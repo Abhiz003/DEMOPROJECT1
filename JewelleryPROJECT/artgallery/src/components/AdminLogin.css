@@ -1,0 +1,35 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+  }
+  .left-column,
+  .right-column {
+    text-align: center;
+    padding: 20px;
+    color: rgb(255, 255, 255); /* Set the text color to white or any other contrasting color */
+  }
+  .left-column {
+    margin-bottom: 10px; 
+    margin-top: 90px;/* Add margin to push the content down */
+  }
+  
+  .right-column {
+    border-left: 2px solid rgba(255, 255, 255, 0.5); /* Adjust border color for contrast */
+  }
+  .admin-login-form {
+    width: 500px; /* Set your desired max-width */
+     /* Ensure the form takes 100% width of its container */
+    margin: 0 auto; /* Center the form horizontally */
+  }
