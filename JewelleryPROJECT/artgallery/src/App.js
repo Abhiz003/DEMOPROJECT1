@@ -21,8 +21,6 @@ import Profile from './components/Profile';
 import AdminDashboard from './admin/dashboard';
 import MyBlogs from './components/MyBlogs';
 import AllBlogs from './components/AllBlogs';
-import { DeletedUsersList } from './components/DeletedUsers';
-import DeletedBloggerList from './components/DeletedBloggerList';
 import EditBloggerDetails from './components/EditBloggerDetails';
 import EditUserDetails from './components/EditUserDetails';
 import AdminBlogs from './components/AdminBlogs';
@@ -43,6 +41,7 @@ export const App = () => {
         <Route path='/admin-log-in' element={<AdminRedirectIfLoggedIn><AdminLogin /></AdminRedirectIfLoggedIn>} />
         
         <Route path='/admin-dashboard' element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
+        
         <Route path='/user-details' element={<AdminPrivateRoute><UsersList /></AdminPrivateRoute>} />
         
         <Route path='/about-us' element={<AboutUs/>} />
@@ -52,6 +51,7 @@ export const App = () => {
         <Route path='/edit-blogger-details' element={<EditBloggerDetails />} />
 
         <Route path='/edit-user-details' element={<EditUserDetails />} />
+
         <Route path='/add-blog' element={<><AddBlog /> </>} />
 
         <Route path='/user-profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
@@ -62,10 +62,6 @@ export const App = () => {
         <Route path='/my-blogs' element={<PrivateRoute><MyBlogs /></PrivateRoute>} />
         
         <Route path='/blogger-list' element={<AdminPrivateRoute><BloggerList /></AdminPrivateRoute>} />
-
-        <Route path='/deleted-user-list' element={<AdminPrivateRoute><DeletedUsersList /></AdminPrivateRoute>} />
-
-        <Route path='/deleted-blogger-list' element={<AdminPrivateRoute><DeletedBloggerList /> </AdminPrivateRoute>} />
 
         <Route path='/admin-blogs' element={<AdminPrivateRoute><AdminBlogs /> </AdminPrivateRoute>} />
 

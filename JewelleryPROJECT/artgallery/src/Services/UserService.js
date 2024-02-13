@@ -56,8 +56,7 @@ export async function updateBlogger(creditials){
     return response.data;
 }
 
-
-//===================DELETE ONE BLOGGER temporary====================
+//===================DELETE ONE ==============
 export async function deleteBlogger(id){
     try {
         const response = await axios.delete(`http://localhost:8080/delete-blogger/${id}`)
@@ -66,28 +65,6 @@ export async function deleteBlogger(id){
         console.log(error);
     }
 }
-
-
-//===================DELETE ONE peramanently==============
-export async function deleteBloggerPermanently(id){
-    try {
-        const response = await axios.delete(`http://localhost:8080/permanently-delete/${id}`)
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-//==================
-export async function reactivateBlogger(id){
-    try {
-        const response = await axios.post(`http://localhost:8080/reactive-blogger/${id}`)
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 
 
 
@@ -135,30 +112,10 @@ export async function getUsers(){
 }
 
 //=====================DELETE ONE USER=========================
+
 export async function deleteUser(userId) {
     try {
         const response = await axios.delete(`http://localhost:8080/delete-user/${userId}`);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
-
-//=========================
-export async function deleteUserPermanently(userId) {
-    try {
-        const response = await axios.delete(`http://localhost:8080/permanently-delete-user/${userId}`);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
-
-export async function reactivateUser(userId) {
-    try {
-        const response = await axios.post(`http://localhost:8080/reactive-user/${userId}`);
         return response.data;
     } catch (error) {
         console.log(error);

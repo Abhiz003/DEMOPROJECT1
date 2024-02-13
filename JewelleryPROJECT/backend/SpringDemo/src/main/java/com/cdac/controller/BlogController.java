@@ -1,5 +1,3 @@
-
-
 package com.cdac.controller;
 
 import java.io.File;
@@ -57,7 +55,7 @@ public class BlogController {
 	                blog.setPhotoUrl(generatedFileName);
 
 	                InputStream is = pic.getInputStream();
-	                FileOutputStream os = new FileOutputStream("D:" + File.separator + "Art_Gallary" + File.separator + "Mini_project" + File.separator + "Profiles" + File.separator + generatedFileName);
+	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -103,7 +101,7 @@ public class BlogController {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("D:\\Art_Gallery\\", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
            byte[] imageBytes = Files.readAllBytes(imagePath);
 
            HttpHeaders headers = new HttpHeaders();
@@ -159,7 +157,7 @@ public class BlogController {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\FinalProject\\", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
            Files.deleteIfExists(imagePath);
 
            blogService.deleteImage(blog);

@@ -50,7 +50,7 @@ public class UserController {
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName;
+                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
 
                 InputStream is = userDetails.getProfilePic().getInputStream();
                 FileOutputStream os = new FileOutputStream(uploadPath);
@@ -89,7 +89,7 @@ public class UserController {
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName;
+                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
 
                 InputStream is = userDetails.getProfilePic().getInputStream();
                 FileOutputStream os = new FileOutputStream(uploadPath);
@@ -114,45 +114,14 @@ public class UserController {
         }
     }
 
+
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         try {
             User fetchedUser = userService.fetchById(id);
             if (fetchedUser != null) {
-                fetchedUser.setUserStatus(UserStatus.DELETED);
-                userService.delete(fetchedUser);
-                return ResponseEntity.ok("User with ID: " + fetchedUser.getUserId() + " deleted successfully");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (UserServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
-        }
-    }
-
-    @PostMapping("/reactive-user/{id}")
-    public ResponseEntity<?> reActiveUser(@PathVariable int id) {
-        try {
-            User fetchedUser = userService.fetchById(id);
-            if (fetchedUser != null) {
-                fetchedUser.setUserStatus(UserStatus.ACTIVE);
-                userService.reActiveUser(fetchedUser);
-                return ResponseEntity.ok("User with ID: " + fetchedUser.getUserId() + " Reactivated Successfully");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (UserServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
-        }
-    }
-
-    @DeleteMapping("/permanently-delete-user/{id}")
-    public ResponseEntity<?> PermanentlyDeleteUser(@PathVariable int id) {
-        try {
-            User fetchedUser = userService.fetchById(id);
-            if (fetchedUser != null) {
                 userService.PermanentlyDelete(fetchedUser);
-                return ResponseEntity.ok("User with ID: " + fetchedUser.getUserId() + "Permanently deleted successfully");
+                return ResponseEntity.ok("User with ID: " + fetchedUser.getUserId() + "User deleted successfully");
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -189,7 +158,7 @@ public class UserController {
     @GetMapping(path = "/user/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getProfilePic(@PathVariable int id) throws IOException {
         User user = userService.fetchById(id);
-        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + user.getProfilePic()));
+        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + user.getProfilePic()));
     }
     
     

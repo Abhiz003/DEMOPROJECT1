@@ -17,8 +17,8 @@ public class RegistrationStatus {
         return list;
     }
 
-    public void setList(List<?> artList) {
-        this.list = artList;
+    public void setList(List<?> blogger) {
+        this.list = blogger;
     }
 	
 	public String getPassword() {

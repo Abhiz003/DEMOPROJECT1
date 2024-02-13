@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import CustomNavbar from './CustomNavbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { deleteUser, deleteUserPermanently } from '../Services/UserService';
+import { faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { deleteUser  } from '../Services/UserService';
 import { logout } from '../utils/TokenUtil';
 
 function Profile() {
@@ -24,31 +24,6 @@ function Profile() {
     setShowZoom(false);
   };
 
-  const handleDeactivateAccount = async () => {
-    const confirmed = window.confirm('Are you sure you want to deactivate your account? This action can be undone by logging in again.');
-
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-      const response = await deleteUser(newid);
-      
-      if (response != null) {
-        alert('Account deactivated successfully');
-
-        logout();
-        sessionStorage.clear();
-        navigate('/');
- 
-      } else {
-        console.error('Failed to deactivate account:', response.statusMessage);
-      }
-    } catch (error) {
-      console.error('Error deactivating account:', error);
-    }
-  };
-
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
 
@@ -57,11 +32,11 @@ function Profile() {
     }
 
     try {
-      const response = await deleteUserPermanently(newid);
+      const response = await deleteUser(newid);
       
       if (response.status) {
         alert('Account deleted successfully');
-
+        logout();
         sessionStorage.clear();
         navigate('/login');  
       } else {
@@ -85,14 +60,14 @@ function Profile() {
             <div className="text-center mb-4">
               <img className='newImg' src={`http://localhost:8080/user/fetch/profilePic/${newid}`} alt="Profile Pic" onClick={handleZoomIn}/>
             </div>
-            <div style={{ marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-              <div style={{ marginTop: '20px' }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ color: '#555' }}>Name</h4>
+            <div style={{ marginTop:'30px', borderTop:'1px solid #ddd', paddingTop:'20px' }}>
+              <div style={{ marginTop:'20px' }}>
+                <div style={{ marginBottom:'20px' }}>
+                  <h4 style={{ color:'#555' }}>Name</h4>
                   <p>{name}</p>
                 </div>
                 <div>
-                  <h4 style={{ color: '#555' }}>Email</h4>
+                  <h4 style={{ color:'#555' }}>Email</h4>
                   <p>{email}</p>
                 </div>
               </div>
@@ -102,15 +77,13 @@ function Profile() {
                 <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                   <FontAwesomeIcon icon={faInstagram} className="social-icon" />
                 </a>
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={faTwitter} className="social-icon" />
+                <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon icon={faYoutube} className="social-icon" />
                 </a>
               </div>
             </div>
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button variant="warning" onClick={handleDeactivateAccount}>
-                Deactivate Account
-              </Button>{'  '}
+             
               <Button
                   variant="secondary"
                   onClick={() => navigate(`/edit-user-details`)}

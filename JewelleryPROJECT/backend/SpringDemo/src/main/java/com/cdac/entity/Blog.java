@@ -3,8 +3,6 @@ package com.cdac.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -48,7 +46,7 @@ public class Blog {
    
    @Column(length = 3000)
    private String blogDescription;
-   private MultipartFile placeImage;
+   
    private int members;
    private double totalCost;
    private String transportationMode;
@@ -166,18 +164,6 @@ public List<Log> getLogs() {
 
 public void setLogs(List<Log> logs) {
 	this.logs = logs;
-}
-
-
-public MultipartFile getPlaceImage() {
-	return placeImage;
-}
-
-
-public void setPlaceImage(MultipartFile placeImage) {
-	this.placeImage = placeImage;
-}
-    
-    
+}    
     
 }

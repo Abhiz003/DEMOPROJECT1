@@ -55,7 +55,7 @@ public class BloggerController {
                     blogger.setProfilePic(generatedFileName);
 
                     InputStream is = profilePic.getInputStream();
-                    FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+                    FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles"  + File.separator + generatedFileName);
                     FileCopyUtils.copy(is, os);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -118,7 +118,7 @@ public class BloggerController {
 				blogger.setProfilePic(generatedFileName);
 				
 				InputStream is = bloggerDetails.getProfilePic().getInputStream();
-				FileOutputStream os = new FileOutputStream("D:" + File.separator + "Art_Gallary" + File.separator + "Mini_project" + File.separator + "Profiles" + File.separator + generatedFileName);
+				FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles"  + File.separator + generatedFileName);
 				FileCopyUtils.copy(is, os);
 			}
 			catch (IOException e) {
@@ -143,40 +143,9 @@ public class BloggerController {
 		}
 	}
 
+	
 	@DeleteMapping("/delete-blogger/{id}")
 	public ResponseEntity<?> deleteBlogger(@PathVariable int id) {
-	    try {
-	        Blogger fetchedBlogger = bloggerService.fetchById(id);
-	        if (fetchedBlogger != null) {
-	        	fetchedBlogger.setBloggerStatus(BloggerStatus.DELETED);
-	            bloggerService.delete(fetchedBlogger);
-	            return ResponseEntity.ok("Blogger with ID: " + fetchedBlogger.getBloggerId() + " deleted successfully");
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    } catch (BloggerServiceException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
-	    }
-	}
-	
-	@PostMapping("/reactive-blogger/{id}")
-	public ResponseEntity<?> reactiveBlogger(@PathVariable int id){
-		try {
-			Blogger fetchedBlogger = bloggerService.fetchById(id);
-			if (fetchedBlogger != null) {
-	        	fetchedBlogger.setBloggerStatus(BloggerStatus.ACTIVE);
-	            bloggerService.reActive(fetchedBlogger);
-	            return ResponseEntity.ok("Blogger with ID: " + fetchedBlogger.getBloggerId() + " Reactivated Successfully");
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-		} catch (BloggerServiceException e) {
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
-		}
-	}
-	
-	@DeleteMapping("/permanently-delete/{id}")
-	public ResponseEntity<?> PermanentlyDeleteBlogger(@PathVariable int id) {
 	    try {
 	        Blogger fetchedBlogger = bloggerService.fetchById(id);
 	        if (fetchedBlogger != null) {
@@ -209,7 +178,6 @@ public class BloggerController {
 	    }
 	}
 	
-
 	@GetMapping("/blogger/fetch/{id}")
 	public Blogger fetchById(@PathVariable int id) {
 		return bloggerService.fetchById(id);
@@ -218,7 +186,6 @@ public class BloggerController {
 	@GetMapping(path = "/blogger/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getProfilePic(@PathVariable int id) throws IOException {
         Blogger blogger = bloggerService.fetchById(id);
-        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + blogger.getProfilePic()));
+        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles" + File.separator + blogger.getProfilePic()));
     }
-
 }

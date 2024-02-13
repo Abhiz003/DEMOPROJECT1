@@ -5,68 +5,54 @@ import CustomNavbar from './CustomNavbar';
 import axios from 'axios';
 
 const AddBlog = () => {
-
-  // const [blogData, setBlogData] = useState(initialBlogData);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setBlogData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const result = await axios.post('http://localhost:8080/blogs/addBlog', blog);
-  //     console.log(response);
-
-  //     navigate('/all-blogs');
-  //   } catch (error) {
-  //     console.error('Error adding blog:', error);
-  //   }
-  // };
-
-  // ---------------------------
   const navigate = useNavigate();
   const initialBlogData = {
     title: '',
     startDate: '',
     endDate: '',
     description: '',
-    placeImage:'',
+    photoUrl: '', 
     membersNum: '',
     cost: '',
-    transportationMode: 'By Road'  //default value
+    transportationMode: 'By Road'
   };
+
   const [blogData, setBlogData] = useState(initialBlogData);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBlogData((prevBlog) => ({ ...prevBlog, [name]: value }));
+    const { name, value, type } = e.target;
+
+    if (type === 'file') {
+      setBlogData({ ...blogData, [name]: e.target.files[0] });
+    } else {
+      setBlogData((prevBlog) => ({ ...prevBlog, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send data to the backend using axios.post
-      const result = await axios.post('http://localhost:8080/blogs/add-blog', blogData);
+      const formDataForUpload = new FormData();
+
+      Object.keys(blogData).forEach((key) => {
+        if (key !== 'photoUrl') {
+          formDataForUpload.append(key, blogData[key]);
+        }
+      });
+
+      formDataForUpload.append('photoUrl', blogData.photoUrl);
+
+      const result = await axios.post('http://localhost:8080/blogs/add-blog', formDataForUpload);
       console.log('Blog added successfully:', result.data);
 
-      // Clear the form after successful submission if needed
       setBlogData(initialBlogData);
-      alert("Blog added successfully");
+      alert('Blog added successfully');
       navigate('/all-blogs');
     } catch (error) {
       console.error('Error adding blog:', error.message);
     }
-
   };
-
-  // ---------------------------
 
   const handleReset = () => {
     setBlogData(initialBlogData);
@@ -77,6 +63,7 @@ const AddBlog = () => {
       <CustomNavbar />
       <div className="add-exhibition-container">
         <h2 className="add-exhibition-title">Add Blog</h2>
+        <p>Share your Travel experience</p>
         <form onSubmit={handleSubmit} onReset={handleReset}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
@@ -120,6 +107,21 @@ const AddBlog = () => {
               onChange={handleChange}
               required
             />
+          </div>
+          <div className="form-group">
+            <div className="mb-3">
+              <label htmlFor="formFile" className="form-label">
+                Upload Images:
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="formFile"
+                name="photoUrl"
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="members">Members:</label>
