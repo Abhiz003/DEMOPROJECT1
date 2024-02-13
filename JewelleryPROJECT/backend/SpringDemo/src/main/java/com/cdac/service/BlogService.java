@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdac.entity.Blog;
+import com.cdac.entity.Blogger;
 import com.cdac.exception.BloggerServiceException;
 import com.cdac.repository.BlogRepository;
 
@@ -44,8 +45,8 @@ public class BlogService {
 			throw new BloggerServiceException("Blog with id " + id + " does not exist!");
 	}
 	
-	public List<Blog> fetchBlogPhotosByBloggerId(int bloggerId) {
-        return blogRepository.findByBlogger_BloggerId(bloggerId);
+	public List<Blog> fetchBlogsByBloggerId(int bloggerId) {
+        return blogRepository.findByBloggerId(bloggerId);
     }
 
 	public List<Blog> fetchAllBlogs() {

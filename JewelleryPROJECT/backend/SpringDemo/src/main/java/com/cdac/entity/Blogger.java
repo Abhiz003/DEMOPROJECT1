@@ -2,6 +2,8 @@ package com.cdac.entity;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -15,7 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
+@Component
 @Entity
 @Table(name = "bloggers")
 public class Blogger {
@@ -23,26 +25,29 @@ public class Blogger {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "blogger_sequence")
 	@SequenceGenerator(name = "blogger_sequence",sequenceName = "sequence_for_new_blogger", allocationSize = 1,initialValue = 1)
+	@Column(name = "blogger_id")
 	private int bloggerId;
 	
-	@Column(length = 30)
+	@Column(name="blogger_name" ,length = 30)
 	private String bloggerName;
 	
-	@Column(length = 30, unique = true)
+	@Column(name="blogger_email", length = 30, unique = true)
 	private String bloggerEmail;
 	
-	@Column(length = 10)
+	@Column(name="blogger_phone", length = 10)
 	private long bloggerPhone;
 	
-	@Column(nullable = false)
+	@Column(name="blogger_password",  nullable = false)
 	private String bloggerPassword;
 	
+	@Column(name = "profile_pic")
 	private String profilePic;
 	
-	@Column(length = 3000 )
+	@Column( name="blogger_description", length = 3000 )
 	private String bloggerDescription;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "blogger_status")
 	private BloggerStatus bloggerStatus;
 	
 	public static enum BloggerStatus{
@@ -50,8 +55,8 @@ public class Blogger {
 	}
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "blogger", cascade = CascadeType.ALL)
-	private List<Blog> blogPhotos;
+	@OneToMany(mappedBy = "blogger_id", cascade = CascadeType.ALL)
+	private List<Blog> blogs;
 
 	public int getBloggerId() {
 		return bloggerId;
@@ -117,12 +122,12 @@ public class Blogger {
 		this.bloggerStatus = bloggerStatus;
 	}
 
-	public List<Blog> getBlogPhotos() {
-		return blogPhotos;
+	public List<Blog> getBlogs() {
+		return blogs;
 	}
 
-	public void setBlogPhotos(List<Blog> blogPhotos) {
-		this.blogPhotos = blogPhotos;
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 	

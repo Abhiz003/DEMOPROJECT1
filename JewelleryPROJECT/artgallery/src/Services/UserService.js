@@ -52,7 +52,7 @@ export async function getBlogger(){
 
 //====================UPDATE ONE BLOGGER===============
 export async function updateBlogger(creditials){
-    const response = await axios.post(`http://localhost:8080/blogger-update`,creditials);
+    const response = await axios.post(`http://localhost:8080/update-blogger`,creditials);
     return response.data;
 }
 

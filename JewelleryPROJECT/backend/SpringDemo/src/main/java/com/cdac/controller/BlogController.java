@@ -113,10 +113,10 @@ public class BlogController {
        }
    }
 
-   @GetMapping("/blog/fetchBlogtPhotosByBlogger/{bloggerId}")
-   public RegistrationStatus fetchBlogPhotosByBloggerId(@PathVariable int bloggerId) {
+   @GetMapping("/blog/fetchBlogPhotosByBlogger/{bloggerId}")
+   public RegistrationStatus fetchBlogsByBloggerId(@PathVariable int bloggerId) {
        try {
-           List<Blog> blogList = blogService.fetchBlogPhotosByBloggerId(bloggerId);
+           List<Blog> blogList = blogService.fetchBlogsByBloggerId(bloggerId);
 
            RegistrationStatus status = new RegistrationStatus();
            status.setList(blogList);

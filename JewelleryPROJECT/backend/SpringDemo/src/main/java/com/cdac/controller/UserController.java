@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -21,12 +20,13 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.dto.RegistrationStatus;
 import com.cdac.dto.UserDetail;
 import com.cdac.entity.User;
-import com.cdac.entity.User.UserStatus;
 import com.cdac.exception.UserServiceException;
 import com.cdac.service.UserService;
 
@@ -37,22 +37,73 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+//    @PostMapping("/register-user")
+//    public ResponseEntity<RegistrationStatus> registerv3(UserDetail userDetails) {
+//        try {
+//            User user = new User();
+//            BeanUtils.copyProperties(userDetails, user);
+//
+//            try {
+//                String fileName = userDetails.getProfilePic().getOriginalFilename();
+//                String generatedFileName = fileName;
+//
+//                user.setProfilePic(generatedFileName);
+//
+//                // Update the path to your desired directory
+//                String uploadPath = "C:" +  File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
+//
+//                InputStream is = userDetails.getProfilePic().getInputStream();
+//                FileOutputStream os = new FileOutputStream(uploadPath);
+//                FileCopyUtils.copy(is, os);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            int id = userService.register(user);
+//            RegistrationStatus status = new RegistrationStatus();
+//            status.setStatus(true);
+//            status.setStatusMessage("Registration successful!");
+//            status.setId(id);
+//
+//            return new ResponseEntity<>(status, HttpStatus.OK);
+//
+//        } catch (UserServiceException e) {
+//            RegistrationStatus status = new RegistrationStatus();
+//            status.setStatus(false);
+//            status.setStatusMessage(e.getMessage());
+//
+//            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    
+    
+    
+    
+    
     @PostMapping("/register-user")
-    public ResponseEntity<RegistrationStatus> registerv3(UserDetail userDetails) {
+    public ResponseEntity<RegistrationStatus> registerv3(@RequestParam("profilePic") MultipartFile profilePic,
+                                                        @RequestParam("userName") String userName,
+                                                        @RequestParam("userEmail") String userEmail,
+                                                        @RequestParam("userPhone") long userPhone,
+                                                        @RequestParam("userPassword") String userPassword) {
         try {
             User user = new User();
-            BeanUtils.copyProperties(userDetails, user);
+            user.setUserName(userName);
+            user.setUserEmail(userEmail);
+            user.setUserPhone(userPhone);
+            user.setUserPassword(userPassword);
 
             try {
-                String fileName = userDetails.getProfilePic().getOriginalFilename();
+                String fileName = profilePic.getOriginalFilename();
                 String generatedFileName = fileName;
 
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
+                String uploadPath = "C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES\\UserProfiles\\" + generatedFileName;
 
-                InputStream is = userDetails.getProfilePic().getInputStream();
+                InputStream is = profilePic.getInputStream();
                 FileOutputStream os = new FileOutputStream(uploadPath);
                 FileCopyUtils.copy(is, os);
             } catch (IOException e) {
@@ -76,6 +127,14 @@ public class UserController {
         }
     }
 
+
+    
+    
+    
+    
+    
+    
+    
     @PatchMapping("/user-update")
     public ResponseEntity<RegistrationStatus> update(UserDetail userDetails) {
         try {
@@ -89,11 +148,14 @@ public class UserController {
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
+                String uploadPath = "C:" + File.separator + "ReactSpringbootApp" + File.separator +
+                        "ReactSpringApp" + File.separator + "JewelleryPROJECT" +
+                        File.separator + "All-IMAGES" + File.separator + "UserProfiles" +
+                        File.separator + generatedFileName;
 
-                InputStream is = userDetails.getProfilePic().getInputStream();
-                FileOutputStream os = new FileOutputStream(uploadPath);
-                FileCopyUtils.copy(is, os);
+               InputStream is = userDetails.getProfilePic().getInputStream();
+               FileOutputStream os = new FileOutputStream(uploadPath);
+               FileCopyUtils.copy(is, os);
             } catch (IOException e) {
             }
 
@@ -155,17 +217,24 @@ public class UserController {
         return userService.fetchById(id);
     }
 
+    
     @GetMapping(path = "/user/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getProfilePic(@PathVariable int id) throws IOException {
-        User user = userService.fetchById(id);
-        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + user.getProfilePic()));
+    public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
+        try {
+            User user = userService.fetchById(id);
+            String imagePath = "C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES\\UserProfiles\\" + user.getProfilePic();
+            File file = new File(imagePath);
+
+            if (file.exists()) {
+                byte[] imageBytes = Files.readAllBytes(file.toPath());
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+            } else {
+                throw new IOException("Image not found");
+            }
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-    
-    
-    
-    
-    
-    
     
     
     

@@ -17,30 +17,33 @@ public class Log {
 	
 	@Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LogId")
+    @Column(name = "log_id")
 	private int logId;
 	
+	@Column(name = "place_name")
 	private String placeName;
 	
+	@Column(name = "start_time")
     private String startTime;
     
+	@Column(name = "exit_time")
     private String exitTime;
     
     @Column(name = "image_url")
     private String images; // You might want to handle file uploads differently
     
-    @Column(length = 3000)
+    @Column( name="description", length = 3000)
     private String description;
     
-    private boolean passRequired;
-    
+    @Column(name = "pass_amount")
     private String passAmount;
     
+    @Column(name = "location")
     private String location;
     
-    @JsonBackReference
+    
     @ManyToOne
-    @JoinColumn(name = "blogId")
+    @JoinColumn(name = "blog_id")
     private Blog blog;
 
 	public int getLogId() {
@@ -89,14 +92,6 @@ public class Log {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public boolean isPassRequired() {
-		return passRequired;
-	}
-
-	public void setPassRequired(boolean passRequired) {
-		this.passRequired = passRequired;
 	}
 
 	public String getPassAmount() {

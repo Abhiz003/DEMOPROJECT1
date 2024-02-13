@@ -49,7 +49,7 @@ const BloggerProfile = () => {
 
   const fetchUserImages = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8080/art/fetchArtPhotosByArtist/${userId}`);
+      const response = await fetch(`http://localhost:8080/blog/fetchBlogtPhotosByBlogger/${userId}`);
       const data = await response.json();
 
       if (data.status) {
@@ -73,7 +73,7 @@ const BloggerProfile = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/art/delete/${imageId}`, {
+      const response = await fetch(`http://localhost:8080/blog/delete/${imageId}`, {
         method: 'DELETE',
       });
 
@@ -87,10 +87,10 @@ const BloggerProfile = () => {
 
         fetchUserImages(newid);
       } else {
-        console.error('Failed to delete art image:', data.statusMessage);
+        console.error('Failed to delete blog image:', data.statusMessage);
       }
     } catch (error) {
-      console.error('Error deleting art image:', error);
+      console.error('Error deleting blog image:', error);
     }
   };
 
@@ -102,7 +102,7 @@ const BloggerProfile = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/permanently-delete/${newid}`, {
+      const response = await fetch(`http://localhost:8080/delete-blogger/${newid}`, {
         method: 'DELETE',
       });
 
@@ -116,31 +116,6 @@ const BloggerProfile = () => {
       }
     } catch (error) {
       console.error('Error deleting account:', error);
-    }
-  };
-
-  const handleDeactivateAccount = async () => {
-    const confirmed = window.confirm('Are you sure you want to deactivate your account? This action can be undone by logging in again.');
-  
-    if (!confirmed) {
-      return;
-    }
-  
-    try {
-      const response = await deleteBlogger(newid);
-  
-      if (response != null) {
-        alert('Account deactivated successfully');
-
-        logout();
-        sessionStorage.clear();
-        navigate('/');
-        
-      } else {
-        console.error('Failed to deactivate account');
-      }
-    } catch (error) {
-      console.error('Error deactivating account:', error);
     }
   };
   
@@ -185,7 +160,7 @@ const BloggerProfile = () => {
     formData.append('photoUrl', artImage);
 
     try {
-      const response = await fetch('http://localhost:8080/add-art', {
+      const response = await fetch('http://localhost:8080/add-blog', {
         method: 'POST',
         body: formData,
       });
@@ -217,7 +192,7 @@ const BloggerProfile = () => {
             <div className="text-center mb-4">
               <img
                 className="newImage"
-                src={`http://localhost:8080/artist/fetch/profilePic/${newid}`}
+                src={`http://localhost:8080/blogger/fetch/profilePic/${newid}`}
                 alt="Profile Pic"
                 onClick={() => handleProfileZoomIn()} 
               />
@@ -261,9 +236,6 @@ const BloggerProfile = () => {
               </Form>
             </div>
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button variant="warning" onClick={handleDeactivateAccount}>
-                Deactivate Account
-              </Button>{'   '}
               <Button
                   variant="secondary"
                   onClick={() => navigate(`/edit-blogger-details`)}
@@ -282,7 +254,7 @@ const BloggerProfile = () => {
           {selectedImage && (
             <img
               className='zoomed-profile-pic'
-              src={`http://localhost:8080/artist/fetch/pic/${selectedImage}`}
+              src={`http://localhost:8080/blogger/fetch/pic/${selectedImage}`}
               alt="Zoomed Profile Pic"
             />
           )}
@@ -305,7 +277,7 @@ const BloggerProfile = () => {
           <Modal.Body>
             <img
               className='zoomed-profile-pic'
-              src={`http://localhost:8080/artist/fetch/profilePic/${newid}`}
+              src={`http://localhost:8080/blogger/fetch/profilePic/${newid}`}
               alt="Zoomed Profile Pic"
             />
           </Modal.Body>

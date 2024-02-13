@@ -72,14 +72,6 @@ public class BloggerService {
 	    }
 	}
 	
-	public void delete(Blogger blogger) {
-		bloggerRepository.save(blogger);
-	}
-	
-	public void reActive(Blogger blogger) {
-		bloggerRepository.save(blogger);
-	}
-	
 	public void permanentlyDelete(Blogger blogger) {
 		bloggerRepository.delete(blogger);
 	}

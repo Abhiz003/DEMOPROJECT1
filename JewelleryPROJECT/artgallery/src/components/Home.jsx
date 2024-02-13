@@ -9,7 +9,7 @@ import Reviews from './Reviews';
 import './Home.css';
 import { Button } from 'react-bootstrap';
 import FeaturedProducts from './FeaturedProducts';
-import Blogs from './Blogs';
+import Newsletter from './Newsletter';
 import { useNavigate } from 'react-router-dom';
 
 export function Home() {
@@ -60,7 +60,7 @@ export function Home() {
             <FeaturedProducts />
 
 
-            <Blogs />
+            <Newsletter />
 
             <div>
                 <Reviews />

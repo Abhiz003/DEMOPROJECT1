@@ -3,8 +3,9 @@ package com.cdac.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,42 +20,50 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+@Component
 @Entity
 @Table(name = "blog")
 public class Blog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "blogId")
-    private int id;
+	  @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Column(name = "blog_id")
+	    private int id;
 
     @Column(name = "photo_url")
     private String photoUrl;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "bloggerId")
+    @JoinColumn(name = "blogger_id") 
     private Blogger blogger;
     
+    @Column(name = "title")
     private String title;
     
 	 @Temporal(TemporalType.DATE)
-	    private Date startDate;
+	 @Column(name = "start_date")
+	 private Date startDate;
 
-	    @Temporal(TemporalType.DATE)
-	    private Date endDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "end_date")
+	private Date endDate;
    
-   @Column(length = 3000)
+   @Column(name ="blog_description", length = 3000)
    private String blogDescription;
    
    private int members;
+   
+   @Column(name = "total_cost")
    private double totalCost;
+   
+   @Column(name = "transportation_mode")
    private String transportationMode;
    
 
-   @JsonManagedReference
+   
    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
-   List < Log > logs;
+   List <Log> logs;
 
 
 public int getId() {
@@ -164,6 +173,8 @@ public List<Log> getLogs() {
 
 public void setLogs(List<Log> logs) {
 	this.logs = logs;
-}    
+}
+
+   
     
 }

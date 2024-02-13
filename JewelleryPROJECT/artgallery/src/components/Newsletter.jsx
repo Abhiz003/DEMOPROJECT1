@@ -1,8 +1,8 @@
 import React from 'react';
 import aboutImage from '../img_art/FindArt/Hybrid-Homepage-RW-Prog-large.jpg';
 import sign from '../img_art/w-sig-black.png';
-import './Blogs.css';
-const Blogs = () => {
+import './Newsletter.css';
+const Newsletter = () => {
   return (
     <>
       <section id="about" className="about-section mt-5 mb-3">
@@ -39,4 +39,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default Newsletter;

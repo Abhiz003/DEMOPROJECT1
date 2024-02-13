@@ -8,100 +8,172 @@ import './Collections.css';
 import axios from 'axios';
 
 const MyBlogs = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showDownloadConfirmation, setShowDownloadConfirmation] = useState(false);
-  const [selectedBlogId, setSelectedBlogId] = useState(null);
-  const [showZoom, setShowZoom] = useState(false);
-  const [zoomedImage, setZoomedImage] = useState(null);
-  const itemsPerPage = 2;
+
+  // const [blogs, setBlogs] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [showDownloadConfirmation, setShowDownloadConfirmation] = useState(false);
+  // const [selectedBlogId, setSelectedBlogId] = useState(null);
+  // const [showZoom, setShowZoom] = useState(false);
+  // const [zoomedImage, setZoomedImage] = useState(null);
+  // const itemsPerPage = 2;
+
+  // useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8080/blogs/get-blogs',blogs);
+
+  //       if (response.status) {
+  //         const blogsWithLikes = response.list.map((blog) => ({ ...blog, likes: 0 }));
+  //         setBlogs(blogsWithLikes);
+  //       } else {
+  //         console.error('Failed to fetch blogs:', response.statusMessage);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching blogs:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBlogs();
+  // }, []);
+
+  // const totalPages = Math.ceil(blogs.length / itemsPerPage);
+
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
+
+  // const handleLike = (blogId) => {
+  //   setBlogs((prevBlogs) =>
+  //     prevBlogs.map((blog) =>
+  //       blog.id === blogId ? { ...blog, likes: blog.likes + 1 } : blog
+  //     )
+  //   );
+  // };
+
+  // const handleShowDownloadConfirmation = (blogId) => {
+  //   setSelectedBlogId(blogId);
+  //   setShowDownloadConfirmation(true);
+  // };
+
+  // const handleConfirmDownload = () => {
+  //   handleDownload(selectedBlogId);
+  //   setShowDownloadConfirmation(false);
+  // };
+
+  // const handleCancelDownload = () => {
+  //   setSelectedBlogId(null);
+  //   setShowDownloadConfirmation(false);
+  // };
+
+  // const handleOpenZoom = (blogId) => {
+  //   setZoomedImage(`http://localhost:8080/blogger/fetch/pic/${blogId}`);
+  //   setShowZoom(true);
+  // };
+
+  // const handleZoomOut = () => {
+  //   setShowZoom(false);
+  // };
+
+  // const handleDownload = (blogId) => {
+  //   const contentType = 'image/png';
+
+  //   fetch(`http://localhost:8080/blogger/fetch/pic/${blogId}`)
+  //     .then((response) => response.blob())
+  //     .then((blob) => {
+  //       const file = new File([blob], `Blog_${blogId}.png`, { type: contentType });
+
+  //       saveAs(file);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error downloading image:', error);
+  //     });
+  // };
+  // const handleContextMenu = (event) => {
+  //   event.preventDefault();
+  // };
+
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+
+
+
+
+// ---------------------------------------------------------
+
+  const [blogs, setBlogs] = useState([]); 
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/blogs/get-blogs',blogs);
+    getUserBlogs();
 
-        if (response.status) {
-          const blogsWithLikes = response.list.map((blog) => ({ ...blog, likes: 0 }));
-          setBlogs(blogsWithLikes);
-        } else {
-          console.error('Failed to fetch blogs:', response.statusMessage);
-        }
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
   }, []);
 
-  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const getUserBlogs = async () => {
+    const result = await axios.get("http://localhost:8080/blogs/getBlogs"); 
+    setBlogs(result.data);
+  }
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
-  const handleLike = (blogId) => {
-    setBlogs((prevBlogs) =>
-      prevBlogs.map((blog) =>
-        blog.id === blogId ? { ...blog, likes: blog.likes + 1 } : blog
-      )
-    );
-  };
-
-  const handleShowDownloadConfirmation = (blogId) => {
-    setSelectedBlogId(blogId);
-    setShowDownloadConfirmation(true);
-  };
-
-  const handleConfirmDownload = () => {
-    handleDownload(selectedBlogId);
-    setShowDownloadConfirmation(false);
-  };
-
-  const handleCancelDownload = () => {
-    setSelectedBlogId(null);
-    setShowDownloadConfirmation(false);
-  };
-
-  const handleOpenZoom = (blogId) => {
-    setZoomedImage(`http://localhost:8080/blogger/fetch/pic/${blogId}`);
-    setShowZoom(true);
-  };
-
-  const handleZoomOut = () => {
-    setShowZoom(false);
-  };
-
-  const handleDownload = (blogId) => {
-    const contentType = 'image/png';
-
-    fetch(`http://localhost:8080/blogger/fetch/pic/${blogId}`)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const file = new File([blob], `Blog_${blogId}.png`, { type: contentType });
-
-        saveAs(file);
-      })
-      .catch((error) => {
-        console.error('Error downloading image:', error);
-      });
-  };
-  const handleContextMenu = (event) => {
-    event.preventDefault();
-  };
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
       <CustomNavbar />
-      <Container className="mt-5 asdf">
-        <h1 className="mb-4 head text-center">Blogs By Our Travellers</h1>
+      <main className="container container-fluid">
+      {blogs.map((blog, index) => (
+      <div key={index} className="blog d-flex flex-column flex-md-row">
+        <section className="place-image">
+          <img src="Images/Ironman.jpg" className="img-fluid" alt="" />
+        </section>
+        <section className="details-part flex-grow-1 p-3">
+          <div className="main-parent mt-2">
+            <div className="main-box1">
+              <h3>{blog.title}</h3>
+            </div>
+            <div className="main-box2">
+              <label>Start date: </label> <span>{blog.startDate}</span>
+            </div>
+            <div className="main-box3">
+              <label>End date: </label> <span>{blog.endDate}</span>
+            </div>
+            <div className="main-box4">
+              <label>Members: </label> <span>{blog.members}</span>
+            </div>
+            <div className="main-box5">
+              <label>Total cost: </label> <span>{blog.totalCost}</span>
+            </div>
+            <div className="main-box6">
+              <label>Transportation: </label> <span>{blog.transportationMode}</span>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-between mt-3">
+            <Link className="btn btn-primary" to="/logs">
+              View
+            </Link>
+            <Link to="/createLogs" className="btn btn-success">
+              Create Logs
+            </Link>
+          </div>
+        </section>
+      </div>
+      ))}
+      <Link className="btn btn-success mt-4" to="/add-blog">
+        Add a Blog
+      </Link>
+    </main>
+
+
+
+
+
+
+
+
+
+      {/* <Container className="mt-5 asdf">
+        <h1 className="mb-4 head text-center">My Journey Tales</h1>
         <Card className="card">
           <Card.Body className="card-body">
             <div className="text-center mb-4 imageList">
@@ -114,10 +186,20 @@ const MyBlogs = () => {
                       <img
                         className="blogs"
                         src={`http://localhost:8080/blogger/fetch/pic/${blog.id}`}
-                        alt={`Art ${blog.id}`}
+                        alt={`Blog ${blog.id}`}
                         onClick={() => handleOpenZoom(blog.id)}
                         onContextMenu={handleContextMenu}
                       />
+                      <div>
+                        <p>{blog.title}</p>
+                        <p>{blog.startDate}</p>
+                        <p>{blog.endDate}</p>
+                        <p>{blog.blogDescription}</p>
+                        <p>{blog.members}</p>
+                        <p>{blog.totalCost}</p>
+                        <p>{blog.transportationMode}</p>
+                      </div>
+
                       <div className="likeContainer">
                         <Button
                           variant="secondary"
@@ -195,7 +277,7 @@ const MyBlogs = () => {
               Close
             </Button>
           </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

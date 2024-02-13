@@ -4,14 +4,14 @@ import CustomNavbar from './CustomNavbar';
 import { signup } from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
 
-export function SignUp (){
+export function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
     userPhone: '',
     userPassword: '',
-    profilePic: '', 
+    profilePic: null, // Use null for the initial state of the file
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -32,32 +32,32 @@ export function SignUp (){
   };
 
   const validateField = (name, value) => {
-    const errors = { ...formErrors };
-
-    switch (name) {
-      case 'userName':
-        errors.user = /^[A-Za-z\s]+$/.test(value) ? '' : 'Name should contain only letters and spaces';
-        break;
-      case 'userPhone':
-        errors.userPhone = /^[0-9]{10}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
-        break;
-        case 'userEmail':
-          errors.userEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value)
-              ? ''
-              : 'Invalid email address';
-          break;
-      case 'userPassword':
-        errors.userPassword =
-          value.length >= 6 && /[A-Z]/.test(value) && /\d/.test(value) && /[!@#$%^&*(),.?":{}|<>]/.test(value)
-            ? ''
-            : 'Password must be at least 6 characters long, contain one uppercase letter, one number, and one special character';
-        break;
-      default:
-        break;
-    }
-
-    setFormErrors(errors);
-  };
+        const errors = { ...formErrors };
+    
+        switch (name) {
+          case 'userName':
+            errors.user = /^[A-Za-z\s]+$/.test(value) ? '' : 'Name should contain only letters and spaces';
+            break;
+          case 'userPhone':
+            errors.userPhone = /^[0-9]{10}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
+            break;
+            case 'userEmail':
+              errors.userEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value)
+                  ? ''
+                  : 'Invalid email address';
+              break;
+          case 'userPassword':
+            errors.userPassword =
+              value.length >= 6 && /[A-Z]/.test(value) && /\d/.test(value) && /[!@#$%^&*(),.?":{}|<>]/.test(value)
+                ? ''
+                : 'Password must be at least 6 characters long, contain one uppercase letter, one number, and one special character';
+            break;
+          default:
+            break;
+        }
+    
+        setFormErrors(errors);
+      };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,13 +69,9 @@ export function SignUp (){
     try {
       const formDataForUpload = new FormData();
 
-      Object.keys(formData).forEach((key) => {
-        if (key !== 'profilePic') {
-          formDataForUpload.append(key, formData[key]);
-        }
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataForUpload.append(key, value);
       });
-
-      formDataForUpload.append('profilePic', formData.profilePic);
 
       const result = await signup(formDataForUpload);
 
@@ -87,7 +83,7 @@ export function SignUp (){
         navigate('/');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setSignUpError(true);
       setTimeout(() => {
         setSignUpError(false);
@@ -104,7 +100,7 @@ export function SignUp (){
       userEmail: '',
       userPhone: '',
       userPassword: '',
-      profilePic: '',
+      profilePic: null,
     });
   };
 
