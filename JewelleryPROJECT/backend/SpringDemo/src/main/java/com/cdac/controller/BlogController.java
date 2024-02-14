@@ -315,6 +315,8 @@ public class BlogController {
        }
    }
 
+   
+   
    @DeleteMapping("/blog/delete/{id}")
    public ResponseEntity<RegistrationStatus> deleteBlog(@PathVariable int id) {
        try {

@@ -26,6 +26,8 @@ import EditUserDetails from './components/EditUserDetails';
 import AdminBlogs from './components/AdminBlogs';
 import AddBlog from './components/AddBlog';
 import UpdateBlogs from './components/UpdateExhibition';
+import Logs from './components/Logs';
+import CreateLogs from './components/CreateLogs';
 
 
 export const App = () => {
@@ -67,29 +69,34 @@ export const App = () => {
         
         <Route path='/about-us' element={<AboutUs/>} />
 
-        <Route path='/blogger-details' element={<Blogger/>} />
+        <Route path='/get-blogger' element={<Blogger/>} />
 
         <Route path='/edit-blogger-details' element={<EditBloggerDetails />} />
 
         <Route path='/edit-user-details' element={<EditUserDetails />} />
 
-        <Route path='/add-blog' element={<><AddBlog /> </>} />
 
         <Route path='/user-profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path='/blogger-profile' element={<PrivateRoute><BloggerProfile /></PrivateRoute>} />
         
-        <Route path='/all-blogs' element={<PrivateRoute><AllBlogs /></PrivateRoute>} />
 
+        <Route path='/all-blogs' element={<AllBlogs />} />
         <Route path='/my-blogs' element={<PrivateRoute><MyBlogs /></PrivateRoute>} />
+        <Route path='/add-blog' element={<AddBlog /> } />
         
+
+        <Route path='/my-logs' element={<Logs/>}/>
+        <Route path='/create-logs' element={<CreateLogs/>}/>
+
+
+
+
+
+
         <Route path='/blogger-list' element={<AdminPrivateRoute><BloggerList /></AdminPrivateRoute>} />
-
         <Route path='/admin-blogs' element={<AdminPrivateRoute><AdminBlogs /> </AdminPrivateRoute>} />
-
         <Route path='/admin/add-exhibition' element={<AdminPrivateRoute><AddBlog /> </AdminPrivateRoute>} />
-        
         <Route path='/admin/update-exhibition/:id' element={<AdminPrivateRoute><UpdateBlogs /> </AdminPrivateRoute>} />
-
       </Routes>
 
 

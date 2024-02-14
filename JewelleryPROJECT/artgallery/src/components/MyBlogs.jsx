@@ -4,10 +4,10 @@ import CustomNavbar from './CustomNavbar';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { saveAs } from 'file-saver';
 import { useNavigate } from 'react-router-dom';
-import './Collections.css';
+import './MyBlogs.css';
 import axios from 'axios';
 import { getUserId } from '../utils/TokenUtil';
-import { getBlogImage } from '../Services/BlogService';
+import { getBlogImage} from '../Services/BlogService';
 
 const MyBlogs = () => {
   const navigate = useNavigate();
@@ -75,56 +75,114 @@ const MyBlogs = () => {
       });
   };
 
+  // const handleDelete = async (blogId) => {
+  //   if (window.confirm("Do you want to delete the Blog?")) {
+  //     try {
+  //       const response = await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
+  //       console.log('Response from handleDelete:', response);
+      
+  //       if (response.status === 200) {
+  //         alert("Blog deleted successfully");
+  //         setBlogs((prevBlogs) => prevBlogs.filter(blog => blog.id !== blogId));
+  //       } else {
+  //         alert(`Failed to delete blog: ${response.data.statusMessage}`);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error deleting blog:', error);
+  //       alert(`Failed to delete blog: ${error.message}`);
+  //     }
+  //   }
+  // };
+  
+
+
+
   const handleContextMenu = (event) => {
     event.preventDefault();
   };
 
+  const WORDS_LIMIT = 30; // Set your desired word limit
+
+  const truncateDescription = (description) => {
+    const words = description.split(' ');
+    if (words.length > WORDS_LIMIT) {
+      return words.slice(0, WORDS_LIMIT);
+    }
+    return description;
+  };
   return (
     <>
       <CustomNavbar />
-      <Container className="mt-5 asdf">
+      <Container className="mt-5 my-blogs-container">
         <h1 className="mb-4 head text-center">My Journey Tales</h1>
-        <Card className="card">
-          <Card.Body className="card-body">
-            <div className="text-center mb-4 imageList">
-              {blogs.length === 0 ? (
-                <p>No blogs available.</p>
-              ) : (
-                <div className="div1">
-                  {blogs.map((blog, index) => (
-                    <div key={blog.id} className="artContainer">
-                      <img
-                        className="blogs"
-                        src={blog.photoUrl}
-                        alt={`Blog ${blog.id}`}
-                        onClick={() => handleOpenZoom(blog.id)}
-                        onContextMenu={handleContextMenu}
-                      />
-                      <div>
-                        <p>{blog.title}</p>
-                        <p>{blog.startDate}</p>
-                        <p>{blog.endDate}</p>
-                        <p>{blog.blogDescription}</p>
-                        <p>{blog.members}</p>
-                        <p>{blog.totalCost}</p>
-                        <p>{blog.transportationMode}</p>
-                      </div>
-                      <div className="likeContainer">
-                        <Button
-                          variant="secondary"
-                          className="downloadButton"
-                          onClick={() => handleShowDownloadConfirmation(blog.id)}
-                        >
-                          <AiOutlineDownload size={20} />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </Card.Body>
-        </Card>
+
+        {blogs.length === 0 ? (
+          <p className="text-center">No blogs available.</p>
+        ) : (
+          <>
+            {blogs.map((blog, index) => (
+              <Card key={blog.id} className='mb-2 blog-container'>
+                <Card.Body className="blog-container">
+                  <div className="blog-image">
+                    <img
+                      className="blogs"
+                      src={`Images/${blog.photoUrl}`}
+                      alt={`Blog ${blog.id}`}
+                      onClick={() => handleOpenZoom(blog.id)}
+                      onContextMenu={handleContextMenu}
+                    />
+                  </div>
+
+                  <div className="blog-info">
+                    <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>
+                      <span style={{ marginRight: '10px' }}></span> Blog title - {blog.title}
+                      <Button
+                        variant="secondary"
+                        className="downloadButton"
+                        onClick={() => handleShowDownloadConfirmation(blog.id)}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        <AiOutlineDownload size={20} />
+                      </Button>
+                    </p>
+                    <p>
+                      <b>Start date:</b> {blog.startDate} &nbsp;
+                      <b>End date:</b> {blog.endDate}
+                    </p>
+                    <p>
+                      <b>Members:</b> {blog.members} &nbsp;
+                      <b>Total cost:</b> {blog.totalCost}
+                    </p>
+                    <p>
+                      <b>Transportation:</b> {blog.transportationMode}
+                    </p>
+                    <p style={{ marginTop: '10px', padding: '20px', fontStyle: 'italic' }}>
+                      {truncateDescription(blog.blogDescription)}{' '}
+                      {blog.blogDescription.length > WORDS_LIMIT && (
+                        <span className="read-more-link" >
+                          ...
+                        </span>
+                      )}
+                    </p>
+                    <Button onClick={() => navigate('/my-logs')} > View</Button> &nbsp;
+                    {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
+                    <Button onClick={() => navigate('/create-logs', { state: { blogId:blog.id } }) } > create Logs</Button>
+                    {/* <Button onClick={handleDelete(blog.id)}>Delete</Button>  */}
+                  </div>
+                      
+
+
+                </Card.Body>
+              </Card>
+            ))}
+          </>
+        )}
+
+
+
+
+
+
         <div className="d-flex">
           <Button onClick={() => navigate('/add-blog')}>Add New Blog</Button>
         </div>

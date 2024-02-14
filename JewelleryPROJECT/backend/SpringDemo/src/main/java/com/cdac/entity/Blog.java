@@ -28,8 +28,8 @@ import jakarta.persistence.TemporalType;
 public class Blog {
 
 	  @Id
-	  @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "new_user_sequence")
-		@SequenceGenerator(name = "new_user_sequence",sequenceName = "sequence_for_new_user", allocationSize = 1,initialValue = 100)
+	  @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "blog_sequence")
+		@SequenceGenerator(name = "blog_sequence",sequenceName = "sequence_for_new_blog", allocationSize = 1,initialValue = 100)
 	    @Column(name = "blog_id")
 	    private int id;
 

@@ -41,9 +41,9 @@ export async function getBloggerDetails(id){
 }
 
 //===================READ ALL BLOGGERS ===================== 
-export async function getBlogger(){
+export async function getAllBlogger(){
     try {
-       const response = await axios.get("http://localhost:8080/get-bloggers");
+       const response = await axios.get("http://localhost:8080/get-blogger");
         return response.data;
     } catch (error) {
         console.log(error);

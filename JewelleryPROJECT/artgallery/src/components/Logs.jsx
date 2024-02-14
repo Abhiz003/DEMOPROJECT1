@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './Logs.css'
 import axios from 'axios'
+import CustomNavbar from './CustomNavbar'
 
 const Logs = () => {
+    const location = useLocation();
+    const {blogId} = location.state; 
+    console.log("TEST:------>"+blogId);
+
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
@@ -12,7 +17,7 @@ const Logs = () => {
     }, []);
 
     const getUserLogs = async () => {
-        const result = await axios.get("http://localhost:8080/blogs/getLogs");
+        const result = await axios.get(`http://localhost:8080//log/get-logs/${blogId}`);
         setLogs(result.data);
     }
 
@@ -39,6 +44,7 @@ const Logs = () => {
 
     return (
         <>
+            <CustomNavbar/>
             <div className="timeline">
 
                 {handleTimeLine()}

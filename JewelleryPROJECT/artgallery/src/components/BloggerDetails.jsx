@@ -1,6 +1,6 @@
 import { Modal, Button, Container, Table } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { deleteBlogger, deleteUser, getBlogger } from "../Services/UserService";
+import { deleteBlogger, deleteUser, getAllBlogger } from "../Services/UserService";
 import AdminNavbar  from "./AdminNavbar";
 
 const BloggerList = () => {
@@ -23,7 +23,7 @@ const BloggerList = () => {
 
     async function fetchUsersList() {
         try {
-            const data = await getBlogger();
+            const data = await getAllBlogger();
             setUser(data.list);
         } catch (error) {
             console.log(error);
@@ -56,7 +56,6 @@ const BloggerList = () => {
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
-                                {/* <th>Password</th> */}
                                 <th>Status</th>
                                 <th>Options</th>
                             </tr>
@@ -68,7 +67,6 @@ const BloggerList = () => {
                                         <td>{s.bloggerName}</td>
                                         <td>{s.bloggerPhone}</td>
                                         <td>{s.bloggerEmail}</td>
-                                        {/* <td>{s.bloggerPassword}</td> */}
                                         <td>{s.bloggerStatus}</td>
                                         <td>
                                             <Button variant="danger" onClick={() => openModalDialog(s.bloggerId)}>

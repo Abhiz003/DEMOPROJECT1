@@ -6,16 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
-const blogggerData = {
-  id: 0,
-  name: 'Bear Grylls',
-  image: 'https://wallpapercave.com/wp/wp2492934.jpg',
-  description: 'Bear Grylls is a British survival television presenter, writer, and producer. He is best known for his survival television series "Man vs. Wild," as well as "The Apprentice," "Celebrity Apprentice," and "Dancing with the Stars."Grylls has also authored several books about survival and adventure.',
-  socialMedia: {
-      youtube: 'https://youtube.com/',
-      instagram: 'https://www.instagram.com/',
-  },
-};
 
 const BloggerContainer = styled.div`
   display: flex;
@@ -104,7 +94,8 @@ const Blogger = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/all-bloggers');
+        const response = await axios.get('http://localhost:8080/get-blogger');
+        console.log(response);
         setBloggers(response.data.list);
       } catch (error) {
         console.error('Error fetching bloggers:', error);

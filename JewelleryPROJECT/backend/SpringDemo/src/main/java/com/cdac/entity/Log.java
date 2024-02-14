@@ -1,7 +1,5 @@
 package com.cdac.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,8 +15,8 @@ import jakarta.persistence.Table;
 public class Log {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "new_user_sequence")
-	@SequenceGenerator(name = "new_user_sequence",sequenceName = "sequence_for_new_user", allocationSize = 1,initialValue = 1000)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "log_sequence")
+	@SequenceGenerator(name = "log_sequence",sequenceName = "sequence_for_new_log", allocationSize = 1,initialValue = 1000)
     @Column(name = "log_id")
 	private int logId;
 	
@@ -32,10 +30,10 @@ public class Log {
     private String exitTime;
     
     @Column(name = "image_url")
-    private String images; // You might want to handle file uploads differently
+    private String imageUrl; // You might want to handle file uploads differently
     
-    @Column( name="description", length = 3000)
-    private String description;
+    @Column( name="log_description", length = 3000)
+    private String logDescription;
     
     @Column(name = "pass_amount")
     private String passAmount;
@@ -80,20 +78,20 @@ public class Log {
 		this.exitTime = exitTime;
 	}
 
-	public String getImages() {
-		return images;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImages(String images) {
-		this.images = images;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getLogDescription() {
+		return logDescription;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setLogDescription(String logDescription) {
+		this.logDescription = logDescription;
 	}
 
 	public String getPassAmount() {

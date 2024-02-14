@@ -16,8 +16,8 @@ export function isBlogger() {
     return localStorage.getItem("blogger") === "true"; 
   }
 
-
-
   export function getUserId() {
     return sessionStorage.getItem('userId');
-  }
+}
+
+
