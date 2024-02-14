@@ -188,7 +188,7 @@ public class BloggerController {
 	        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
 	    }
 	}
-	@GetMapping("/all-bloggers")
+	@GetMapping("/get-bloggers")
 	public ResponseEntity<RegistrationStatus> getAllBloggers() {
 	    try {
 	        List<Blogger> bloggers = bloggerService.getAllBloggers();

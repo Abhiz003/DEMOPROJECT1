@@ -14,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -55,8 +56,8 @@ public class Blogger {
 	}
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "blogger_id", cascade = CascadeType.ALL)
-	private List<Blog> blogs;
+	@OneToMany(mappedBy = "blogger", cascade = CascadeType.ALL)
+    private List<Blog> blogs;
 
 	public int getBloggerId() {
 		return bloggerId;

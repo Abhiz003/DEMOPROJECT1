@@ -29,11 +29,14 @@ const Login = () => {
         result = await bloggerLogin({
           bloggerEmail: formData.userEmail,
           bloggerPassword: formData.userPassword,
+
         });
       } else {
         result = await login(formData);
+
       }
 
+      console.log(result);
       if (result.status === true) {
         sessionStorage.setItem('userName', result.name);
         sessionStorage.setItem('userEmail', result.email);

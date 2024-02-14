@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,16 +18,20 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.dto.BlogDetail;
 import com.cdac.dto.RegistrationStatus;
 import com.cdac.entity.Blog;
+import com.cdac.entity.Blogger;
 import com.cdac.exception.BloggerServiceException;
 import com.cdac.service.BlogService;
+import com.cdac.service.BloggerService;
 
 @RestController
 @CrossOrigin
@@ -37,25 +40,96 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 	
+	@Autowired
+	private BloggerService bloggerService;
+	
+//	@PostMapping("/add-blog")
+//	public ResponseEntity<RegistrationStatus> registerBlog(    @ModelAttribute BlogDetail blogDetail) {
+//	    try {
+//	        Blog blog = new Blog();
+//	        Blogger blogger = bloggerService.fetchById(blogDetail.getBloggerId());
+//	        blog.setBlogger(blogger);
+//	        blog.setTitle(blogDetail.getTitle());
+//	        blog.setStartDate(blogDetail.getStartDate());
+//	        blog.setEndDate(blogDetail.getEndDate());
+//	        blog.setBlogDescription(blogDetail.getBlogDescription());
+//	        blog.setMembers(blogDetail.getMembers());
+//	        blog.setTotalCost(blogDetail.getTotalCost());
+//	        blog.setTransportationMode(blogDetail.getTransportationMode());
+//	       
+//	        
+//	        MultipartFile pic = blogDetail.getPhotoUrl();
+//	        
+//	        // Check is Pic is not null before accessing properties
+//	        if (pic != null) {
+//	            try {
+//	                String fileName = pic.getOriginalFilename();
+//
+//	                String generatedFileName = fileName; 
+//
+//	                blog.setPhotoUrl(generatedFileName);
+//
+//	                InputStream is = pic.getInputStream();
+//	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp" + File.separator +  "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+//	                FileCopyUtils.copy(is, os);
+//	            } catch (IOException e) {
+//	                e.printStackTrace();
+//	            }
+//	        } else {
+//	            RegistrationStatus status = new RegistrationStatus();
+//	            status.setStatus(false);
+//	            status.setStatusMessage("picture is required.");
+//	            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//	        }
+//
+//	        Blog addedBlog = blogService.addBlog(blog);
+//	        RegistrationStatus status = new RegistrationStatus();
+//	        status.setStatus(true);
+//	        status.setStatusMessage("Photo Uploaded Successful!");
+//	        status.setId(addedBlog.getId());
+//
+//	        return new ResponseEntity<>(status, HttpStatus.OK);
+//
+//	    } catch (BloggerServiceException e) {
+//	        RegistrationStatus status = new RegistrationStatus();
+//	        status.setStatus(false);
+//	        status.setStatusMessage(e.getMessage());
+//
+//	        return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//	    }
+//	}
+	
+	
 	@PostMapping("/add-blog")
-	public ResponseEntity<RegistrationStatus> registerv3(BlogDetail blogDetail) {
+	public ResponseEntity<RegistrationStatus> registerBlog(
+	    @RequestParam("bloggerId") int bloggerId,
+	    @ModelAttribute BlogDetail blogDetail
+	) {
 	    try {
 	        Blog blog = new Blog();
-	        BeanUtils.copyProperties(blogDetail, blog);
+	        Blogger blogger = bloggerService.fetchById(bloggerId);
+	        blog.setBlogger(blogger);
+	        blog.setTitle(blogDetail.getTitle());
+	        blog.setStartDate(blogDetail.getStartDate());
+	        blog.setEndDate(blogDetail.getEndDate());
+	        blog.setBlogDescription(blogDetail.getBlogDescription());
+	        blog.setMembers(blogDetail.getMembers());
+	        blog.setTotalCost(blogDetail.getTotalCost());
+	        blog.setTransportationMode(blogDetail.getTransportationMode());
 
 	        MultipartFile pic = blogDetail.getPhotoUrl();
-	        
-	        // Check is Pic is not null before accessing properties
+
+	        // Check if Pic is not null before accessing properties
 	        if (pic != null) {
 	            try {
 	                String fileName = pic.getOriginalFilename();
 
-	                String generatedFileName = fileName; 
+	                String generatedFileName = fileName;
 
 	                blog.setPhotoUrl(generatedFileName);
 
 	                InputStream is = pic.getInputStream();
-	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -63,15 +137,15 @@ public class BlogController {
 	        } else {
 	            RegistrationStatus status = new RegistrationStatus();
 	            status.setStatus(false);
-	            status.setStatusMessage("picture is required.");
+	            status.setStatusMessage("Picture is required.");
 	            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
 	        }
 
-	        int id = blogService.addImages(blog);
+	        Blog addedBlog = blogService.addBlog(blog);
 	        RegistrationStatus status = new RegistrationStatus();
 	        status.setStatus(true);
 	        status.setStatusMessage("Photo Uploaded Successful!");
-	        status.setId(id);
+	        status.setId(addedBlog.getId());
 
 	        return new ResponseEntity<>(status, HttpStatus.OK);
 
@@ -83,6 +157,14 @@ public class BlogController {
 	        return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
 	    }
 	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 	 @GetMapping("/blogger/blog/{id}")
    public Blog fetchById(@PathVariable int id) {
@@ -113,10 +195,10 @@ public class BlogController {
        }
    }
 
-   @GetMapping("/blog/fetchBlogPhotosByBlogger/{bloggerId}")
-   public RegistrationStatus fetchBlogsByBloggerId(@PathVariable int bloggerId) {
+   @GetMapping("/blog/fetchBlogsByBloggerId/{bloggerId}")
+   public RegistrationStatus fetchBlogsByBloggerId(@PathVariable String bloggerId) {
        try {
-           List<Blog> blogList = blogService.fetchBlogsByBloggerId(bloggerId);
+           List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
 
            RegistrationStatus status = new RegistrationStatus();
            status.setList(blogList);
@@ -131,6 +213,29 @@ public class BlogController {
        }
    }
 
+   
+   @GetMapping("/blog/get-my-blogs/{bloggerId}")
+   public RegistrationStatus fetchBlogsByUserId(@PathVariable String bloggerId) {
+      try {
+    	  
+    	  System.out.println(bloggerId);
+          List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
+
+          System.out.println(blogList);
+          RegistrationStatus status = new RegistrationStatus();
+          status.setList(blogList);
+          status.setStatus(true);
+          status.setStatusMessage("User's blogs fetched successfully.");
+          return status;
+      } catch (Exception e) {
+          RegistrationStatus status = new RegistrationStatus();
+          status.setStatus(false);
+          status.setStatusMessage("Failed to fetch user's blogs: " + e.getMessage());
+          return status;
+      }
+   }
+   
+   
    @GetMapping("/blog/fetchAllBlogs")
    public RegistrationStatus fetchAllBlogs() {
        try {

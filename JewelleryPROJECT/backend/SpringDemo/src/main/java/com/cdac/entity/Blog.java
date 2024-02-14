@@ -3,6 +3,7 @@ package com.cdac.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,7 +28,8 @@ import jakarta.persistence.TemporalType;
 public class Blog {
 
 	  @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	  @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "new_user_sequence")
+		@SequenceGenerator(name = "new_user_sequence",sequenceName = "sequence_for_new_user", allocationSize = 1,initialValue = 100)
 	    @Column(name = "blog_id")
 	    private int id;
 
@@ -41,13 +44,15 @@ public class Blog {
     @Column(name = "title")
     private String title;
     
-	 @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//	 @Temporal(TemporalType.DATE)
 	 @Column(name = "start_date")
-	 private Date startDate;
+	 private String startDate;
 
-	@Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date")
-	private Date endDate;
+	private String endDate;
    
    @Column(name ="blog_description", length = 3000)
    private String blogDescription;
@@ -106,22 +111,22 @@ public void setTitle(String title) {
 }
 
 
-public Date getStartDate() {
+public String getStartDate() {
 	return startDate;
 }
 
 
-public void setStartDate(Date startDate) {
+public void setStartDate(String startDate) {
 	this.startDate = startDate;
 }
 
 
-public Date getEndDate() {
+public String getEndDate() {
 	return endDate;
 }
 
 
-public void setEndDate(Date endDate) {
+public void setEndDate(String endDate) {
 	this.endDate = endDate;
 }
 

@@ -28,9 +28,9 @@ public class BlogService {
 		blogRepository.delete(blog);
 	}
 	
-	public int addBlog(Blog blog) {
-        Blog savedBlog = blogRepository.save(blog);
-        return savedBlog.getId();
+	public Blog addBlog(Blog blog) {
+        return blogRepository.save(blog);
+       
 	}
 	
 	public void deleteBlog(Blog blog) {
@@ -48,7 +48,9 @@ public class BlogService {
 	public List<Blog> fetchBlogsByBloggerId(int bloggerId) {
         return blogRepository.findByBloggerId(bloggerId);
     }
-
+	
+	
+	
 	public List<Blog> fetchAllBlogs() {
 			return blogRepository.findAll();
 		}

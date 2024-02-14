@@ -82,7 +82,11 @@ const BloggerRegistration = () => {
       
       formDataForUpload.append('profilePic', formData.profilePic);
 
+      console.log('Form Data for Upload: ', formDataForUpload)
       const result = await register(formDataForUpload);
+
+      console.log('Axios Response:', result);
+
       axios.post('http://localhost:8080/register-blogger');
       console.log(result);
 
