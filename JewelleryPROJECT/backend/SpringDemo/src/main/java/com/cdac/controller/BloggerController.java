@@ -109,6 +109,8 @@ public class BloggerController {
 		}
 	}
 	
+	
+	
 	@PostMapping("/update-blogger")
 	public ResponseEntity<RegistrationStatus> update(@ModelAttribute BloggerDetail bloggerDetails) {
 	    try {

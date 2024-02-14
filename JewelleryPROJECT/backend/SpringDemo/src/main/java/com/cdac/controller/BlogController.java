@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,15 +176,20 @@ public class BlogController {
        return blog;
    }
 
+	 
+	 
+	 
+	 //--------------------fetch image of A Blog-----------------
+	 
    @GetMapping(path = "/blogger/fetch/pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-   public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
+   public ResponseEntity<byte[]> getBlogPic(@PathVariable int id) {
        try {
            Blog blog = blogService.fetchById(id);
            if (blog == null) {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
            byte[] imageBytes = Files.readAllBytes(imagePath);
 
            HttpHeaders headers = new HttpHeaders();
@@ -195,6 +201,34 @@ public class BlogController {
        }
    }
 
+	 
+	 
+//	 @GetMapping(path = "/blogger/fetch/pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+//	 public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
+//	     try {
+//	         Blog blog = blogService.fetchById(id);
+//	         if (blog == null) {
+//	             throw new BloggerServiceException("Blog with id " + id + " does not exist!");
+//	         }
+//
+//	         // Assuming blog.getPhotoUrl() contains the correct image filename
+//	         Path imagePath = Paths.get("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+//	         byte[] imageBytes = Files.readAllBytes(imagePath);
+//
+//	         HttpHeaders headers = new HttpHeaders();
+//	         headers.setContentType(MediaType.IMAGE_JPEG);
+//
+//	         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+//	     } catch (IOException e) {
+//	         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//	     }
+//	 }
+
+	 
+	 
+	 
+	 
+	 
    @GetMapping("/blog/fetchBlogsByBloggerId/{bloggerId}")
    public RegistrationStatus fetchBlogsByBloggerId(@PathVariable String bloggerId) {
        try {
@@ -214,26 +248,53 @@ public class BlogController {
    }
 
    
+   
+   
+   
+   //-------------------Fetch Blog API --------------------------------------------
+   
+//   @GetMapping("/blog/get-my-blogs/{bloggerId}")
+//   public RegistrationStatus fetchBlogsByUserId(@PathVariable String bloggerId) {
+//      try {
+//    	  
+//    	  System.out.println(bloggerId);
+//          List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
+//
+//          System.out.println(blogList);
+//          RegistrationStatus status = new RegistrationStatus();
+//          status.setList(blogList);
+//          status.setStatus(true);
+//          status.setStatusMessage("User's blogs fetched successfully.");
+//          return status;
+//      } catch (Exception e) {
+//          RegistrationStatus status = new RegistrationStatus();
+//          status.setStatus(false);
+//          status.setStatusMessage("Failed to fetch user's blogs: " + e.getMessage());
+//          return status;
+//      }
+//   }
+   
+   
    @GetMapping("/blog/get-my-blogs/{bloggerId}")
-   public RegistrationStatus fetchBlogsByUserId(@PathVariable String bloggerId) {
+   public List<Blog> fetchBlogsByUserId(@PathVariable String bloggerId) {
       try {
     	  
     	  System.out.println(bloggerId);
           List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
-
-          System.out.println(blogList);
-          RegistrationStatus status = new RegistrationStatus();
-          status.setList(blogList);
-          status.setStatus(true);
-          status.setStatusMessage("User's blogs fetched successfully.");
-          return status;
+          return blogList;
       } catch (Exception e) {
-          RegistrationStatus status = new RegistrationStatus();
-          status.setStatus(false);
-          status.setStatusMessage("Failed to fetch user's blogs: " + e.getMessage());
-          return status;
+    	  throw new RuntimeException("Failed to fetch user's blogs: " + e.getMessage());
       }
-   }
+   }   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    @GetMapping("/blog/fetchAllBlogs")
@@ -262,7 +323,7 @@ public class BlogController {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
            Files.deleteIfExists(imagePath);
 
            blogService.deleteImage(blog);

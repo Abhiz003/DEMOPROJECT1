@@ -19,5 +19,5 @@ export function isBlogger() {
 
 
   export function getUserId() {
-    return sessionStorage.getItem("userId");
+    return sessionStorage.getItem('userId');
   }

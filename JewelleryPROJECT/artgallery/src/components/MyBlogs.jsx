@@ -1,59 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Pagination, Button, Modal } from 'react-bootstrap';
-import CustomNavbar  from './CustomNavbar';
+import { Container, Card, Button, Modal } from 'react-bootstrap';
+import CustomNavbar from './CustomNavbar';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { saveAs } from 'file-saver';
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Collections.css';
 import axios from 'axios';
-import { getToken , getUserId} from '../utils/TokenUtil';
+import { getUserId } from '../utils/TokenUtil';
+import { getBlogImage } from '../Services/BlogService';
 
 const MyBlogs = () => {
+  const navigate = useNavigate();
 
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const [showDownloadConfirmation, setShowDownloadConfirmation] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [showZoom, setShowZoom] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
-  const itemsPerPage = 2;
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const userId = getUserId();
         const response = await axios.get(`http://localhost:8080/blog/get-my-blogs/${userId}`);
-        console.log(response)
-        if (response.status) {
-          const blogsWithLikes = response.list.map((blog) => ({ ...blog, likes: 0 }));
-          setBlogs(blogsWithLikes);
+        if (response.status === 200) {
+          setBlogs(response.data);
         } else {
           console.error('Failed to fetch blogs:', response.statusMessage);
         }
       } catch (error) {
         console.error('Error fetching blogs:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchBlogs();
   }, []);
-
-  const totalPages = Math.ceil(blogs.length / itemsPerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleLike = (blogId) => {
-    setBlogs((prevBlogs) =>
-      prevBlogs.map((blog) =>
-        blog.id === blogId ? { ...blog, likes: blog.likes + 1 } : blog
-      )
-    );
-  };
 
   const handleShowDownloadConfirmation = (blogId) => {
     setSelectedBlogId(blogId);
@@ -71,7 +52,7 @@ const MyBlogs = () => {
   };
 
   const handleOpenZoom = (blogId) => {
-    setZoomedImage(`http://localhost:8080/blogger/fetch/pic/${blogId}`);
+    setZoomedImage(getBlogImage(blogId));
     setShowZoom(true);
   };
 
@@ -82,7 +63,7 @@ const MyBlogs = () => {
   const handleDownload = (blogId) => {
     const contentType = 'image/png';
 
-    fetch(`http://localhost:8080/blogger/fetch/pic/${blogId}`)
+    fetch(getBlogImage(blogId))
       .then((response) => response.blob())
       .then((blob) => {
         const file = new File([blob], `Blog_${blogId}.png`, { type: contentType });
@@ -93,12 +74,10 @@ const MyBlogs = () => {
         console.error('Error downloading image:', error);
       });
   };
+
   const handleContextMenu = (event) => {
     event.preventDefault();
   };
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
@@ -107,26 +86,16 @@ const MyBlogs = () => {
         <h1 className="mb-4 head text-center">My Journey Tales</h1>
         <Card className="card">
           <Card.Body className="card-body">
-            
-                  {/* {(blogs.length == 0) ? <> <p> No blogs Available</p>" 
-                    <div className="d-flex">
-                  <Link to="/add-blog"> <Button >Add New Blog</Button></Link>
-                  </div> </> 
-                  : */}
-                  
-                
-
             <div className="text-center mb-4 imageList">
-              {loading ? (
-                <p>Loading blogs...</p>
+              {blogs.length === 0 ? (
+                <p>No blogs available.</p>
               ) : (
                 <div className="div1">
-                  {blogs.slice(startIndex, endIndex).map((blog) => (
-                    
+                  {blogs.map((blog, index) => (
                     <div key={blog.id} className="artContainer">
                       <img
                         className="blogs"
-                        src={`http://localhost:8080/blogger/fetch/pic/${blog.id}`}
+                        src={blog.photoUrl}
                         alt={`Blog ${blog.id}`}
                         onClick={() => handleOpenZoom(blog.id)}
                         onContextMenu={handleContextMenu}
@@ -140,19 +109,7 @@ const MyBlogs = () => {
                         <p>{blog.totalCost}</p>
                         <p>{blog.transportationMode}</p>
                       </div>
-
                       <div className="likeContainer">
-                        <Button
-                          variant="secondary"
-                          className="likeButton"
-                          onClick={() => handleLike(blog.id)}
-                        >
-                          Like{' '}
-                          <span role="img" aria-label="heart">
-                            ❤️
-                          </span>{' '}
-                          {blog.likes}
-                        </Button>{' '}
                         <Button
                           variant="secondary"
                           className="downloadButton"
@@ -166,23 +123,10 @@ const MyBlogs = () => {
                 </div>
               )}
             </div>
-            <div className="text-center xyz">
-              <Pagination>
-                {[...Array(totalPages)].map((_, index) => (
-                  <Pagination.Item
-                    key={index + 1}
-                    active={index + 1 === currentPage}
-                    onClick={() => handlePageChange(index + 1)}
-                  >
-                    {index + 1}
-                  </Pagination.Item>
-                ))}
-              </Pagination>
-            </div>
           </Card.Body>
         </Card>
         <div className="d-flex">
-           <Link to="/add-blog"> <Button >Add New Blog</Button></Link>
+          <Button onClick={() => navigate('/add-blog')}>Add New Blog</Button>
         </div>
       </Container>
 
@@ -214,13 +158,13 @@ const MyBlogs = () => {
           />
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={handleZoomOut}>
-              Close
-            </Button>
-          </Modal.Footer>
-      </Modal> 
+          <Button variant="secondary" onClick={handleZoomOut}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
-}
+};
 
 export default MyBlogs;

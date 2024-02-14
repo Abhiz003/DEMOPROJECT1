@@ -33,8 +33,6 @@ public class Blog {
 	    @Column(name = "blog_id")
 	    private int id;
 
-    @Column(name = "photo_url")
-    private String photoUrl;
 
     @JsonBackReference
     @ManyToOne
@@ -44,18 +42,21 @@ public class Blog {
     @Column(name = "title")
     private String title;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
 //	 @Temporal(TemporalType.DATE)
 	 @Column(name = "start_date")
 	 private String startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
 //	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date")
 	private String endDate;
    
    @Column(name ="blog_description", length = 3000)
    private String blogDescription;
+   
+   @Column(name = "photo_url")
+   private String photoUrl;
    
    private int members;
    

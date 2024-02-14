@@ -124,7 +124,7 @@ const AllBlogs = () => {
         {blogs.map((blog, index) => (
           <div key={index} className="blog d-flex flex-column flex-md-row">
             <section className="place-image">
-              <img src={`http://localhost:8080/blog/fetch/pic/${blog.id}`} className="img-fluid" alt="" />
+              <img src={blog.photoUrl} className="img-fluid" alt="" />
             </section>
             <section className="details-part flex-grow-1 p-3">
           <div className="main-parent mt-2">
@@ -139,6 +139,9 @@ const AllBlogs = () => {
             </div>
             <div className="main-box4">
               <label>Members: </label> <span>{blog.members}</span>
+            </div>
+            <div className="main-box4">
+              <label>Description: </label> <span>{blog.blogDescription}</span>
             </div>
             <div className="main-box5">
               <label>Total cost: </label> <span>{blog.totalCost}</span>

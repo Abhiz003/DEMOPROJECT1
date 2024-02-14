@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CookieConsent from "react-cookie-consent";
@@ -29,6 +29,27 @@ import UpdateBlogs from './components/UpdateExhibition';
 
 
 export const App = () => {
+
+  const [showCookieConsent, setShowCookieConsent] = useState(true);
+
+  useEffect(() => {
+    // Check if the consent has been given
+    const consentGiven = localStorage.getItem('cookieConsentGiven');
+    if (consentGiven) {
+      setShowCookieConsent(false);
+    }
+  }, []);
+
+  const handleCookieConsent = () => {
+    // Set the consent flag in local storage
+    localStorage.setItem('cookieConsentGiven', 'true');
+    setShowCookieConsent(false);
+  };
+
+
+
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -73,7 +94,7 @@ export const App = () => {
 
 
 
-      <CookieConsent 
+      {/* <CookieConsent 
           debug={true}
           location='bottom'
           style={{background: '#9E9E9E',color:'#000', textAlign:'center' }}
@@ -88,9 +109,29 @@ export const App = () => {
           This website uses cookies to enhance your experience. By continuing to use this site, you consent to our use of cookies.
           Cookies here are like sidekicks for your online adventures, helping your browser navigate the vast digital universe!
           </p>
-      </CookieConsent>
+      </CookieConsent> */}
 
-
+{showCookieConsent && (
+        <CookieConsent
+          debug={true}
+          location='bottom'
+          style={{ background: '#9E9E9E', color: '#000', textAlign: 'center' }}
+          buttonStyle={{
+            color: '#000',
+            background: '#fff',
+            fontSize: '14px',
+            padding: '8px 16px',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+          onAccept={handleCookieConsent}
+        >
+          <p style={{ fontSize: '18px' }}>
+            This website uses cookies to enhance your experience. By continuing to use this site, you consent to our use of cookies.
+            Cookies here are like sidekicks for your online adventures, helping your browser navigate the vast digital universe!
+          </p>
+        </CookieConsent>
+      )}
 
       <Footer></Footer>
     </BrowserRouter>
