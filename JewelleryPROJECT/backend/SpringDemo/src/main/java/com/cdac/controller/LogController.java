@@ -101,6 +101,10 @@ public class LogController {
 //	}
 	
 	
+	
+	
+	
+	//--------xxxxxxxxxxxx---------Create New Log API ----------xxxxxxxxxx-------------
 	@PostMapping("/add-log")
 	public ResponseEntity<RegistrationStatus> registerLog(
 	    @RequestParam("blogId") int blogId,
@@ -165,7 +169,7 @@ public class LogController {
 	
 	
 	
-	
+	//-----xxxxxxxx----Read A Log using id -----------xxxxxxxxxx----
 	
 	 @GetMapping("/blog/log/{logId}")
    public Log fetchByLogId(@PathVariable int logId) {
@@ -177,12 +181,9 @@ public class LogController {
        return log;
        //---------------------------
    }
-
+	 			
 	 
-	
-	 
-	 
-	 //--------------------fetch image of A Log-----------------
+	 //--------------------Read  image of A Log-----------------
 	 
    @GetMapping(path = "/blog/fetch/logPic/{logId}", produces = MediaType.IMAGE_JPEG_VALUE)
    public ResponseEntity<byte[]> getLogPic(@PathVariable int logId) {
@@ -286,6 +287,7 @@ public class LogController {
    
    
    
+   //-----------xxxxxxxxxxxx-----------fetch a log based on id -------xxxxxxx-------------
    @GetMapping("/log/get-logs/{blogId}")
    public List<Log> fetchLogsByBlogId(@PathVariable String blogId) {      // -----------doubt here
       try {
@@ -306,7 +308,8 @@ public class LogController {
    
    
    
-   
+   //---------------xxxxxxxxxxxxxxx-----not needed --------xxxxx-----------
+   //---------just in case if needed--------------
    
    @GetMapping("/log/fetchAllLogs")
    public RegistrationStatus fetchAllLogs() {
@@ -328,6 +331,9 @@ public class LogController {
 
   
    
+   
+   
+   //------------xxxxxxxxxx---------delete a log--------xxxxxxxxx----------
    @DeleteMapping("/log/delete/{logId}")
    public ResponseEntity<RegistrationStatus> deleteLog(@PathVariable int logId) {
        try {

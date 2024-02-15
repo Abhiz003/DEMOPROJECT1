@@ -23,8 +23,6 @@ const CreateLogs = () => {
     location :''
   }
   const [logData, setLogData] = useState(initialBlogData);
-  // logData.append(blogId);
-
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;

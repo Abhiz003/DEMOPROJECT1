@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -67,7 +68,7 @@ public class Blog {
    private String transportationMode;
    
 
-   
+   @JsonManagedReference
    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
    List <Log> logs;
 

@@ -103,12 +103,12 @@ const MyBlogs = () => {
 
   const WORDS_LIMIT = 30; // Set your desired word limit
 
-  const truncateDescription = (description) => {
-    const words = description.split(' ');
+  const truncateDescription = (blogDescription) => {
+    const words = blogDescription.split(' ');
     if (words.length > WORDS_LIMIT) {
       return words.slice(0, WORDS_LIMIT);
     }
-    return description;
+    return blogDescription;
   };
   return (
     <>
@@ -164,9 +164,12 @@ const MyBlogs = () => {
                         </span>
                       )}
                     </p>
-                    <Button onClick={() => navigate('/my-logs')} > View</Button> &nbsp;
+                    {/* <Button onClick={() => navigate('/my-logs', blogId={blog.id})} > View</Button> &nbsp; */}
+                    <Button onClick={() => navigate('/my-logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
+
                     {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
                     <Button onClick={() => navigate('/create-logs', { state: { blogId:blog.id } }) } > create Logs</Button>
+                    
                     {/* <Button onClick={handleDelete(blog.id)}>Delete</Button>  */}
                   </div>
                       
@@ -177,11 +180,6 @@ const MyBlogs = () => {
             ))}
           </>
         )}
-
-
-
-
-
 
         <div className="d-flex">
           <Button onClick={() => navigate('/add-blog')}>Add New Blog</Button>

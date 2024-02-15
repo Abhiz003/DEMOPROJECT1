@@ -1,5 +1,7 @@
 package com.cdac.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Log {
 	@Column(name = "place_name")
 	private String placeName;
 	
+	
 	@Column(name = "start_time")
     private String startTime;
     
@@ -41,7 +44,7 @@ public class Log {
     @Column(name = "location")
     private String location;
     
-    
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "blog_id") 
     private Blog blog;

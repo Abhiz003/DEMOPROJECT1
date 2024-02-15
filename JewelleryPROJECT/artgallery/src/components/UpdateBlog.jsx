@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import AdminNavbar from '../components/AdminNavbar';
+import AdminNavbar from './AdminNavbar';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import './UpdateExhibition.css';
+import './UpdateBlog.css';
 
 const UpdateBlogs = ({ history }) => {
     const navigate = useNavigate();
   const { id } = useParams();
   const [blogsData, setBlogsData] = useState({
     title: '',
-    date: '',
-    venue: '',
-    description: '',
-    image: '',
+    startDate: '',
+    endDate: '',
+    blogDescription: '',
+    photoUrl: '', 
+    members: '',
+    totalCost: '',
+    transportationMode: 'By Road'
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlogsDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/exhibitions/get/${id}`);
+        const response = await fetch(`http://localhost:8080/blog/get/${id}`);
 
         if (response.ok) {
           const data = await response.json();

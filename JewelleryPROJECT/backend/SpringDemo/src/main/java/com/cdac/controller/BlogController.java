@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -229,23 +230,23 @@ public class BlogController {
 	 
 	 
 	 
-   @GetMapping("/blog/fetchBlogsByBloggerId/{bloggerId}")
-   public RegistrationStatus fetchBlogsByBloggerId(@PathVariable String bloggerId) {
-       try {
-           List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
-
-           RegistrationStatus status = new RegistrationStatus();
-           status.setList(blogList);
-           status.setStatus(true);
-           status.setStatusMessage("Blog photos fetched successfully.");
-           return status;
-       } catch (Exception e) {
-           RegistrationStatus status = new RegistrationStatus();
-           status.setStatus(false);
-           status.setStatusMessage("Failed to fetch blog photos: " + e.getMessage());
-           return status;
-       }
-   }
+//   @GetMapping("/blog/fetchBlogsByBloggerId/{bloggerId}")
+//   public RegistrationStatus fetchBlogsByBloggerId(@PathVariable String bloggerId) {
+//       try {
+//           List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
+//
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setList(blogList);
+//           status.setStatus(true);
+//           status.setStatusMessage("Blog photos fetched successfully.");
+//           return status;
+//       } catch (Exception e) {
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setStatus(false);
+//           status.setStatusMessage("Failed to fetch blog photos: " + e.getMessage());
+//           return status;
+//       }
+//   }
 
    
    
@@ -341,6 +342,23 @@ public class BlogController {
            return ResponseEntity.badRequest().body(status);
        }
    }
+   
+   
+   
+   //-------------Update Blog API------------------
+   
+//   @PutMapping("/update/{blogId}")
+//   public ResponseEntity<String> updateBlog(
+//           @PathVariable int blogId,
+//           @RequestBody Blog blogRequest // Create a class to represent the request body
+//   ) {
+//       try {
+//           blogService.updateBlog(blogId, blogRequest);
+//           return new ResponseEntity<>("Blog updated successfully", HttpStatus.OK);
+//       } catch (Exception e) {
+//           return new ResponseEntity<>("Failed to update blog: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+//       }
+//   }
 
 
 }

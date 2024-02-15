@@ -52,7 +52,7 @@ public class Blogger {
 	private BloggerStatus bloggerStatus;
 	
 	public static enum BloggerStatus{
-		ACTIVE,VERIFICATION_PENDING, INACTIVE, DELETED
+		ACTIVE, INACTIVE, DELETED
 	}
 	
 	@JsonManagedReference

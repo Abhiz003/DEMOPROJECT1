@@ -36,4 +36,21 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
                          @Param("blogger") Blogger blogger);
 	
 	
+//	 @Transactional
+//	    @Modifying
+//	    @Query("UPDATE Blog b SET b.title = :title, b.startDate = :startDate, b.endDate = :endDate, " +
+//	           "b.blogDescription = :blogDescription, b.photoUrl = :photoUrl, b.members = :members, " +
+//	           "b.totalCost = :totalCost, b.transportationMode = :transportationMode WHERE b.blogId = :blogId")
+//	    void updateBlog(@Param("blogId") int blogId,
+//	                    @Param("title") String title,
+//	                    @Param("startDate") String startDate,
+//	                    @Param("endDate") String endDate,
+//	                    @Param("blogDescription") String blogDescription,
+//	                    @Param("photoUrl") String photoUrl,
+//	                    @Param("members") int members,
+//	                    @Param("totalCost") double totalCost,
+//	                    @Param("transportationMode") String transportationMode);
+
+	
+	
 }
