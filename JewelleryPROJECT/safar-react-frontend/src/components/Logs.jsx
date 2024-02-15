@@ -30,7 +30,7 @@ const Logs = () => {
 
     const handleContextMenu = (event) => {
         event.preventDefault();
-      };
+    };
 
 
     const WORDS_LIMIT = 30;
@@ -45,8 +45,8 @@ const Logs = () => {
 
     const handleTimeLine = () => {
         return logs.map((log, index) => {
-            const side = index % 2 === 0 ? "left" : "right"; 
-            const { placeName, startTime, exitTime, logDescription } = log; 
+            const side = index % 2 === 0 ? "left" : "right";
+            const { placeName, startTime, exitTime, logDescription } = log;
             return (
                 <div key={index} className={`content-container ${side}-container`}>
                     <i className="fa-solid fa-gear"></i>
@@ -54,21 +54,23 @@ const Logs = () => {
                         {/* <img className="d-block w-100" src={`Images/${side === 'left' ? 'Antman' : 'Ironman'}.jpg`} alt={side} /> */}
 
                         <img
-                      className="d-block w-100"
-                      src={`Images/${log.imageUrl}`}
-                      alt={`Log ${log.id}`}
-                      onContextMenu={handleContextMenu}
-                    />
-
-
+                            className="d-block w-100"
+                            alt={`Log ${log.logId}`}
+                            src='Images/leaves001.jpg'
+                            onContextMenu={handleContextMenu}
+                        />
+                        {/* <img
+                            className="d-block w-100"
+                            src={`Images/${log.imageUrl}`}
+                            alt={`Log ${log.logId}`}
+                            onContextMenu={handleContextMenu}
+                        /> */}
                         <h2>{log.placeName}</h2>
                         <small>{log.startTime} - {log.exitTime}</small>
-                        <p style={{ marginTop: '10px', padding: '20px', fontStyle: 'italic' }}>
+                        <p className="log-description" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {truncateDescription(log.logDescription)}{' '}
                             {log.logDescription.length > WORDS_LIMIT && (
-                                <span className="read-more-link" >
-                                    ...
-                                </span>
+                                <span className="read-more-link">...</span>
                             )}
                         </p>
                         <span className={`${side}-container-arrow`}></span>
@@ -83,11 +85,14 @@ const Logs = () => {
     return (
         <>
             <CustomNavbar />
-            <div className="timeline">
+            <div className="container">
+                <div className="timeline " style={{ paddingBottom: '50px' }}>
 
-                {handleTimeLine()}
+                    {handleTimeLine()}
 
-                <i className="fa-solid fa-caret-down text-light"></i>
+                    <i className="fa-solid fa-caret-down text-light"></i>
+                </div>
+
             </div>
 
         </>

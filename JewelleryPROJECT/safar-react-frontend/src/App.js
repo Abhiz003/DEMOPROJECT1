@@ -18,7 +18,7 @@ import BloggerRegistration from './components/BloggerRegistration';
 import BloggerProfile from './components/BloggerProfile';
 import BloggerList from './components/BloggerDetails';
 import Profile from './components/Profile';
-import AdminDashboard from './admin/dashboard';
+import AdminDashboard from './admin/AdminDashboard';
 import MyBlogs from './components/MyBlogs';
 import AllBlogs from './components/AllBlogs';
 import EditBloggerDetails from './components/EditBloggerDetails';
@@ -49,9 +49,6 @@ export const App = () => {
   };
 
 
-
-
-
   return (
     <BrowserRouter>
       <Routes>
@@ -65,16 +62,8 @@ export const App = () => {
         
         <Route path='/admin-dashboard' element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
         
-        
         <Route path='/about-us' element={<AboutUs/>} />
 
-
-
-
-
-        
-
-        
         <Route path='/user-profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path='/edit-user-details' element={<EditUserDetails />} />
 
@@ -89,14 +78,12 @@ export const App = () => {
         <Route path='/my-logs' element={<Logs/>}/>
         <Route path='/create-logs' element={<CreateLogs/>}/>
 
-
         <Route path='/user-details' element={<AdminPrivateRoute><UsersList /></AdminPrivateRoute>} />
         <Route path='/blogger-list' element={<AdminPrivateRoute><BloggerList /></AdminPrivateRoute>} />
         <Route path='/admin-blogs' element={<AdminPrivateRoute><AdminBlogs /> </AdminPrivateRoute>} />
         <Route path='/admin/add-blog' element={<AdminPrivateRoute><AddBlog /> </AdminPrivateRoute>} />
         <Route path='/admin/update-blog/:id' element={<AdminPrivateRoute><UpdateBlogs /> </AdminPrivateRoute>} />
       </Routes>
-
 
 
       {/* <CookieConsent 

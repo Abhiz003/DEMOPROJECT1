@@ -40,7 +40,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
 //	    @Modifying
 //	    @Query("UPDATE Blog b SET b.title = :title, b.startDate = :startDate, b.endDate = :endDate, " +
 //	           "b.blogDescription = :blogDescription, b.photoUrl = :photoUrl, b.members = :members, " +
-//	           "b.totalCost = :totalCost, b.transportationMode = :transportationMode WHERE b.blogId = :blogId")
+//	           "b.totalCost = :totalCost, b.transportationMode = :transportationMode WHERE b.id = :blogId")
 //	    void updateBlog(@Param("blogId") int blogId,
 //	                    @Param("title") String title,
 //	                    @Param("startDate") String startDate,
@@ -51,6 +51,5 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
 //	                    @Param("totalCost") double totalCost,
 //	                    @Param("transportationMode") String transportationMode);
 
-	
 	
 }

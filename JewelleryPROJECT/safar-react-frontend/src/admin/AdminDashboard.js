@@ -1,8 +1,8 @@
 import React from "react";
-import "./dashboard.css";
+import "./AdminDashboard.css";
 import AdminNavbar from "../components/AdminNavbar";
-import videoFile from '../img_art/video/2.mp4'; 
-import videoFile1 from '../img_art/video/3.mp4'; 
+import videoFile from './videos/vid1.mp4'; 
+import videoFile1 from './videos/vid2.mp4'; 
 
 const AdminDashboard = () => {
   return (

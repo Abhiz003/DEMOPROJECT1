@@ -23,7 +23,7 @@ export function Home() {
                     <Carousel.Caption className="text-container">
                         <h3 className="text-bold">Discover Enchanting Travel Destinations</h3>
                         <p>Immerse yourself in a world of travel wonders and discover unique destinations.</p>
-                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/collections')} >EXPLORE JOURNEYS</Button></p>
+                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')} >EXPLORE JOURNEYS</Button></p>
                     </Carousel.Caption>
                 </Carousel.Item>
 
@@ -32,7 +32,7 @@ export function Home() {
                     <Carousel.Caption className="text-container">
                         <h3 className="text-bold">Dive into Modern Adventures</h3>
                         <p>Experience a contemporary collection that pushes the boundaries of travel innovation.</p>
-                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/collections')} >VIEW COLLECTIONS</Button></p>
+                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')} >VIEW COLLECTIONS</Button></p>
                     </Carousel.Caption>
                 </Carousel.Item>
 
@@ -41,7 +41,7 @@ export function Home() {
                     <Carousel.Caption className="text-container">
                         <h3 className="text-bold">Elevate Your Journey with Timeless Explorations</h3>
                         <p>Transform your adventures with a grand collection of timeless destinations.</p>
-                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/collections')}>EXPLORE JOURNEYS</Button></p>
+                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')}>EXPLORE JOURNEYS</Button></p>
                     </Carousel.Caption>
                 </Carousel.Item>
 
@@ -50,7 +50,7 @@ export function Home() {
                     <Carousel.Caption className="text-container">
                         <h3 className="text-bold">Discover Journeys That Resonate</h3>
                         <p>Let your adventure through the destinations be guided by experiences that resonate with your soul.</p>
-                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/collections')}>EXPLORE JOURNEYS</Button></p>
+                        <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')}>EXPLORE JOURNEYS</Button></p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 

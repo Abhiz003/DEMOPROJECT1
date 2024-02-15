@@ -266,7 +266,7 @@ const AddBlog = () => {
       formDataForUpload.append('photoUrl', blogData.photoUrl);
       formDataForUpload.append('bloggerId', getUserId());
   
-      const result = await axios.post('http://localhost:8080/update-blog', formDataForUpload, {
+      const result = await axios.post('http://localhost:8080/add-blog', formDataForUpload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

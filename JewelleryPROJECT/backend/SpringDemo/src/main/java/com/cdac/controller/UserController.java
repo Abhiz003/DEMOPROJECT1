@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.dto.RegistrationStatus;
 import com.cdac.dto.UserDetail;
@@ -37,6 +35,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    
+    
+    
+    //--------------------xxxxxxxxx------------add User API----------xxxxxxxxx------------
     @PostMapping("/register-user")
     public ResponseEntity<RegistrationStatus> registerv3(UserDetail userDetails) {
         try {
@@ -133,7 +135,7 @@ public class UserController {
     
     
     
-    
+    //--------------UPDATE USER API----------
     
     @PatchMapping("/user-update")
     public ResponseEntity<RegistrationStatus> update(UserDetail userDetails) {
@@ -177,6 +179,9 @@ public class UserController {
     }
 
 
+    
+    
+    //---------------DELETE USER API----------
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         try {
@@ -192,6 +197,8 @@ public class UserController {
         }
     }
 
+    
+    //-------------GET ALL USERS --------------------
     @GetMapping("/all-users")
     public ResponseEntity<RegistrationStatus> getAllUsers() {
         try {
@@ -212,11 +219,17 @@ public class UserController {
         }
     }
 
+    
+    
+    
+    //----------------get user by id ----------xxxxxxxx---------
     @GetMapping("/user/fetch/{id}")
     public User fetchById(@PathVariable int id) {
         return userService.fetchById(id);
     }
 
+    
+    //--------------get profile picture of user by id--------------------
     
     @GetMapping(path = "/user/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
@@ -240,7 +253,7 @@ public class UserController {
     
     
     
-    
+    //---------------USER LOGIN  API------------
     
     @PostMapping("/login-user")
     public ResponseEntity<RegistrationStatus> loginUser(@RequestBody User user) {
@@ -266,6 +279,25 @@ public class UserController {
     }
 
     
+    
+    //--------------ADMIN-LOGIN API---------------
+    @PostMapping("/admin-login")
+	public RegistrationStatus isAdmin(@RequestBody User user) {
+		try {
+			Boolean isBoolean = userService.adminLogin(user);
+			RegistrationStatus status = new RegistrationStatus();
+			status.setStatus(isBoolean);
+			status.setName("secret");
+			status.setStatusMessage("Admin Login Successfull");
+			return status;
+		} catch (Exception e) {
+			RegistrationStatus status = new RegistrationStatus();
+			status.setStatus(false);
+			status.setStatusMessage(e.getMessage());
+			return status;
+		}
+	}
+
     
     
 }

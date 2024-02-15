@@ -1,8 +1,8 @@
 export function isAuthenticated(){
     return getToken() ? true:false;
 }
-
 export function getToken(){
+    
     return localStorage.getItem("token");
 }
 
@@ -17,7 +17,9 @@ export function isBlogger() {
   }
 
   export function getUserId() {
-    return sessionStorage.getItem('userId');
+    // return sessionStorage.getItem('userId');
+
+    return localStorage.getItem('userId');
 }
 
 

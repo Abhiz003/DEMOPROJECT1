@@ -83,19 +83,19 @@ const BloggerRegistration = () => {
       formDataForUpload.append('profilePic', formData.profilePic);
 
       console.log('Form Data for Upload: ', formDataForUpload)
-      const result = await register(formDataForUpload);
+      const response = await register(formDataForUpload);
 
-      console.log('Axios Response:', result);
+      console.log('Axios Response:', response);
 
-      axios.post('http://localhost:8080/register-blogger');
-      console.log(result);
+      //  const response = axios.post('http://localhost:8080/register-blogger');
 
-      if (result.status === true) {
-        alert(result.statusMessage || "Congratulations! You're officially a part of the club.");
+      if (response.status === true) {
+        alert("Congratulations! You're officially a part of the club.");
+        // alert(response.statusMessage || "Congratulations! You're officially a part of the club.");
         navigate('/log-in');
       } else {
        
-        alert(result.statusMessage || "Oops! It seems like you're already a member. Please Log In.");
+        alert(response.statusMessage || "Oops! It seems like you're already a member. Please Log In.");
         navigate('/log-in');
       }
     } catch (error) {

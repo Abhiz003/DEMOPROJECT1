@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background: url('./admin/videos/cappadocia.jpg');
+  background-position:center;
+  background-attachment: fixed;
+  background-size: cover;
+
 }
 
 code {

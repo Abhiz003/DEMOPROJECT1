@@ -11,6 +11,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdac.dto.BlogDetail;
 import com.cdac.entity.Blog;
 import com.cdac.exception.BloggerServiceException;
 import com.cdac.repository.BlogRepository;
@@ -68,12 +69,22 @@ public class BlogService {
 	
 	
 	//------------------- UPDATE BLOG SERVICE-------------
-//	public void updateBlog(int blogId, Blog updateBlogRequest) {
+//	public void updateBlog(int blogId, BlogDetail updatedBlogDetail) {
 //        Blog existingBlog = fetchById(blogId);
 //
 //        // Copy non-null properties from updateBlogRequest to existingBlog
-//        BeanUtils.copyProperties(updateBlogRequest, existingBlog, getNullPropertyNames(updateBlogRequest));
+//        BeanUtils.copyProperties(updatedBlogDetail, existingBlog, getNullPropertyNames(blogRequest));
 //
+//        
+//        existingBlog.setTitle(updatedBlogDetail.getTitle());
+//        existingBlog.setStartDate(updatedBlogDetail.getStartDate());
+//        existingBlog.setEndDate(updatedBlogDetail.getEndDate());
+//        existingBlog.setBlogDescription(updatedBlogDetail.getBlogDescription());
+//        existingBlog.setPhotoUrl(updatedBlogDetail.getPhotoUrl());
+//        existingBlog.setMembers(updatedBlogDetail.getMembers());
+//        existingBlog.setTotalCost(updatedBlogDetail.getTotalCost());
+//        existingBlog.setTransportationMode(updatedBlogDetail.getTransportationMode());
+//        
 //        blogRepository.save(existingBlog);
 //    }
 //

@@ -102,6 +102,9 @@ public class BlogController {
 //	}
 	
 	
+	
+	//--------------create new blog-------------------------
+	
 	@PostMapping("/add-blog")
 	public ResponseEntity<RegistrationStatus> registerBlog(
 	    @RequestParam("bloggerId") int bloggerId,
@@ -165,8 +168,7 @@ public class BlogController {
 	
 	
 	
-	
-	
+	//------------------what is this doing here ---------------------????????/
 	
 	 @GetMapping("/blogger/blog/{id}")
    public Blog fetchById(@PathVariable int id) {
@@ -276,6 +278,13 @@ public class BlogController {
 //   }
    
    
+   
+   
+   
+   
+   //---------------------fetch blog of a BLOGGER-------------------------- 
+//	----------------{using his id and returning a list for blog.map()} ----------
+   
    @GetMapping("/blog/get-my-blogs/{bloggerId}")
    public List<Blog> fetchBlogsByUserId(@PathVariable String bloggerId) {
       try {
@@ -296,10 +305,30 @@ public class BlogController {
    
    
    
+   //---------------------Fetch All Blogs  of all Bloggers --------------------
    
+//   @GetMapping("/blog/fetchAllBlogs")
+//   public RegistrationStatus fetchAllBlogs() {
+//       try {
+//           List<Blog> blogList = blogService.fetchAllBlogs();
+//
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setList(blogList);
+//           status.setStatus(true);
+//           status.setStatusMessage("All blogs fetched successfully.");
+//           return status;
+//       } catch (Exception e) {
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setStatus(false);
+//           status.setStatusMessage("Failed to fetch all blogs: " + e.getMessage());
+//           return status;
+//       }
+//   }
+
+   //----------------- fetch all blogs  returning list 
    
    @GetMapping("/blog/fetchAllBlogs")
-   public RegistrationStatus fetchAllBlogs() {
+   public  List<Blog> fetchAllBlogs() {
        try {
            List<Blog> blogList = blogService.fetchAllBlogs();
 
@@ -307,16 +336,19 @@ public class BlogController {
            status.setList(blogList);
            status.setStatus(true);
            status.setStatusMessage("All blogs fetched successfully.");
-           return status;
+           return blogList;
        } catch (Exception e) {
-           RegistrationStatus status = new RegistrationStatus();
-           status.setStatus(false);
-           status.setStatusMessage("Failed to fetch all blogs: " + e.getMessage());
-           return status;
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setStatus(false);
+//           status.setStatusMessage("Failed to fetch all blogs: " + e.getMessage());
+//           return status;
+    	   throw new RuntimeException("Failed to fetch all blogs: " + e.getMessage());
        }
    }
-
    
+   
+   
+   //----------------------delete Blog API-------------
    
    @DeleteMapping("/blog/delete/{id}")
    public ResponseEntity<RegistrationStatus> deleteBlog(@PathVariable int id) {
@@ -347,18 +379,19 @@ public class BlogController {
    
    //-------------Update Blog API------------------
    
-//   @PutMapping("/update/{blogId}")
+//   @PutMapping("/blog/update/{blogId}")
 //   public ResponseEntity<String> updateBlog(
 //           @PathVariable int blogId,
-//           @RequestBody Blog blogRequest // Create a class to represent the request body
+//           @RequestBody Blog updatedBlogDetail // Create a class to represent the request body
 //   ) {
 //       try {
-//           blogService.updateBlog(blogId, blogRequest);
+//           blogService.updateBlog(blogId, updatedBlogDetail);
 //           return new ResponseEntity<>("Blog updated successfully", HttpStatus.OK);
 //       } catch (Exception e) {
 //           return new ResponseEntity<>("Failed to update blog: " + e.getMessage(), HttpStatus.BAD_REQUEST);
 //       }
 //   }
 
+   
 
 }

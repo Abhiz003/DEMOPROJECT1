@@ -112,7 +112,7 @@ public class BloggerController {
 	
 	
 	@PostMapping("/update-blogger")
-	public ResponseEntity<RegistrationStatus> update(@ModelAttribute BloggerDetail bloggerDetails) {
+	public ResponseEntity<RegistrationStatus> updateBlogger(@ModelAttribute BloggerDetail bloggerDetails) {
 	    try {
 	        Blogger existingBlogger = bloggerService.fetchById(bloggerDetails.getBloggerId());
 
