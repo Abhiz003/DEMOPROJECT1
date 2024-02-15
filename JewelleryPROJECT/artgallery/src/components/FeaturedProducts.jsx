@@ -1,25 +1,26 @@
 import React from 'react';
-import img1 from '../img_art/PopularArts/1.jpg';
-import img2 from '../img_art/PopularArts/2.jpg';
-import img3 from '../img_art/PopularArts/3.jpg';
-import img4 from '../img_art/PopularArts/4.jpg';
-import img5 from '../img_art/PopularArts/5.jpg';
-import img6 from '../img_art/PopularArts/6.jpg';
-import img7 from '../img_art/PopularArts/12.jpg';
-import img8 from '../img_art/PopularArts/14.jpg';
+import img1 from '../img_art/PopularArts/pexels-ricky-esquivel-1701893.jpg';
+import img2 from '../img_art/PopularArts/pexels-oleksandr-p-1004584.jpg';
+import img3 from '../img_art/PopularArts/pexels-mayur-sable-12931217.jpg';
+import img4 from '../img_art/PopularArts/pexels-jen-healy-2542339.jpg';
+import img5 from '../img_art/PopularArts/pexels-jagadeeshbabu-gnanasekaran-14352575.jpg';
+import img6 from '../img_art/PopularArts/pexels-frozenmomentii-13943611.jpg';
+import img7 from '../img_art/PopularArts/pexels-david-geib-3220760.jpg';
+import img8 from '../img_art/PopularArts/pexels-darshak-pandya-574313.jpg';
 import './FeaturedProducts.css';
 import { Button } from 'react-bootstrap';
 
 const FeaturedProducts = () => {
   const products = [
-    { id: 1, name: 'Abstract Fusion', description: 'Abstract and contemporary artwork', extraFeature: 'Hand-painted with vibrant colors', image: img1 },
-    { id: 2, name: 'Ethereal Portraits', description: 'Capturing the essence of individuals', extraFeature: 'Highly detailed and realistic', image: img2 },
-    { id: 3, name: 'Expressive Emotions', description: 'Artistic expression and emotion', extraFeature: 'Bold brushstrokes and vivid colors', image: img3 },
-    { id: 4, name: 'Intricate Miniatures', description: 'Intricate and detailed small-scale artwork', extraFeature: 'Exquisite craftsmanship', image: img4 },
-    { id: 5, name: 'Innovative Explorations', description: 'Pushing the boundaries of traditional art', extraFeature: 'Innovative and unique techniques', image: img5 },
-    { id: 6, name: 'Tempered Tones', description: 'Using pigments mixed with a water-soluble binder medium', extraFeature: 'Traditional technique with a modern twist', image: img6 },
-    { id: 7, name: 'Watercolor Whimsy', description: 'Artwork using watercolor as the primary medium', extraFeature: 'Soft and ethereal color palette', image: img7 },
-    { id: 8, name: 'Everyday Narratives', description: 'Depicting scenes from everyday life', extraFeature: 'Narrative storytelling through art', image: img8 },
+    { id: 1, name: 'Urban Escapes', description: 'Discover the pulse of city life and modern architecture', extraFeature: 'Captured in minimalist compositions', image: img1 },
+{ id: 2, name: 'Nature Retreats', description: 'Immerse in serene landscapes and natural beauty', extraFeature: 'Minimalistic portrayals of tranquil environments', image: img2 },
+{ id: 3, name: 'Adventurous Spirit', description: 'Explore the thrill of daring activities and challenges', extraFeature: 'Minimalist depictions of adrenaline-fueled moments', image: img3 },
+{ id: 4, name: 'Tiny Expeditions', description: 'Embark on micro adventures with small-scale wonders', extraFeature: 'Minimalist artistry capturing intricate details', image: img4 },
+{ id: 5, name: 'Innovative Journeys', description: 'Experience cutting-edge travel and exploration', extraFeature: 'Minimalist interpretations of groundbreaking adventures', image: img5 },
+{ id: 6, name: 'Harmony in Hues', description: 'Blend with diverse cultures and traditions', extraFeature: 'Minimalist renditions merging traditional and modern elements', image: img6 },
+{ id: 7, name: 'Watercolor Wanderlust', description: 'Embark on a journey through fluid landscapes', extraFeature: 'Minimalistic watercolor expressions in a dreamy palette', image: img7 },
+{ id: 8, name: 'Everyday Discoveries', description: 'Uncover the beauty in ordinary moments during travels', extraFeature: 'Minimalist storytelling through travel scenes', image: img8 }
+
   ];
 
   return (
@@ -28,8 +29,8 @@ const FeaturedProducts = () => {
         <div className="row">
           <div className="col">
             <div className="title-wrapper-with-link title-wrapper--self-padded-mobile title-wrapper--no-top-margin content-align--center">
-              <h2 className="title h0">Discover Masterpieces</h2>
-              <p className="description">Welcome to the Art-Sphere. Enjoy this magical world of art, masterpieces, and amazing collections! We display, borrow, and collect artworks from around the world.</p>
+              <h2 className="title h0">Explore Adventures</h2>
+              <p className="description">Welcome to the SAFAR. Embark on a journey through the world's wonders, discover breathtaking landscapes, and share in the excitement of incredible travel experiences! We curate, document, and share travel stories from across the globe.</p>
             </div>
           </div>
         </div>

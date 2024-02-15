@@ -15,22 +15,23 @@ const AboutUs = () => {
         <>
             <CustomNavbar/>
             <section className="section-white mt-5">
-                <div className="container text-center">
-                    <h1>About Art-Sphere</h1>
-                    <p>Discover the World of Art</p>
+            <div className="container text-center">
+                    <h1>About SAFAR</h1>
+                    <p>Explore the Global Tapestry of Wonders</p>
                     <Container className="abouttext">
                         <h5>
-                            Art-Sphere is your gateway to a captivating world of artistic expression, where traditional and contemporary styles seamlessly converge.
-                            Immerse yourself in an extensive collection featuring over a thousand carefully curated artworks, blending the essence of local talent
-                            with globally acclaimed masterpieces. Our commitment is to provide you with a diverse selection that caters to a variety of artistic tastes.
-                            If you have a specific vision in mind, our dedicated team is ready to source it for you.
+                            SAFAR opens the door to an enchanting world of travel experiences, where traditional and contemporary adventures seamlessly converge.
+                            Immerse yourself in an extensive collection featuring over a thousand carefully curated journeys, blending the essence of local exploration
+                            with globally acclaimed destinations. Our commitment is to provide you with a diverse selection that caters to a variety of travel tastes.
+                            If you have a specific destination in mind, our dedicated team is ready to plan it for you.
                         </h5>
                         <h5>
-                            With a heritage spanning three decades, we bring a wealth of credibility and expertise to fulfill your artistic desires. Whether you're
-                            seeking a single piece to adorn your space, building a collection for a special event, or exploring corporate orders, Art-Sphere is your
-                            comprehensive destination for all things art. Step into the enchanting world of Art-Sphere, where each piece is a timeless celebration of
-                            elegance and grace.
+                            With a heritage spanning three decades, we bring a wealth of credibility and expertise to fulfill your travel desires. Whether you're
+                            seeking a single trip to discover new horizons, planning an adventure for a special occasion, or exploring corporate travel plans, SAFAR is your
+                            comprehensive destination for all things travel. Step into the enchanting world of SAFAR, where each journey is a timeless celebration of
+                            exploration and discovery.
                         </h5>
+
                     </Container>
                 </div>
             </section>

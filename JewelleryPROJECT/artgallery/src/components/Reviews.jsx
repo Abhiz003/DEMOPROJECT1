@@ -16,59 +16,65 @@ import Carousel from 'react-bootstrap/Carousel';
 function Reviews() {
   const reviewsData = [
     {
-      img: img2,
+      img: img1,
       review:
-        "The art gallery is a hidden gem! I love the way each piece tells a different story, and the atmosphere inside is perfect for immersing oneself in the world of art.",
-      name: 'Ayush Kumar',
+        "SAFAR is a hidden gem! I love the way it captures the essence of each journey, and the user-friendly interface is perfect for immersing oneself in the world of exploration.",
+      name: 'WanderlustJess',
     },
     {
-      img: img7,
+      img: img2,
       review:
-        "Attending exhibitions at this gallery is always a delight. The curation is excellent, showcasing a variety of styles and mediums. It's a haven for art enthusiasts.",
-      name: 'Bhavesh Patel',
+        "Navigating through destinations on this app is always a delight. The content curation is excellent, showcasing diverse experiences and hidden gems. It's a haven for travel enthusiasts.",
+      name: 'AdventureSeekerBella',
     },
     {
       img: img3,
       review:
-        "The gallery's commitment to supporting local artists is commendable. The diverse range of artworks reflects the rich talent within the community.",
-      name: 'Munot Verma',
+        "The app's commitment to spotlighting offbeat locations is commendable. The diverse range of travel stories reflects the richness of global exploration.",
+      name: 'LocalExplorerMike',
     },
     {
       img: img4,
       review:
-        "I've attended several art events here, and each time I'm impressed by the engaging exhibitions. The gallery's contribution to the art scene is invaluable.",
-      name: 'Rajesh Singh',
+        "I've documented numerous trips using this app, and each time I'm impressed by the engaging narratives. The app's contribution to the travel community is invaluable.",
+      name: 'NomadDreamerSarah',
     },
     {
       img: img5,
       review:
-        "The gallery's staff is knowledgeable and passionate about art. Their insights and willingness to share information enhance the overall experience for visitors.",
-      name: 'Sandeep Sharma',
+        "The app's support team is knowledgeable and passionate about travel. Their insights and willingness to share information enhance the overall experience for users.",
+      name: 'DiscoverWithDave',
     },
     {
       img: img6,
       review:
-        "As an artist, I'm grateful for the opportunities the gallery provides. It's a platform that fosters creativity and encourages artists to push boundaries.",
-      name: 'Diksha Kapoor',
+        "As a travel blogger, I'm grateful for the opportunities this app provides. It's a platform that fosters storytelling and encourages explorers to share their unique perspectives.",
+      name: 'WanderlustArtisan',
     },
     {
       img: img7,
       review:
-        "The gallery's commitment to creating an inclusive space for art appreciation is commendable. It welcomes diverse perspectives and encourages dialogue.",
-      name: 'Arjun Gupta',
+        "Surviving and thriving in every adventure is what this app is all about! I love how it encapsulates the raw beauty of each expedition, making exploration an exciting journey.",
+      name: 'BearGryllsAdventures',
+    },
+    {
+      img: img4,
+      review:
+        "The app's commitment to creating an inclusive space for travel appreciation is commendable. It welcomes diverse perspectives and encourages a global dialogue.",
+      name: 'CultureNomadSara',
     },
     {
       img: img6,
       review:
-        "I recently discovered this gallery, and I'm impressed by its dedication to showcasing emerging artists. It's become my go-to place for discovering new talents.",
-      name: 'Vikram Joshi',
+        "I recently discovered this app, and I'm impressed by its dedication to showcasing authentic travel experiences. It's become my go-to place for discovering new destinations.",
+      name: 'EpicJourneyVik',
     },
   ];
 
   return (
     <>
       <div className='section'>
-        <h2>Art Gallery Reviews</h2>
+        <h2>SAFAR Reviews</h2>
       </div>
       <Card className="bg-dark text-white position-relative">
         <Card.Img
@@ -80,21 +86,22 @@ function Reviews() {
         <div className="overlay"></div>
         <Card.ImgOverlay
           className="d-flex flex-column justify-content-center align-items-center"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }} // Increase the alpha value for a darker overlay
         >
           <Carousel
             fade
             className="card-carousel"
             indicators={false}
             controls={false}
-            interval={5000}
-            pause={false}
+            interval={5000} // Adjust the interval time to 5000 milliseconds (5 seconds)
+            pause={true} // Pause on hover
           >
             {reviewsData.map((review, index) => (
               <Carousel.Item key={index}>
-
-                <h4>{`"${review.review}"`}</h4>
-                <p>{`-- ${review.name} --`}</p>
+                <div className="review-container"> {/* New container to style the reviews */}
+                  <h4>{`"${review.review}"`}</h4>
+                  <p>{`-- ${review.name} --`}</p>
+                </div>
               </Carousel.Item>
             ))}
           </Carousel>
