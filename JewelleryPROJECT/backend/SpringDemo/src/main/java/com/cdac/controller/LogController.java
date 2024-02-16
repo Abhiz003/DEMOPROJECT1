@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -330,6 +334,64 @@ public class LogController {
    }
 
   
+   
+   
+   
+   
+   
+   
+   
+   //-------------Update Log API---------------------------
+   
+   
+   @PutMapping("/update-log/{logId}")
+   public ResponseEntity<Log> updateLog(@ModelAttribute LogDetail logDetail, @PathVariable String logId)
+   {
+	  try
+	  {
+		  Log updateLog = logService.fetchByLogId(Integer.parseInt(logId));
+		  
+		  blogService.fetchById(logDetail.getBlogId());
+		  updateLog.setPlaceName(logDetail.getPlaceName());
+		  updateLog.setStartTime(logDetail.getStartTime());
+		  updateLog.setExitTime(logDetail.getExitTime());
+		  updateLog.setLogDescription(logDetail.getLogDescription());
+		  updateLog.setPassAmount(logDetail.getPassAmount());
+		  updateLog.setLocation(logDetail.getLocation());
+		  MultipartFile logPic = logDetail.getImageUrl();
+
+	        // Check if Pic is not null before accessing properties
+	        if (logPic != null) 
+	        {
+	        	String fileName = logPic.getOriginalFilename();
+                updateLog.setImageUrl(fileName);
+
+                InputStream is = logPic.getInputStream();
+                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + fileName);
+                FileCopyUtils.copy(is, os);
+	        }
+		  updateLog = logService.updateLog(updateLog);
+		  return ResponseEntity.ok(updateLog);
+	  }
+	  catch (Throwable e) {
+		  throw new RuntimeException("Failed to update log: " + e.getMessage());
+	}
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    

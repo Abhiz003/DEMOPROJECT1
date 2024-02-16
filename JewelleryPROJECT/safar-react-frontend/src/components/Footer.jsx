@@ -7,7 +7,7 @@ import { faFacebook, faInstagram, faLinkedin, faYoutube } from '@fortawesome/fre
 export const Footer = () => {
 
     return (
-        <div className="footer-dark mt-5">
+        <div className="footer-dark mt-5 footer-container">
             <footer>
                 <Container>
                     <Row>

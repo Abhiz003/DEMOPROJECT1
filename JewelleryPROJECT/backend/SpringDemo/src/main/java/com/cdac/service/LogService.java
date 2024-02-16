@@ -59,4 +59,9 @@ public class LogService {
 	public List<Log> fetchAllLogs() {
 			return logRepository.findAll();
 		}
+	
+	public Log updateLog(Log log)
+	{
+		return logRepository.save(log);
+	}
 }

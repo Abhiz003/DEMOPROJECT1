@@ -274,7 +274,6 @@ const AddBlog = () => {
   
       console.log('Blog added successfully:', result.data);
   
-      setBlogData(initialBlogData);
       alert('Blog added successfully');
       navigate('/my-blogs');
     } catch (error) {
@@ -289,9 +288,9 @@ const AddBlog = () => {
   return (
     <>
       <CustomNavbar />
-      <div className="add-exhibition-container">
-        <h2 className="add-exhibition-title">Add Blog</h2>
-        <p>Share your Travel experience</p>
+      <div className="add-blog-container">
+        <h2 className="add-blog-title text-center">Add Blog</h2>
+        <p className="text-center">Share your Travel experience</p>
         <form onSubmit={handleSubmit} onReset={handleReset}>
           {/* <input
               type="hidden"

@@ -76,8 +76,8 @@ const CreateLogs = () => {
   return (
     <>
     <CustomNavbar />
-      <div className="container mt-2 border">
-      <h1 className="add-exhibition-title  text-center">Create Logs</h1>
+      <div className="add-blog-container mt-2 border">
+      <h1 className="add-blog-title  text-center">Create Logs</h1>
         <p className="text-center">Share your Travel experience</p>
         <form onSubmit={handleSubmit}>
           <div className="log-parent">

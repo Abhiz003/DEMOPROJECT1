@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import './MyBlogs.css';
 import axios from 'axios';
 import { getUserId } from '../utils/TokenUtil';
-import { getBlogImage} from '../Services/BlogService';
+import { getBlogImage } from '../Services/BlogService';
+import UpdateBlog from './UpdateBlog';
+// import Logs from './Logs.jsx'
 
 const MyBlogs = () => {
   const navigate = useNavigate();
@@ -17,6 +19,10 @@ const MyBlogs = () => {
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [showZoom, setShowZoom] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [updateData, setUpdateData] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -61,12 +67,12 @@ const MyBlogs = () => {
   };
 
   const handleDownload = (blogId) => {
-    const contentType = 'image/png';
+    const contentType = 'image/jpg';
 
     fetch(getBlogImage(blogId))
       .then((response) => response.blob())
       .then((blob) => {
-        const file = new File([blob], `Blog_${blogId}.png`, { type: contentType });
+        const file = new File([blob], `Blog_${blogId}.jpg`, { type: contentType });
 
         saveAs(file);
       })
@@ -75,15 +81,51 @@ const MyBlogs = () => {
       });
   };
 
+
+  const loadUpdateData = async (blogId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/blog/get-blog/${blogId}`);
+      if (response.status === 200) {
+        setUpdateData(response.data);
+        setShowUpdateForm(true);
+        // navigate('/update-blog'); // Navigate to the update form
+      } else {
+        console.error('Failed to fetch blog for update:', response.statusMessage);
+      }
+    } catch (error) {
+      console.error('Error fetching blog for update:', error);
+    }
+  };
+
+  const handleUpdate = async (blogId) => {
+    await loadUpdateData(blogId);
+    navigate(`/update-blog/${blogId}`);
+  };
+
+  // const handleDeleteConfirmation = (blogId) => {
+  //   setSelectedBlogId(blogId);
+  //   setShowDeleteConfirmation(true);
+  // };
+
+  // const handleConfirmDelete = () => {
+  //   handleDelete(selectedBlogId);
+  //   setShowDeleteConfirmation(false);
+  // };
+
+  // const handleCancelDelete = () => {
+  //   setSelectedBlogId(null);
+  //   setShowDeleteConfirmation(false);
+  // };
+
   // const handleDelete = async (blogId) => {
   //   if (window.confirm("Do you want to delete the Blog?")) {
   //     try {
   //       const response = await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
   //       console.log('Response from handleDelete:', response);
-      
+
   //       if (response.status === 200) {
   //         alert("Blog deleted successfully");
-  //         setBlogs((prevBlogs) => prevBlogs.filter(blog => blog.id !== blogId));
+  //         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
   //       } else {
   //         alert(`Failed to delete blog: ${response.data.statusMessage}`);
   //       }
@@ -93,7 +135,7 @@ const MyBlogs = () => {
   //     }
   //   }
   // };
-  
+
 
 
 
@@ -135,7 +177,7 @@ const MyBlogs = () => {
 
                   <div className="blog-info">
                     <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>
-                      <span style={{ marginRight: '10px' }}></span> Blog title - {blog.title}
+                      <span style={{ marginRight: '10px' }}></span>{blog.title}
                       <Button
                         variant="secondary"
                         className="downloadButton"
@@ -156,7 +198,7 @@ const MyBlogs = () => {
                     <p>
                       <b>Transportation:</b> {blog.transportationMode}
                     </p>
-                    <p style={{ marginTop: '10px', padding: '20px', fontStyle: 'italic' }}>
+                    <p className="blog-description border">
                       {truncateDescription(blog.blogDescription)}{' '}
                       {blog.blogDescription.length > WORDS_LIMIT && (
                         <span className="read-more-link" >
@@ -164,20 +206,31 @@ const MyBlogs = () => {
                         </span>
                       )}
                     </p>
-                    {/* <Button onClick={() => navigate('/my-logs', blogId={blog.id})} > View</Button> &nbsp; */}
-                    <Button onClick={() => navigate('/my-logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
+                    <span className="crud-buttons d-flex">
 
-                    {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
-                    <Button onClick={() => navigate('/create-logs', { state: { blogId:blog.id } }) } > create Logs</Button>
-                    
-                    {/* <Button onClick={handleDelete(blog.id)}>Delete</Button>  */}
+                      {/* <Button onClick={() => navigate('/my-logs', <Logs blogId={blog.id} />)} > View</Button> &nbsp; */}
+                      <Button onClick={() => navigate('/my-logs', { state: { blogId: blog.id } })} > View</Button>
+
+                      {/* <Button onClick={() => navigate('/create-logs',<Logs blogId={blog.id} />) } > create Logs</Button> */}
+                      <Button onClick={() => navigate('/create-logs', { state: { blogId: blog.id } })} > create Logs</Button>
+
+
+                      <Button onClick={() => handleUpdate(blog.id)}>Update</Button>
+                      {/* <Button onClick={() => {updateData && <UpdateBlog updateData={updateData} loadUpdateData={loadUpdateData}/>}}>Update</Button> */}
+
+                      {/* <Button onClick={handleConfirmDelete(blog.id)}>Delete</Button> */}
+                      <Button >Delete</Button>
+                    </span>
                   </div>
-                      
+
 
 
                 </Card.Body>
               </Card>
             ))}
+            {showUpdateForm && updateData && (
+              <UpdateBlog updateData={updateData} />
+            )}
           </>
         )}
 

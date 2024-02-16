@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CookieConsent from "react-cookie-consent";
@@ -6,17 +6,17 @@ import { Home } from './components/Home';
 import Login from './components/Login';
 import { SignUp } from './components/SignUp';
 import { AdminPrivateRoute, PrivateRoute } from './components/PrivateRoute';
-import { RedirectIfLoggedIn } from './components/RedirectIfLoggedIn'; 
+import { RedirectIfLoggedIn } from './components/RedirectIfLoggedIn';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminRedirectIfLoggedIn } from './components/AdminRedirectIfLoggedIn';
 import { UsersList } from './components/UserDetails';
 import { Footer } from './components/Footer';
-import AboutUs  from './components/AboutUs';
+import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs'
 import Blogger from './components/Blogger';
 import BloggerRegistration from './components/BloggerRegistration';
 import BloggerProfile from './components/BloggerProfile';
-import BloggerList from './components/BloggerDetails';
+import BloggerList from './components/BloggerList';
 import Profile from './components/Profile';
 import AdminDashboard from './admin/AdminDashboard';
 import MyBlogs from './components/MyBlogs';
@@ -25,9 +25,12 @@ import EditBloggerDetails from './components/EditBloggerDetails';
 import EditUserDetails from './components/EditUserDetails';
 import AdminBlogs from './components/AdminBlogs';
 import AddBlog from './components/AddBlog';
-import UpdateBlogs from './components/UpdateBlog';
 import Logs from './components/Logs';
 import CreateLogs from './components/CreateLogs';
+import AllUsers from './components/AllUsers';
+import AllBloggers from './components/AllBloggers';
+import TripDetails from './components/TripDetails';
+import UpdateBlog from './components/UpdateBlog';
 
 
 export const App = () => {
@@ -52,37 +55,45 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path='/' element={<Home />} />
         <Route path='/log-in' element={<RedirectIfLoggedIn><Login /></RedirectIfLoggedIn>} />
         <Route path="/blogger-register" element={<BloggerRegistration />} />
-        <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/admin-log-in' element={<AdminRedirectIfLoggedIn><AdminLogin /></AdminRedirectIfLoggedIn>} />
-        
-        <Route path='/admin-dashboard' element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
-        
-        <Route path='/about-us' element={<AboutUs/>} />
+        <Route path='/sign-up' element={<SignUp />} />
+
+
 
         <Route path='/user-profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path='/edit-user-details' element={<EditUserDetails />} />
 
-        <Route path='/get-blogger' element={<Blogger/>} />
+        <Route path='/get-blogger' element={<Blogger />} />
         <Route path='/blogger-profile' element={<PrivateRoute><BloggerProfile /></PrivateRoute>} />
         <Route path='/edit-blogger-details' element={<EditBloggerDetails />} />
 
         <Route path='/all-blogs' element={<AllBlogs />} />
         <Route path='/my-blogs' element={<PrivateRoute><MyBlogs /></PrivateRoute>} />
-        <Route path='/add-blog' element={<AddBlog /> } />
+        <Route path='/add-blog' element={<PrivateRoute><AddBlog/></PrivateRoute>} />
+        <Route path='/update-blog/:blogId' element={<PrivateRoute><UpdateBlog/></PrivateRoute>} />
 
-        <Route path='/my-logs' element={<Logs/>}/>
-        <Route path='/create-logs' element={<CreateLogs/>}/>
+        <Route path='/create-logs' element={<CreateLogs />} />
+        <Route path='/my-logs' element={<Logs />} />
+        <Route path='/trip-details' element={<TripDetails />} />
 
-        <Route path='/user-details' element={<AdminPrivateRoute><UsersList /></AdminPrivateRoute>} />
-        <Route path='/blogger-list' element={<AdminPrivateRoute><BloggerList /></AdminPrivateRoute>} />
+
+        <Route path='/admin-dashboard' element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
+        <Route path='/all-users' element={<AdminPrivateRoute><AllUsers /></AdminPrivateRoute>} />
+        <Route path='/all-bloggers' element={<AllBloggers />} />
+
+        <Route path='/users-list' element={<AdminPrivateRoute><UsersList /></AdminPrivateRoute>} />
+        <Route path='/bloggers-list' element={<AdminPrivateRoute><BloggerList /></AdminPrivateRoute>} />
+     
         <Route path='/admin-blogs' element={<AdminPrivateRoute><AdminBlogs /> </AdminPrivateRoute>} />
         <Route path='/admin/add-blog' element={<AdminPrivateRoute><AddBlog /> </AdminPrivateRoute>} />
-        <Route path='/admin/update-blog/:id' element={<AdminPrivateRoute><UpdateBlogs /> </AdminPrivateRoute>} />
+     
+        <Route path='/contact-us' element={<ContactUs />} />
+        <Route path='/about-us' element={<AboutUs />} />
+        <Route path='*' element={<Home />} />
+
       </Routes>
 
 
@@ -103,7 +114,7 @@ export const App = () => {
           </p>
       </CookieConsent> */}
 
-{showCookieConsent && (
+      {showCookieConsent && (
         <CookieConsent
           debug={true}
           location='bottom'

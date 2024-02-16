@@ -25,7 +25,7 @@ export function AdminLogin() {
             const result = await adminlogin(formData);
             if (result.status === true) {
                 if(result.name === "secret"){
-                    alert(`Admin, the Picasso of Pixels! Time to brush up on your masterpiece-making skills! 🎨😄`);
+                    alert(`Admin, Welcome to Admin Panel`);
                     localStorage.setItem("token", result.statusMessage);
                      navigate("/admin-dashboard");
 

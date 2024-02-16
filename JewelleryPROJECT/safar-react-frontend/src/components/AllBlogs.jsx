@@ -311,7 +311,7 @@ const AllBlogs = () => {
     <>
       <CustomNavbar />
       <Container className="mt-5 my-blogs-container">
-        <h1 className="mb-4 head text-center">My Journey Tales</h1>
+        <h1 className="mb-4 head text-center">Tales of wanderlust</h1>
 
         {blogs.length === 0 ? (
           <p className="text-center">No blogs available.</p>
@@ -332,7 +332,7 @@ const AllBlogs = () => {
 
                   <div className="blog-info">
                     <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>
-                      <span style={{ marginRight: '10px' }}></span> Blog title - {blog.title}
+                      <span style={{ marginRight: '10px' }}></span>{blog.title}
                       <Button
                         variant="secondary"
                         className="downloadButton"
@@ -365,7 +365,6 @@ const AllBlogs = () => {
                     <Button onClick={() => navigate('/my-logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
 
                     {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
-                    <Button onClick={() => navigate('/create-logs', { state: { blogId:blog.id } }) } > create Logs</Button>
                     
                     {/* <Button onClick={handleDelete(blog.id)}>Delete</Button>  */}
                   </div>

@@ -1,5 +1,6 @@
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import '../App.css'
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import CustomNavbar from './CustomNavbar';
 import { bloggerLogin, login } from '../Services/UserService.js';
 import { useNavigate } from 'react-router-dom';
@@ -58,13 +59,10 @@ const Login = () => {
   return (
     <>
       <CustomNavbar />
-
-      <Container>
+      <Container className="login-container">
         <div className="container d-flex justify-content-center align-items-center">
           <h1 className='mt-5'>User Login</h1>
         </div>
-
-        <div className="container">
           <Form onSubmit={handleSubmit}>
             <Row className="justify-content-md-center mt-4">
               <Col lg={4}>
@@ -102,7 +100,7 @@ const Login = () => {
               </Col>
             </Row>
           </Form>
-        </div>
+        
       </Container>
     </>
   );

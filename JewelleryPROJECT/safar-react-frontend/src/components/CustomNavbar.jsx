@@ -48,7 +48,7 @@ const CustomNavbar = () => {
                 </LinkContainer>
               )}
 
-              <LinkContainer to="/get-blogger">
+              <LinkContainer to="/all-bloggers">
                 <Nav.Link>BLOGGERS</Nav.Link>
               </LinkContainer>
 

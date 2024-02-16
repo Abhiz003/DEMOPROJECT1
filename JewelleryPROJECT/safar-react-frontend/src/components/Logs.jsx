@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './Logs.css'
 import axios from 'axios'
 import CustomNavbar from './CustomNavbar'
+import { Button } from 'react-bootstrap'
 
 const Logs = () => {
     const location = useLocation();
@@ -11,6 +12,7 @@ const Logs = () => {
 
     const [logs, setLogs] = useState([]);
 
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchLogs = async () => {
             try {
@@ -51,20 +53,13 @@ const Logs = () => {
                 <div key={index} className={`content-container ${side}-container`}>
                     <i className="fa-solid fa-gear"></i>
                     <div className="text-box">
-                        {/* <img className="d-block w-100" src={`Images/${side === 'left' ? 'Antman' : 'Ironman'}.jpg`} alt={side} /> */}
 
                         <img
                             className="d-block w-100"
                             alt={`Log ${log.logId}`}
-                            src='Images/leaves001.jpg'
+                            src={`Images/${log.imageUrl}`}
                             onContextMenu={handleContextMenu}
                         />
-                        {/* <img
-                            className="d-block w-100"
-                            src={`Images/${log.imageUrl}`}
-                            alt={`Log ${log.logId}`}
-                            onContextMenu={handleContextMenu}
-                        /> */}
                         <h2>{log.placeName}</h2>
                         <small>{log.startTime} - {log.exitTime}</small>
                         <p className="log-description" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -74,7 +69,7 @@ const Logs = () => {
                             )}
                         </p>
                         <span className={`${side}-container-arrow`}></span>
-                        <Link to="/triplog" className="btn btn-primary">View more</Link>
+                        <Button onClick={() => navigate("/trip-details")} className="btn btn-primary">View more</Button>
                     </div>
                 </div>
             );
@@ -85,7 +80,7 @@ const Logs = () => {
     return (
         <>
             <CustomNavbar />
-            <div className="container">
+            <div className="container logs-container" >
                 <div className="timeline " style={{ paddingBottom: '50px' }}>
 
                     {handleTimeLine()}

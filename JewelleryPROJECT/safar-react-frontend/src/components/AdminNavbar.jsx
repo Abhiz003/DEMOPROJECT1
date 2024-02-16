@@ -27,26 +27,32 @@ const AdminNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="me-2">
             <Nav className="me-auto">
-
-              <LinkContainer to="/">
+              <LinkContainer to="/admin-dashboard">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to="/user-details">
-                <Nav.Link>User List</Nav.Link>
+              <LinkContainer to="/all-users">
+                <Nav.Link>Users</Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to="/blogger-list">
-                <Nav.Link>Blogger List</Nav.Link>
+              <LinkContainer to="/all-bloggers">
+                <Nav.Link>Bloggers</Nav.Link>
               </LinkContainer>
 
-             
+              <NavDropdown title={"List"} id="profile-dropdown">
+                    <LinkContainer to="/bloggers-list">
+                      <NavDropdown.Item>Bloggers List</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/users-list">
+                      <NavDropdown.Item>Users List</NavDropdown.Item>
+                    </LinkContainer>
+              </NavDropdown>
 {/* 
               <LinkContainer to="/message-list">
                 <Nav.Link>Messages</Nav.Link>
               </LinkContainer> */}
               
-              <LinkContainer to="/admin-exhibitions">
+              <LinkContainer to="/all-blogs">
                 <Nav.Link>All Blogs</Nav.Link>
               </LinkContainer>
 
@@ -59,7 +65,7 @@ const AdminNavbar = () => {
                       <NavDropdown.Item>Log In</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/blogger-register">
-                      <NavDropdown.Item>SignUp-Artist</NavDropdown.Item>
+                      <NavDropdown.Item>SignUp-Blogger</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/sign-up">
                       <NavDropdown.Item>SignUp-User</NavDropdown.Item>

@@ -60,7 +60,10 @@ public class BlogService {
 			return blogRepository.findAll();
 		}
 	
-	
+	public Blog updateBlog(Blog blog)
+	{
+		return blogRepository.save(blog);
+	}
 	
 	
 	
