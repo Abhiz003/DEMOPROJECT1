@@ -1,3 +1,4 @@
+// import { useState } from 'react';
 import './CustomNavbar.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -27,7 +28,6 @@ const CustomNavbar = () => {
       navigate('/blogger-profile');
     }
   };
-
   return (
     <> 
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar" bg="dark" data-bs-theme="dark">
@@ -108,6 +108,8 @@ const CustomNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+                  
+
     </>
   );
 }

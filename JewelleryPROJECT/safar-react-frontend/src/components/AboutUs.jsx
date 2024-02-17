@@ -1,21 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import CustomNavbar from './CustomNavbar';
-import diksha from '../img_art/Founder/diksha.jpg';
-import munot from '../img_art/Founder/munot.jpg';
-import video from "../img_art/video/1.mp4";
+import video1 from "../admin/videos/vid1.mp4";
 import { Container } from "react-bootstrap";
 import './AboutUs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 
 const AboutUs = () => {
     return (
         <>
-            <CustomNavbar/>
+            <CustomNavbar />
             <section className="section-white mt-5">
-            <div className="container text-center">
+                <div className="container text-center">
                     <h1>About SAFAR</h1>
                     <p>Explore the Global Tapestry of Wonders</p>
                     <Container className="abouttext">
@@ -36,7 +34,7 @@ const AboutUs = () => {
                 </div>
             </section>
 
-            <video src={video} width="100%" height="80%" className="mt-4" autoPlay loop muted playsInline />
+            <video src={video1} width="100%" height="80%" className="mt-4" autoPlay loop muted playsInline />
             <section className="section-white mt-5">
                 <div className="container">
                     <div className="row">
@@ -52,30 +50,38 @@ const AboutUs = () => {
                                 <div className="row">
                                     <div className="col-lg-4 col-mf-12 col-12">
                                         <div className="about-img">
-                                            <img src={diksha} alt="" className="img-fluid hover-effect" />
+                                            <img src="Images/Team/Spidey.jpg" alt="" className="img-fluid hover-effect" />
                                         </div>
                                     </div>
                                     <div className="col-lg-8 col-md-12 col-12 ps-lg-5 md-5">
                                         <div className="about-text">
-                                            <h1>Diksha Dhar</h1>
-
+                                            <h1>Abhijit Bhangale</h1>
+                                            <p>Web Developer</p>
                                             <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus ipsam ipsa blanditiis sequi asperiores maxime voluptatibus totam nihil labore reprehenderit numquam nulla eveniet dicta in officia, itaque, minus qui.
                                             </h5>
-                                            <div className="item-social mt-4">
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faLinkedin} />
-                                                </a>
 
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faInstagram} />
-                                                </a>
 
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faFacebook} />
-                                                </a>
+                                            <div className="social-buttons">
 
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faTwitter} />
+                                                <a href="https://www.linkedin.com/in/abhijitb3/" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-linkedin-in"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="https://www.instagram.com/_magnum.__?igsh=MTg1cHZ3ejVzODdtMA==/" target="_blank" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-instagram"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="https://github.com/Abhiz003" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-github"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
+                                                    <span className="social-button__inner">
+                                                    <i className="fa-solid fa-envelope fa-fade" ></i>
+                                                    </span>
                                                 </a>
                                             </div>
                                         </div>
@@ -84,44 +90,51 @@ const AboutUs = () => {
                             </div>
                         </section>
 
-                        <section id="about" className="about-section mt-5 mb-3">
+                        <section id="about" className="about-section mt-5 mb-3 bg-light">
                             <div className="container">
                                 <div className="row">
 
                                     <div className="col-lg-8 col-md-12 col-12 ps-lg-5 md-5">
                                         <div className="about-text">
-                                            <h1>Munot Gadale</h1>
+                                            <h1>Gopal Patil</h1>
 
                                             <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste sequi nemo incidunt quisquam quos, nam voluptate tempora suscipit odio a? Ex vel quisquam recusandae reiciendis asperiores minima, porro nisi consequatur.</h5>
-                                            <div className="item-social mt-4">
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faLinkedin} />
-                                                </a>
 
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faInstagram} />
-                                                </a>
+                                            <div className="social-buttons">
 
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faFacebook} />
+                                                <a href="https://in.linkedin.com/in/gopal-patil-54824a242" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-linkedin-in"></i>
+                                                    </span>
                                                 </a>
-
-                                                <a href="https://www.linkedin.com/in/munot-gadale-4a804722a/" style={{ textDecoration: 'none' }}>
-                                                    <FontAwesomeIcon icon={faTwitter} />
+                                                <a href="https://www.instagram.com/patilgopal_02?igsh=eW93eHV2bjJsanNz" target="_blank" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-instagram"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="https://github.com/GitCloud-tech" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                                    <span className="social-button__inner">
+                                                        <i className="fab fa-github"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="gopal@netcomjaipur.in" aria-label="GitHub">
+                                                    <span className="social-button__inner">
+                                                    <i className="fa-solid fa-envelope fa-fade" ></i>
+                                                    </span>
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-mf-12 col-12">
                                         <div className="about-img">
-                                            <img src={munot} alt="" className="img-fluid hover-effect" />
+                                            <img src="Images/Team/Dude.jpg" alt="" className="img-fluid hover-effect" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                       
+
 
                     </div>
                 </div>
