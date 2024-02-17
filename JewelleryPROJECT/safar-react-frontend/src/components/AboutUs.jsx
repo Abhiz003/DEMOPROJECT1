@@ -102,22 +102,22 @@ const AboutUs = () => {
 
                                             <div className="social-buttons">
 
-                                                <a href="https://in.linkedin.com/in/gopal-patil-54824a242" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                                <a href="https://www.linkedin.com/in/abhijitb3/" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-linkedin-in"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://www.instagram.com/patilgopal_02?igsh=eW93eHV2bjJsanNz" target="_blank" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
+                                                <a href="https://www.instagram.com/_magnum.__?igsh=MTg1cHZ3ejVzODdtMA==/" target="_blank" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-instagram"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://github.com/GitCloud-tech" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                                <a href="https://github.com/Abhiz003" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-github"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="gopal@netcomjaipur.in" aria-label="GitHub">
+                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                     <i className="fa-solid fa-envelope fa-fade" ></i>
                                                     </span>
@@ -127,6 +127,7 @@ const AboutUs = () => {
                                     </div>
                                     <div className="col-lg-4 col-mf-12 col-12">
                                         <div className="about-img">
+
                                             <img src="Images/Team/Dude.jpg" alt="" className="img-fluid hover-effect" />
                                         </div>
                                     </div>

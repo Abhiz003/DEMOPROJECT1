@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import img1 from '../img_art/crausal/4.jpg';
+import img1 from '../img_art/crausal/pexels-porapak-apichodilok-346885.jpg';
 import img2 from '../img_art/Founder/Ayush.jpg';
 import img3 from '../img_art/Founder/munot.jpg';
 import img4 from '../img_art/Founder/munot.jpg';
