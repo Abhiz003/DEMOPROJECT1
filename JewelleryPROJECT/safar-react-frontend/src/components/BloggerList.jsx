@@ -46,7 +46,7 @@ const BloggerList = () => {
 
     return (
         <>
-            <AdminNavbar />
+            {/* <AdminNavbar /> */}
             <h1>Bloggers List</h1>
             <Container>
                 {user.length !== 0 ? (

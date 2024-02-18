@@ -58,7 +58,7 @@ const Login = () => {
 
   return (
     <>
-      <CustomNavbar />
+      {/* <CustomNavbar /> */}
       <Container className="login-container">
         <div className="container d-flex justify-content-center align-items-center">
           <h1 className='mt-5'>User Login</h1>

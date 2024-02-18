@@ -106,7 +106,7 @@ export function SignUp() {
 
   return (
     <>
-      <CustomNavbar />
+      {/* <CustomNavbar /> */}
       <Container>
         <h2 className="mt-5 text-center">User Registration</h2>
         <Form onSubmit={handleSubmit}>

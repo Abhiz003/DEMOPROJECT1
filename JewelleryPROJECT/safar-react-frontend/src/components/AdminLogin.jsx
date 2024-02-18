@@ -21,19 +21,32 @@ export function AdminLogin() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(e);
         try {
             const result = await adminlogin(formData);
             if (result.status === true) {
                 if(result.name === "secret"){
                     alert(`Admin, Welcome to Admin Panel`);
-                    localStorage.setItem("token", result.statusMessage);
+                    console.log(result.userEmail);
+                    localStorage.setItem("token", result.name);
+                    localStorage.setItem("msg", result.statusMessage);
+                    localStorage.setItem("userEmail", formData.userEmail);
                      navigate("/admin-dashboard");
-
+                
                      sessionStorage.setItem("adminMessage",result.name);
                 }
-                else{
-                    alert(`Something Went Wrong!!!!!`);
-                }
+
+                // -----------------------------------------
+                // if(result.name === "secret"){
+                //     alert(`Admin, Welcome to Admin Panel`);
+                //     localStorage.setItem("token", result.statusMessage);
+                //      navigate("/admin-dashboard");
+
+                //      sessionStorage.setItem("adminMessage",result.name);
+                // }
+                // else{
+                //     alert(`Something Went Wrong!!!!!`);
+                // }
                 
             } else {
                 
@@ -46,7 +59,7 @@ export function AdminLogin() {
 
     return (
         <>
-            <CustomNavbar></CustomNavbar>
+            {/* <CustomNavbar></CustomNavbar> */}
             <Container fluid className="container-wrapper" style={backgroundStyle}>
                 <Row className="justify-content-md-center">
                     <Col lg={6} className="left-column">

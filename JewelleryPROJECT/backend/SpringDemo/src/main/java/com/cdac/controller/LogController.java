@@ -10,22 +10,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +35,6 @@ import com.cdac.service.BlogService;
 import com.cdac.service.LogService;
 
 @RestController
-@CrossOrigin
 public class LogController {
 	
 	@Autowired
@@ -47,6 +42,9 @@ public class LogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	
+	String imgPath = BloggerController.imgPath; //calling the basepath of images folder
 	
 //	@PostMapping("/add-blog")
 //	public ResponseEntity<RegistrationStatus> registerBlog(    @ModelAttribute BlogDetail blogDetail) {
@@ -75,7 +73,7 @@ public class LogController {
 //	                blog.setPhotoUrl(generatedFileName);
 //
 //	                InputStream is = pic.getInputStream();
-//	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp" + File.separator +  "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+//	                FileOutputStream os = new FileOutputStream( imgPath + File.separator + generatedFileName);
 //	                FileCopyUtils.copy(is, os);
 //	            } catch (IOException e) {
 //	                e.printStackTrace();
@@ -140,7 +138,7 @@ public class LogController {
 	                log.setImageUrl(generatedFileName);
 
 	                InputStream is = logPic.getInputStream();
-	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+	                FileOutputStream os = new FileOutputStream(imgPath + File.separator + generatedFileName);
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -200,7 +198,7 @@ public class LogController {
           //--------------------------------------
            
            
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", log.getImageUrl());
+           Path imagePath = FileSystems.getDefault().getPath(imgPath , log.getImageUrl());
            byte[] imageBytes = Files.readAllBytes(imagePath);
 
            HttpHeaders headers = new HttpHeaders();
@@ -223,7 +221,7 @@ public class LogController {
 //	         }
 //
 //	         // Assuming blog.getPhotoUrl() contains the correct image filename
-//	         Path imagePath = Paths.get("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+//	         Path imagePath = Paths.get(imgPath, blog.getPhotoUrl());
 //	         byte[] imageBytes = Files.readAllBytes(imagePath);
 //
 //	         HttpHeaders headers = new HttpHeaders();
@@ -367,7 +365,7 @@ public class LogController {
                 updateLog.setImageUrl(fileName);
 
                 InputStream is = logPic.getInputStream();
-                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + fileName);
+                FileOutputStream os = new FileOutputStream(imgPath + File.separator + fileName);
                 FileCopyUtils.copy(is, os);
 	        }
 		  updateLog = logService.updateLog(updateLog);
@@ -406,7 +404,7 @@ public class LogController {
            }
            
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", log.getImageUrl());
+           Path imagePath = FileSystems.getDefault().getPath(imgPath, log.getImageUrl());
            Files.deleteIfExists(imagePath);
 
            logService.deleteImage(log);

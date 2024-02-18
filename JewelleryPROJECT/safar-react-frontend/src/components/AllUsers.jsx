@@ -27,7 +27,7 @@ const AllUsers = () => {
 
     return (
         <>
-            <AdminNavbar/>
+            {/* <AdminNavbar/> */}
             <div className="container">
                 {users.length === 0 ? (
                     <p>No users registered.</p>

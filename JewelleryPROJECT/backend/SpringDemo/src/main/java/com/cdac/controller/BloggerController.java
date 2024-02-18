@@ -35,12 +35,17 @@ import com.cdac.exception.BloggerServiceException;
 import com.cdac.service.BloggerService;
 
 @RestController
-@CrossOrigin
 public class BloggerController {
 	
 	@Autowired
 	private BloggerService bloggerService;
 	
+	public  static String  imgPath = "C:" + File.separator + "ReactSpringbootApp"  + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "safar-react-frontend" + File.separator + "public"  + File.separator + "Images";
+	
+	
+	
+	
+	//--------------------- Create  New Blogger --------------------
 	@PostMapping("/register-blogger")
     public ResponseEntity<RegistrationStatus> registerBlogger(BloggerDetail bloggerDetails) {
         try {
@@ -52,14 +57,13 @@ public class BloggerController {
             // Check if profilePic is not null before accessing properties
             if (profilePic != null) {
                 try {
-                    String fileName = profilePic.getOriginalFilename();
-                    // TODO: here should be the code to generate a unique name for the file before proceeding further
-                    String generatedFileName = fileName; // replace this later
+                  
+                    String generatedFileName = profilePic.getOriginalFilename(); // replace this later
 
                     blogger.setProfilePic(generatedFileName);
 
                     InputStream is = profilePic.getInputStream();
-                    FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"  + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles"  + File.separator + generatedFileName);
+                    FileOutputStream os = new FileOutputStream(imgPath  +  File.separator + "Profiles"  + File.separator + generatedFileName);
                     FileCopyUtils.copy(is, os);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -90,6 +94,10 @@ public class BloggerController {
     }
 
 	
+	
+	
+	
+	//-----------------Blogger Login API-----------------
 	@PostMapping("/login-blogger")
 	public RegistrationStatus isBloggerPresent(@RequestBody Blogger blogger){
 		try {
@@ -111,6 +119,8 @@ public class BloggerController {
 	
 	
 	
+	
+	//-------------------Update Blogger API------------
 	@PostMapping("/update-blogger")
 	public ResponseEntity<RegistrationStatus> updateBlogger(@ModelAttribute BloggerDetail bloggerDetails) {
 	    try {
@@ -136,7 +146,7 @@ public class BloggerController {
 	            existingBlogger.setProfilePic(generatedFileName);
 
 	            try (InputStream is = profilePic.getInputStream();
-	                 FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp" + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles" + File.separator + generatedFileName)) {
+	                 FileOutputStream os = new FileOutputStream(imgPath + File.separator + "Profiles" + File.separator + generatedFileName)) {
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                // Handle IO exception
@@ -175,7 +185,13 @@ public class BloggerController {
 	}
 
 
+
 	
+	
+	
+	
+	
+	//---------------Delete Blogger   API-------------------
 	@DeleteMapping("/delete-blogger/{id}")
 	public ResponseEntity<?> deleteBlogger(@PathVariable int id) {
 	    try {
@@ -193,6 +209,7 @@ public class BloggerController {
 	
 	
 	
+	//-------------------Get-Blogger API---------------
 	@GetMapping("/get-blogger")
 	public ResponseEntity<RegistrationStatus> getAllBloggers() {
 	    try {
@@ -213,14 +230,18 @@ public class BloggerController {
 	    }
 	}
 	
+	
+	//--------------------- Fetch One Blogger using ID ---------------
 	@GetMapping("/blogger/fetch/{id}")
 	public Blogger fetchById(@PathVariable int id) {
 		return bloggerService.fetchById(id);
 	}
 	
-	@GetMapping(path = "/blogger/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getProfilePic(@PathVariable int id) throws IOException {
-        Blogger blogger = bloggerService.fetchById(id);
-        return Files.readAllBytes(Paths.get("C:" + File.separator + "ReactSpringbootApp"  + File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "BloggerProfiles" + File.separator + blogger.getProfilePic()));
+	
+	//--------------------Fetch profilePic of A blogger-------------
+	@GetMapping(path = "/blogger/fetch/profilePic/{bloggerId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getProfilePic(@PathVariable int bloggerId) throws IOException {
+        Blogger blogger = bloggerService.fetchById(bloggerId);
+        return Files.readAllBytes(Paths.get(imgPath + "Profiles" + File.separator + blogger.getProfilePic()));
     }
 }

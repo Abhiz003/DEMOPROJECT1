@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,13 +28,16 @@ import com.cdac.exception.UserServiceException;
 import com.cdac.service.UserService;
 
 @RestController
-@CrossOrigin
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    String imgPath = BloggerController.imgPath; // calling the basepath of images folder
     
+    
+    
+    	
     //--------------------xxxxxxxxx------------add User API----------xxxxxxxxx------------
     @PostMapping("/register-user")
     public ResponseEntity<RegistrationStatus> registerv3(UserDetail userDetails) {
@@ -51,7 +52,7 @@ public class UserController {
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" +  File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + "UserProfiles"  + File.separator + generatedFileName;
+                String uploadPath =  imgPath + File.separator + "Profiles"  + File.separator + generatedFileName;
 
                 InputStream is = userDetails.getProfilePic().getInputStream();
                 FileOutputStream os = new FileOutputStream(uploadPath);
@@ -149,10 +150,7 @@ public class UserController {
                 user.setProfilePic(generatedFileName);
 
                 // Update the path to your desired directory
-                String uploadPath = "C:" + File.separator + "ReactSpringbootApp" + File.separator +
-                        "ReactSpringApp" + File.separator + "JewelleryPROJECT" +
-                        File.separator + "All-IMAGES" + File.separator + "UserProfiles" +
-                        File.separator + generatedFileName;
+                String uploadPath = imgPath + File.separator + "Profiles" + File.separator + generatedFileName;
 
                InputStream is = userDetails.getProfilePic().getInputStream();
                FileOutputStream os = new FileOutputStream(uploadPath);
@@ -234,7 +232,7 @@ public class UserController {
     public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
         try {
             User user = userService.fetchById(id);
-            String imagePath = "C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES\\UserProfiles\\" + user.getProfilePic();
+            String imagePath = imgPath + File.separator +"Profiles"+ File.separator + user.getProfilePic();
             File file = new File(imagePath);
 
             if (file.exists()) {
@@ -286,7 +284,7 @@ public class UserController {
 			Boolean isBoolean = userService.adminLogin(user);
 			RegistrationStatus status = new RegistrationStatus();
 			status.setStatus(isBoolean);
-			status.setName("secret");
+			status.setName("secret");          //==================== Token secret key==========
 			status.setStatusMessage("Admin Login Successfull");
 			return status;
 		} catch (Exception e) {
@@ -297,6 +295,9 @@ public class UserController {
 		}
 	}
 
+   
+    
+    
     
     
 }

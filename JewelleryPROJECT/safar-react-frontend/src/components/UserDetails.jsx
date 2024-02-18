@@ -43,7 +43,7 @@ export function UsersList() {
 
     return (
         <>
-            <AdminNavbar />
+            {/* <AdminNavbar /> */}
             <h1>User List</h1>
             <Container>
                 {user.length !== 0 ? (

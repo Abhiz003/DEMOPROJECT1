@@ -19,10 +19,11 @@ const AdminNavbar = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar" bg="dark" data-bs-theme="dark">
+      <Navbar collapseOnSelect expand="lg" className=" navbar" style={{backgroundColor:"#638889"}} data-bs-theme="dark">
+     
         <Container>
           <Navbar.Brand href="/admin-dashboard">
-          <img src="Images/Logo/TheSafarLogo.png" className="logo" alt="SAFAR" />
+          <img src="Images/Logo/TheSafarLogo.png" title="Admin" className="logo" alt="SAFAR" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="me-2">
@@ -39,9 +40,9 @@ const AdminNavbar = () => {
                 <Nav.Link>Bloggers</Nav.Link>
               </LinkContainer>
 
-              <NavDropdown title={"List"} id="profile-dropdown">
+              <NavDropdown title={"List"} className="text-dark" id="profile-dropdown">
                     <LinkContainer to="/bloggers-list">
-                      <NavDropdown.Item>Bloggers List</NavDropdown.Item>
+                      <NavDropdown.Item className="text-dark">Bloggers List</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/users-list">
                       <NavDropdown.Item>Users List</NavDropdown.Item>
@@ -61,6 +62,7 @@ const AdminNavbar = () => {
               {!isAuthenticated() ? (
                 <>
                   <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
+
                     <LinkContainer to="/log-in">
                       <NavDropdown.Item>Log In</NavDropdown.Item>
                     </LinkContainer>
@@ -78,6 +80,7 @@ const AdminNavbar = () => {
               ) : (
                 <>
                   <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
+                  {/* <NavDropdown title={"A"} id="profile-dropdown"> */}
                     <NavDropdown.Item onClick={handleLogOutClick}>
                       Log Out
                     </NavDropdown.Item>

@@ -3,6 +3,7 @@ import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import CustomNavbar from './CustomNavbar';
 import { register } from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
+import './AddBlog.css';
 import axios from 'axios';
 
 const BloggerRegistration = () => {
@@ -116,10 +117,10 @@ const BloggerRegistration = () => {
 
   return (
     <>
-      <CustomNavbar />
-      <Container >
+      {/* <CustomNavbar /> */}
+      <Container className="blogger-reg-container" >
         <h2 className="mt-5 text-center">Blogger Registration</h2>
-        <Form onSubmit={handleSubmit} className='border p-2'>
+        <Form onSubmit={handleSubmit} className=' p-2'>
           <Row className="justify-content-center">
             <Col lg={6}>
               <Form.Group className="mb-3">
@@ -223,3 +224,6 @@ const BloggerRegistration = () => {
 };
 
 export default BloggerRegistration;
+
+
+

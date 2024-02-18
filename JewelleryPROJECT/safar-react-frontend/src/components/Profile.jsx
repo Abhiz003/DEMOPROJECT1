@@ -49,7 +49,7 @@ function Profile() {
 
   return (
     <>
-      <CustomNavbar />
+      {/* <CustomNavbar /> */}
       <Container className="mt-5">
         <h2 className="mb-4 head">Welcome {name}...</h2>
         <Card className="card">

@@ -35,20 +35,20 @@ const Logs = () => {
     };
 
 
-    const WORDS_LIMIT = 30;
+    // const WORDS_LIMIT = 30;
 
-    const truncateDescription = (logDescription) => {
-        const words = logDescription.split(' ');
-        if (words.length > WORDS_LIMIT) {
-            return words.slice(0, WORDS_LIMIT);
-        }
-        return logDescription;
-    };
+    // const truncateDescription = (logDescription) => {
+    //     const words = logDescription.split(' ');
+    //     if (words.length > WORDS_LIMIT) {
+    //         return words.slice(0, WORDS_LIMIT);
+    //     }
+    //     return logDescription;
+    // };
 
     const handleTimeLine = () => {
         return logs.map((log, index) => {
             const side = index % 2 === 0 ? "left" : "right";
-            const { placeName, startTime, exitTime, logDescription } = log;
+            // const logData= { placeName, startTime, exitTime, logDescription };
             return (
                 <div key={index} className={`content-container ${side}-container`}>
                     <i className="fa-solid fa-gear"></i>
@@ -63,13 +63,14 @@ const Logs = () => {
                         <h2>{log.placeName}</h2>
                         <small>{log.startTime} - {log.exitTime}</small>
                         <p className="log-description" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {truncateDescription(log.logDescription)}{' '}
-                            {log.logDescription.length > WORDS_LIMIT && (
-                                <span className="read-more-link">...</span>
-                            )}
+                            {/* {truncateDescription(log.logDescription)}{' '} */}
+                            {/* {log.logDescription.length > WORDS_LIMIT && ( */}
+                            {log.logDescription }
                         </p>
                         <span className={`${side}-container-arrow`}></span>
-                        <Button onClick={() => navigate("/trip-details")} className="btn btn-primary">View more</Button>
+                       
+                        <Button onClick={() => {console.log("Place name is : ", log.placename); navigate("/trip-details", { state: { placeName: log.placeName, passAmount: log.passAmount, description: log.logDescription} })}} className="btn btn-primary">View more</Button>
+
                     </div>
                 </div>
             );
@@ -79,7 +80,7 @@ const Logs = () => {
 
     return (
         <>
-            <CustomNavbar />
+            {/* <CustomNavbar /> */}
             <div className="container logs-container" >
                 <div className="timeline " style={{ paddingBottom: '50px' }}>
 

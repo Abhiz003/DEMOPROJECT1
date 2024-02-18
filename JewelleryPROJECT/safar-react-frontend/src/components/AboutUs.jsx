@@ -11,7 +11,7 @@ import { faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg
 const AboutUs = () => {
     return (
         <>
-            <CustomNavbar />
+            {/* <CustomNavbar /> */}
             <section className="section-white mt-5">
                 <div className="container text-center">
                     <h1>About SAFAR</h1>
@@ -63,7 +63,7 @@ const AboutUs = () => {
 
                                             <div className="social-buttons">
 
-                                                <a href="https://www.linkedin.com/in/abhijitb3/" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                                <a href="https://www.linkedin.com/in/abhijitb3/" target="_blank" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-linkedin-in"></i>
                                                     </span>
@@ -73,12 +73,12 @@ const AboutUs = () => {
                                                         <i className="fab fa-instagram"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://github.com/Abhiz003" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                                <a href="https://github.com/Abhiz003" target="_blank" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-github"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
+                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new"  target="_blank" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                     <i className="fa-solid fa-envelope fa-fade" ></i>
                                                     </span>
@@ -102,7 +102,7 @@ const AboutUs = () => {
 
                                             <div className="social-buttons">
 
-                                                <a href="https://in.linkedin.com/in/gopal-patil-54824a242" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                                <a href="https://in.linkedin.com/in/gopal-patil-54824a242" target="_blank" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-linkedin-in"></i>
                                                     </span>
@@ -112,12 +112,12 @@ const AboutUs = () => {
                                                         <i className="fab fa-instagram"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://github.com/GitCloud-tech" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                                <a href="https://github.com/GitCloud-tech" target="_blank" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                         <i className="fab fa-github"></i>
                                                     </span>
                                                 </a>
-                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" className="social-buttons__button social-button social-button--gmail" title="gopal@netcomjaipur.in" aria-label="GitHub">
+                                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" target="_blank" className="social-buttons__button social-button social-button--gmail" title="gopal@netcomjaipur.in" aria-label="GitHub">
                                                     <span className="social-button__inner">
                                                     <i className="fa-solid fa-envelope fa-fade" ></i>
                                                     </span>

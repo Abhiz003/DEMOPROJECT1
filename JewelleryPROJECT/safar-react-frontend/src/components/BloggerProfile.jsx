@@ -7,11 +7,12 @@ import CustomNavbar from './CustomNavbar';
 import { deleteBlogger } from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../utils/TokenUtil';
+import axios from 'axios';
 
 const BloggerProfile = () => {
   const name = sessionStorage.getItem('userName');
   const email = sessionStorage.getItem('userEmail');
-  const newid = sessionStorage.getItem('userId');
+  const bloggerId = sessionStorage.getItem('userId');
 
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -39,24 +40,24 @@ const BloggerProfile = () => {
 
   const navigate = useNavigate();
 
-  const [userImages, setUserImages] = useState([]);
+  const [bloggerImages, setBloggerImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [artImage, setArtImage] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState(null);
 
   useEffect(() => {
-    fetchUserImages(newid);
-  }, [newid]);
+    fetchBloggerImages(bloggerId);
+  }, [bloggerId]);
 
-  const fetchUserImages = async (userId) => {
+  const fetchBloggerImages = async (bloggerId) => {
     try {
-      const response = await fetch(`http://localhost:8080/blog/fetchBlogtPhotosByBlogger/${userId}`);
-      const data = await response.json();
+      const response = await axios.get(`http://localhost:8080/blog/fetchBlogtPhotosByBlogger/${bloggerId}`);
+      
 
-      if (data.status) {
-        setUserImages(data.list);
+      if (response.status) {
+        setBloggerImages(response.list);
         setLoading(false);
       } else {
-        console.error('Failed to fetch user images:', data.statusMessage);
+        console.error('Failed to fetch user images:', response.statusMessage);
       }
     } catch (error) {
       console.error('Error fetching user images:', error);
@@ -73,21 +74,17 @@ const BloggerProfile = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/blog/delete/${imageId}`, {
-        method: 'DELETE',
-      });
+      const response = await axios.delete(`http://localhost:8080/blog/delete/${imageId}`);
 
-      const data = await response.json();
-
-      if (data.status) {
-        alert('Art image deleted successfully');
+      if (response.status) {
+        alert('Blog image deleted successfully');
 
         setSelectedImage(null);
         setShowZoom(false);
 
-        fetchUserImages(newid);
+        fetchBloggerImages(bloggerId);
       } else {
-        console.error('Failed to delete blog image:', data.statusMessage);
+        console.error('Failed to delete blog image:', response.statusMessage);
       }
     } catch (error) {
       console.error('Error deleting blog image:', error);
@@ -102,17 +99,13 @@ const BloggerProfile = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/delete-blogger/${newid}`, {
-        method: 'DELETE',
-      });
+      const response = await axios.delete(`http://localhost:8080/delete-blogger/${bloggerId}`);
 
-      const data = await response.json();
-
-      if (data.status) {
+      if (response.status) {
         alert('Account deleted successfully');
 
       } else {
-        console.error('Failed to delete account:', data.statusMessage);
+        console.error('Failed to delete account:', response.statusMessage);
       }
     } catch (error) {
       console.error('Error deleting account:', error);
@@ -120,25 +113,25 @@ const BloggerProfile = () => {
   };
   
 
-  const renderUserImages = () => {
+  const renderBloggerImages = () => {
     return (
       <div className="user-images">
         {loading ? (
           <p>Loading...</p>
         ) : (
-          Array.isArray(userImages) && userImages.length > 0 ? (
-            userImages.map((image, index) => (
+          Array.isArray(bloggerImages) && bloggerImages.length > 0 ? (
+            bloggerImages.map((image, index) => (
               <div key={index} className="user-image-container">
                 <img
-                  src={`http://localhost:8080/artist/fetch/pic/${image.id}`}
-                  alt={`User Image ${index + 1}`}
+                  src={`http://localhost:8080/blogger/fetch/pic/${image.id}`}
+                  alt={`Blogger Image ${index + 1}`}
                   className="user-image"
                   onClick={() => handleZoomIn(image.id)}
                 />
               </div>
             ))
           ) : (
-            <p>No user images available.</p>
+            <p>No blogger images available.</p>
           )
         )}
       </div>
@@ -146,42 +139,40 @@ const BloggerProfile = () => {
   };
 
   const handleChange = (event) => {
-    setArtImage(event.target.files[0]);
+    setPhotoUrl(event.target.files[0]);
   };
 
   const handleUpload = async () => {
-    if (!artImage) {
+    if (!photoUrl) {
       alert('Please select an image before uploading.');
       return;
     }
 
     const formData = new FormData();
-    formData.append('blogger.bloggerId', newid);
-    formData.append('photoUrl', artImage);
+    formData.append('blogger.bloggerId', bloggerId);
+    formData.append('photoUrl', photoUrl);
 
     try {
-      const response = await fetch('http://localhost:8080/add-blog', {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await axios.post('http://localhost:8080/add-blog', formData);
 
-      const data = await response.json();
-
-      if (data.status) {
+      if (response.status) {
         alert('Image uploaded successfully');
-        setArtImage(null);
-        fetchUserImages(newid);
+        setPhotoUrl(null);
+        fetchBloggerImages(bloggerId);
       } else {
-        console.error('Failed to upload art image:', data.statusMessage);
+        console.error('Failed to upload art image:', response.statusMessage);
       }
     } catch (error) {
       console.error('Error uploading art image:', error);
     }
   };
 
+
+
+
   return (
     <>
-      <CustomNavbar />
+      {/* <CustomNavbar /> */}
       <Container className="mt-5">
         <h2 className="mb-4 head">Welcome {name}...</h2>
         <Card className="card">
@@ -192,7 +183,7 @@ const BloggerProfile = () => {
             <div className="text-center mb-4">
               <img
                 className="newImage"
-                src={`http://localhost:8080/blogger/fetch/profilePic/${newid}`}
+                src={`http://localhost:8080/blogger/fetch/profilePic/${bloggerId}`}
                 alt="Profile Pic"
                 onClick={() => handleProfileZoomIn()} 
               />
@@ -220,14 +211,14 @@ const BloggerProfile = () => {
               </div>
             </div>
             <div style={{ marginTop: '30px' }}>
-              <h4 style={{ color: '#555' }}>Uploaded Arts</h4>
-              {renderUserImages()}
+              <h4 style={{ color: '#555' }}>Uploaded Blogs</h4>
+              {renderBloggerImages()}
             </div>
             <div style={{ marginTop: '30px' }}>
-              <h4 style={{ color: '#555' }}>Upload Art Image</h4>
+              <h4 style={{ color: '#555' }}>Upload Blog Images</h4>
               <Form>
                 <Form.Group className="mb-3">
-                  <Form.Label>Art Image</Form.Label>
+                  <Form.Label>Blogs Images</Form.Label>
                   <Form.Control type="file" name="photoUrl" onChange={handleChange} />
                 </Form.Group>
                 <Button variant="primary" className="mt-2" onClick={handleUpload}>
@@ -277,7 +268,7 @@ const BloggerProfile = () => {
           <Modal.Body>
             <img
               className='zoomed-profile-pic'
-              src={`http://localhost:8080/blogger/fetch/profilePic/${newid}`}
+              src={`http://localhost:8080/blogger/fetch/profilePic/${bloggerId}`}
               alt="Zoomed Profile Pic"
             />
           </Modal.Body>

@@ -109,7 +109,7 @@ const Blogger = () => {
 
   return (
     <>
-      <CustomNavbar />
+      {/* <CustomNavbar /> */}
       <Container>
         <Header>Our Contributors</Header>
         

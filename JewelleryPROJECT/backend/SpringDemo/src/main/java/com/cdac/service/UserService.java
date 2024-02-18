@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cdac.entity.User;
 import com.cdac.entity.User.UserStatus;
@@ -19,6 +21,10 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	
+	
+	
 	
 	public int register(User user) {
 	    Optional<User> isUserAlreadyPresent = userRepository.findByUserEmail(user.getUserEmail());

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CookieConsent from "react-cookie-consent";
 import { Home } from './components/Home';
 import Login from './components/Login';
@@ -31,6 +32,10 @@ import AllUsers from './components/AllUsers';
 import AllBloggers from './components/AllBloggers';
 import TripDetails from './components/TripDetails';
 import UpdateBlog from './components/UpdateBlog';
+import AdminNavbar from './components/AdminNavbar';
+import CustomNavbar from './components/CustomNavbar';
+
+import { isAdmin , isBlogger} from './utils/TokenUtil';
 
 
 export const App = () => {
@@ -54,6 +59,9 @@ export const App = () => {
 
   return (
     <BrowserRouter>
+
+      {isAdmin() ? <AdminNavbar/> : isBlogger() ? <CustomNavbar title={"Blogger"}/>: <CustomNavbar title={"User"} />}
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/log-in' element={<RedirectIfLoggedIn><Login /></RedirectIfLoggedIn>} />

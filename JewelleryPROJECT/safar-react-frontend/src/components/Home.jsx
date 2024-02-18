@@ -16,7 +16,7 @@ export function Home() {
     const navigate = useNavigate();
     return (
         <>
-            <CustomNavbar />
+            {/* <CustomNavbar /> */}
             <Carousel fade controls={false}>
                 <Carousel.Item>
                     <img src={img1} alt="First slide" className="carousel-image" />
@@ -55,7 +55,7 @@ export function Home() {
                 </Carousel.Item>
                 
             </Carousel>
-
+        <hr/>
 
             <FeaturedProducts />
 

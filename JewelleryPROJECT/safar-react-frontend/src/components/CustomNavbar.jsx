@@ -9,7 +9,7 @@ import { NavDropdown, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const CustomNavbar = () => {
+const CustomNavbar = ({title}) => {
   const navigate = useNavigate();
 
   const handleLogOutClick = () => {
@@ -30,10 +30,10 @@ const CustomNavbar = () => {
   };
   return (
     <> 
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar" bg="dark" data-bs-theme="dark">
+      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar w-100"  data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="/">
-						<img src="Images/Logo/TheSafarLogo.png" className="logo" alt="SAFAR" />
+						<img src="Images/Logo/TheSafarLogo.png" title={title} className="logo" alt="SAFAR" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="me-2">

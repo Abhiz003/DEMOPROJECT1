@@ -28,7 +28,7 @@ const AdminBlogs = () => {
 
   return (
     <>
-      <AdminNavbar />
+      {/* <AdminNavbar /> */}
       <div className="exhibition-container">
         <div className="exhibition-header">
           <h2 className="exhibition-title">All Blogs</h2>

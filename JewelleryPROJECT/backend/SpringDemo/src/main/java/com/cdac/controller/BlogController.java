@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,6 +44,10 @@ public class BlogController {
 	@Autowired
 	private BloggerService bloggerService;
 	
+	
+	String imgPath = BloggerController.imgPath;   // calling the basepath of images folder
+	
+	
 //	@PostMapping("/add-blog")
 //	public ResponseEntity<RegistrationStatus> registerBlog(    @ModelAttribute BlogDetail blogDetail) {
 //	    try {
@@ -72,7 +75,7 @@ public class BlogController {
 //	                blog.setPhotoUrl(generatedFileName);
 //
 //	                InputStream is = pic.getInputStream();
-//	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp" + File.separator +  "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+//	                FileOutputStream os = new FileOutputStream(imgPath + File.separator + generatedFileName);
 //	                FileCopyUtils.copy(is, os);
 //	            } catch (IOException e) {
 //	                e.printStackTrace();
@@ -127,14 +130,13 @@ public class BlogController {
 	        // Check if Pic is not null before accessing properties
 	        if (pic != null) {
 	            try {
-	                String fileName = pic.getOriginalFilename();
 
-	                String generatedFileName = fileName;
+	                String generatedFileName = pic.getOriginalFilename();
 
 	                blog.setPhotoUrl(generatedFileName);
 
 	                InputStream is = pic.getInputStream();
-	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + generatedFileName);
+	                FileOutputStream os = new FileOutputStream(imgPath + File.separator + generatedFileName);
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -163,9 +165,7 @@ public class BlogController {
 	    }
 	}
 
-	
-	
-	
+		
 	
 	
 	//------------------Fetch ONE BLOG BY ID ---------------------????????/
@@ -193,7 +193,7 @@ public class BlogController {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath(imgPath, blog.getPhotoUrl());
            byte[] imageBytes = Files.readAllBytes(imagePath);
 
            HttpHeaders headers = new HttpHeaders();
@@ -216,7 +216,7 @@ public class BlogController {
 //	         }
 //
 //	         // Assuming blog.getPhotoUrl() contains the correct image filename
-//	         Path imagePath = Paths.get("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+//	         Path imagePath = Paths.get(imgPath, blog.getPhotoUrl());
 //	         byte[] imageBytes = Files.readAllBytes(imagePath);
 //
 //	         HttpHeaders headers = new HttpHeaders();
@@ -392,7 +392,7 @@ public class BlogController {
 	                existingBlog.setPhotoUrl(fileName);
 
 	                InputStream is = pic.getInputStream();
-	                FileOutputStream os = new FileOutputStream("C:" + File.separator + "ReactSpringbootApp"+ File.separator + "ReactSpringApp" + File.separator + "JewelleryPROJECT" + File.separator + "All-IMAGES" + File.separator + fileName);
+	                FileOutputStream os = new FileOutputStream(imgPath + File.separator + fileName);
 	                FileCopyUtils.copy(is, os);
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -424,7 +424,7 @@ public class BlogController {
                throw new BloggerServiceException("Blog with id " + id + " does not exist!");
            }
 
-           Path imagePath = FileSystems.getDefault().getPath("C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES", blog.getPhotoUrl());
+           Path imagePath = FileSystems.getDefault().getPath(imgPath, blog.getPhotoUrl());
            Files.deleteIfExists(imagePath);
 
            blogService.deleteImage(blog);

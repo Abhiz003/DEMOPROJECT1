@@ -27,7 +27,7 @@ const AllBloggers = () => {
 
     return (
         <>
-            <AdminNavbar />
+            {/* <AdminNavbar /> */}
             <Container fluid="md mt-4">
                 <Row>
                     {bloggers.length === 0 ? (
