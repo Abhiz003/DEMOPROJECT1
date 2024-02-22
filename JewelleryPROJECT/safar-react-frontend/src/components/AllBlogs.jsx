@@ -4,10 +4,11 @@ import CustomNavbar from './CustomNavbar';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { saveAs } from 'file-saver';
 import { useNavigate } from 'react-router-dom';
-import './MyBlogs.css';
+import '../Styles/MyBlogs.css';
 import axios from 'axios';
 // import { getUserId } from '../utils/TokenUtil';
 import { getBlogImage} from '../Services/BlogService';
+import { isAdmin } from '../utils/TokenUtil';
 
 
 
@@ -37,21 +38,6 @@ const AllBlogs = () => {
     fetchBlogs();
   }, []);
 
-  const handleShowDownloadConfirmation = (blogId) => {
-    setSelectedBlogId(blogId);
-    setShowDownloadConfirmation(true);
-  };
-
-  const handleConfirmDownload = () => {
-    handleDownload(selectedBlogId);
-    setShowDownloadConfirmation(false);
-  };
-
-  const handleCancelDownload = () => {
-    setSelectedBlogId(null);
-    setShowDownloadConfirmation(false);
-  };
-
   const handleOpenZoom = (blogId) => {
     setZoomedImage(getBlogImage(blogId));
     setShowZoom(true);
@@ -61,48 +47,33 @@ const AllBlogs = () => {
     setShowZoom(false);
   };
 
-  const handleDownload = (blogId) => {
-    const contentType = 'image/png';
-
-    fetch(getBlogImage(blogId))
-      .then((response) => response.blob())
-      .then((blob) => {
-        const file = new File([blob], `Blog_${blogId}.png`, { type: contentType });
-
-        saveAs(file);
-      })
-      .catch((error) => {
-        console.error('Error downloading image:', error);
-      });
-  };
-
-  // const handleDelete = async (blogId) => {
-  //   if (window.confirm("Do you want to delete the Blog?")) {
-  //     try {
-  //       const response = await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
-  //       console.log('Response from handleDelete:', response);
-      
-  //       if (response.status === 200) {
-  //         alert("Blog deleted successfully");
-  //         setBlogs((prevBlogs) => prevBlogs.filter(blog => blog.id !== blogId));
-  //       } else {
-  //         alert(`Failed to delete blog: ${response.data.statusMessage}`);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error deleting blog:', error);
-  //       alert(`Failed to delete blog: ${error.message}`);
-  //     }
-  //   }
-  // };
-  
-
-
 
   const handleContextMenu = (event) => {
     event.preventDefault();
   };
 
+  // const handleDelete = (blogId) => {
+  //   axios.delete(`http://localhost:8080/blog/delete/${blogId}`)
+  //   .then()
+  // }
   
+//   const handleDelete = async (blogId) => {
+//     const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+
+//     if (confirmDelete) {
+//         console.log(blogId);
+//         try {
+//             await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
+//             console.log("Blog deleted successfully");
+//             window.location.reload();
+//         } catch (error) {
+//             console.error('Failed to delete blog:', error);
+//             alert("Unable to delete the blog, try reloading !!!")
+//         }
+//     }
+// };
+
+
   return (
     <>
       <Container className="mt-5 my-blogs-container">
@@ -128,14 +99,6 @@ const AllBlogs = () => {
                   <div className="blog-info">
                     <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>
                       <span style={{ marginRight: '10px' }}>{blog.title}</span>
-                      <Button
-                        variant="secondary"
-                        className="downloadButton"
-                        onClick={() => handleShowDownloadConfirmation(blog.id)}
-                        style={{ marginLeft: '10px' }}
-                      >
-                        <AiOutlineDownload size={20} />
-                      </Button>
                     </p>
                     <p>
                       <b>Start date:</b> {blog.startDate} &nbsp;
@@ -153,59 +116,20 @@ const AllBlogs = () => {
                       {blog.blogDescription}
                     </p>
                     {/* <Button onClick={() => navigate('/my-logs', blogId={blog.id})} > View</Button> &nbsp; */}
-                    <Button onClick={() => navigate('/my-logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
+                    <Button onClick={() => navigate('/logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
 
                     {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
                     
-                    {/* <Button onClick={handleDelete(blog.id)}>Delete</Button>  */}
+                    {/* {isAdmin() && <Button onClick={handleDelete(blog.id)}>Delete</Button>}  */}
                   </div>
-                      
-
-
                 </Card.Body>
               </Card>
             ))}
           </>
         )}
-
-        <div className="d-flex">
-          <Button onClick={() => navigate('/add-blog')}>Add New Blog</Button>
-        </div>
       </Container>
 
-      <Modal show={showDownloadConfirmation} onHide={handleCancelDownload}>
-        <Modal.Header closeButton>
-          <Modal.Title> Confirm Download</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>You're about to immortalize this blog on your device! 🚀</p>
-          <p>Hit the "Download" button and know more about my journey! 🎉</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCancelDownload}>
-            Nah, I'll pass 😎
-          </Button>
-          <Button variant="primary" onClick={handleConfirmDownload}>
-            Download this journey 🌟
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showZoom} onHide={() => setShowZoom(false)}>
-        <Modal.Body className="p-0">
-          <img
-            className="arts zoomed-image"
-            src={zoomedImage}
-            alt={`Zoomed view`}
-            onContextMenu={handleContextMenu}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleZoomOut}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+     
     </>
   );
 };

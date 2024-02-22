@@ -44,8 +44,13 @@ public class BloggerController {
 	
 	
 	
-	
-	//--------------------- Create  New Blogger --------------------
+
+	/**
+	 * --------------------- Create  New Blogger -------------------- 
+	 * 
+	 * @param bloggerDetails
+	 * @return
+	 */
 	@PostMapping("/register-blogger")
     public ResponseEntity<RegistrationStatus> registerBlogger(BloggerDetail bloggerDetails) {
         try {
@@ -95,9 +100,14 @@ public class BloggerController {
 
 	
 	
-	
-	
-	//-----------------Blogger Login API-----------------
+
+	/**
+	 * ----------------Blogger Login API-----------------
+	 * 
+	 * 
+	 * @param blogger
+	 * @return
+	 */
 	@PostMapping("/login-blogger")
 	public RegistrationStatus isBloggerPresent(@RequestBody Blogger blogger){
 		try {

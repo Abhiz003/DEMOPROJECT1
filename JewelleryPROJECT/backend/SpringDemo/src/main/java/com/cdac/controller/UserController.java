@@ -81,54 +81,7 @@ public class UserController {
     
     
     
-    
-    
-//    @PostMapping("/register-user")
-//    public ResponseEntity<RegistrationStatus> registerv3(@RequestParam("profilePic") MultipartFile profilePic,
-//                                                        @RequestParam("userName") String userName,
-//                                                        @RequestParam("userEmail") String userEmail,
-//                                                        @RequestParam("userPhone") long userPhone,
-//                                                        @RequestParam("userPassword") String userPassword) {
-//        try {
-//            User user = new User();
-//            user.setUserName(userName);
-//            user.setUserEmail(userEmail);
-//            user.setUserPhone(userPhone);
-//            user.setUserPassword(userPassword);
-//
-//            try {
-//                String fileName = profilePic.getOriginalFilename();
-//                String generatedFileName = fileName;
-//
-//                user.setProfilePic(generatedFileName);
-//
-//                // Update the path to your desired directory
-//                String uploadPath = "C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES\\UserProfiles\\" + generatedFileName;
-//
-//                InputStream is = profilePic.getInputStream();
-//                FileOutputStream os = new FileOutputStream(uploadPath);
-//                FileCopyUtils.copy(is, os);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            int id = userService.register(user);
-//            RegistrationStatus status = new RegistrationStatus();
-//            status.setStatus(true);
-//            status.setStatusMessage("Registration successful!");
-//            status.setId(id);
-//
-//            return new ResponseEntity<>(status, HttpStatus.OK);
-//
-//        } catch (UserServiceException e) {
-//            RegistrationStatus status = new RegistrationStatus();
-//            status.setStatus(false);
-//            status.setStatusMessage(e.getMessage());
-//
-//            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
+ 
 
     
     
@@ -297,7 +250,63 @@ public class UserController {
 
    
     
-    
-    
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//@PostMapping("/register-user")
+//public ResponseEntity<RegistrationStatus> registerv3(@RequestParam("profilePic") MultipartFile profilePic,
+//                                                  @RequestParam("userName") String userName,
+//                                                  @RequestParam("userEmail") String userEmail,
+//                                                  @RequestParam("userPhone") long userPhone,
+//                                                  @RequestParam("userPassword") String userPassword) {
+//  try {
+//      User user = new User();
+//      user.setUserName(userName);
+//      user.setUserEmail(userEmail);
+//      user.setUserPhone(userPhone);
+//      user.setUserPassword(userPassword);
+//
+//      try {
+//          String fileName = profilePic.getOriginalFilename();
+//          String generatedFileName = fileName;
+//
+//          user.setProfilePic(generatedFileName);
+//
+//          // Update the path to your desired directory
+//          String uploadPath = "C:\\ReactSpringbootApp\\ReactSpringApp\\JewelleryPROJECT\\All-IMAGES\\UserProfiles\\" + generatedFileName;
+//
+//          InputStream is = profilePic.getInputStream();
+//          FileOutputStream os = new FileOutputStream(uploadPath);
+//          FileCopyUtils.copy(is, os);
+//      } catch (IOException e) {
+//          e.printStackTrace();
+//      }
+//
+//      int id = userService.register(user);
+//      RegistrationStatus status = new RegistrationStatus();
+//      status.setStatus(true);
+//      status.setStatusMessage("Registration successful!");
+//      status.setId(id);
+//
+//      return new ResponseEntity<>(status, HttpStatus.OK);
+//
+//  } catch (UserServiceException e) {
+//      RegistrationStatus status = new RegistrationStatus();
+//      status.setStatus(false);
+//      status.setStatusMessage(e.getMessage());
+//
+//      return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//  }
+//}

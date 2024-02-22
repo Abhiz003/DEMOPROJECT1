@@ -15,7 +15,7 @@ public class LogDetail {
     private String placeName;
     private String startTime;
     private String exitTime;
-    private MultipartFile imageUrl; // You might want to handle file uploads differently
+    private MultipartFile imageUrl; 
     private String logDescription;
     private String passAmount;
     private String location;

@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { getAllBlogger } from '../Services/UserService';
-import AdminNavbar from './AdminNavbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import '../Styles/AllBloggers.css';
 
 const AllBloggers = () => {
     const [bloggers, setBloggers] = useState([])
-
-
 
     useEffect(() => {
         const fetchAllBloggers = async () => {
@@ -27,17 +25,17 @@ const AllBloggers = () => {
 
     return (
         <>
-            {/* <AdminNavbar /> */}
             <Container fluid="md mt-4">
-                <Row>
+                <Row className="bloggers-row">
                     {bloggers.length === 0 ? (
                         <p>No bloggers registered.</p>
                     ) : (
                         <>
                             {bloggers.map((blogger, index) => (
-                                <Col>
-                                    <Card key={blogger.bloggerId} style={{ width: '18rem' }}>
-                                        <Card.Img variant="top" src="Images/dummyUser.png" />
+                                <Col key={index}>
+                                    <Card key={blogger.bloggerId} className="blogger-card">
+                                        <Card.Img variant="top" src="Images/dummyUser.png"  className="blogger-img "/>
+                                        {/* <Card.Img variant="top" src={`http://localhost:8080/blogger/fetch/profilePic/${blogger.bloggerId}`} /> */}
                                         <Card.Body>
                                             <Card.Title>{blogger.bloggerName}</Card.Title>
                                             <Card.Text>

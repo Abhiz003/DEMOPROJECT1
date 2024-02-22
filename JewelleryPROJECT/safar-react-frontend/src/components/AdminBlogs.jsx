@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './AllBlogs.css';
-import AdminNavbar from "./AdminNavbar";
+import '../Styles/AllBlogs.css';
 import { Button } from 'react-bootstrap';
 
 const AdminBlogs = () => {
@@ -10,7 +9,7 @@ const AdminBlogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/exhibitions/get/exhibitions');
+        const response = await fetch('http://localhost:8080/admin/blogs/myblogs');
         const data = await response.json();
         setBlogData(data);
       } catch (error) {
@@ -28,7 +27,6 @@ const AdminBlogs = () => {
 
   return (
     <>
-      {/* <AdminNavbar /> */}
       <div className="exhibition-container">
         <div className="exhibition-header">
           <h2 className="exhibition-title">All Blogs</h2>

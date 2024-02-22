@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
-import CustomNavbar from './CustomNavbar';
 import { getBloggerDetails, updateBlogger } from '../Services/UserService';
 import { useNavigate, useParams } from 'react-router-dom';
 

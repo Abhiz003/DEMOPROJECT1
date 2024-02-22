@@ -1,0 +1,16 @@
+.bloggers-row {
+    display: flex;
+    gap: 20px;
+
+}
+
+.blogger-img {
+    margin: auto;
+    height: 100px;
+    width: 90px
+}
+
+.blogger-card {
+    width: 18rem;
+    /* height */
+}

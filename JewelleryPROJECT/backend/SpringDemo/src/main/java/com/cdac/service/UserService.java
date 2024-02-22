@@ -23,9 +23,6 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	
-	
-	
-	
 	public int register(User user) {
 	    Optional<User> isUserAlreadyPresent = userRepository.findByUserEmail(user.getUserEmail());
 	    if (isUserAlreadyPresent.isEmpty()) {
@@ -69,6 +66,13 @@ public class UserService {
 	    }
 	}
 	
+	
+	
+	/**
+	 * Update User service
+	 * @param user
+	 * @return
+	 */
 	public int update(User user) {
 	    Optional<User> optionalUser = userRepository.findById(user.getUserId());
 

@@ -46,67 +46,19 @@ public class LogController {
 	
 	String imgPath = BloggerController.imgPath; //calling the basepath of images folder
 	
-//	@PostMapping("/add-blog")
-//	public ResponseEntity<RegistrationStatus> registerBlog(    @ModelAttribute BlogDetail blogDetail) {
-//	    try {
-//	        Blog blog = new Blog();
-//	        Blogger blogger = bloggerService.fetchById(blogDetail.getBloggerId());
-//	        blog.setBlogger(blogger);
-//	        blog.setTitle(blogDetail.getTitle());
-//	        blog.setStartDate(blogDetail.getStartDate());
-//	        blog.setEndDate(blogDetail.getEndDate());
-//	        blog.setBlogDescription(blogDetail.getBlogDescription());
-//	        blog.setMembers(blogDetail.getMembers());
-//	        blog.setTotalCost(blogDetail.getTotalCost());
-//	        blog.setTransportationMode(blogDetail.getTransportationMode());
-//	       
-//	        
-//	        MultipartFile pic = blogDetail.getPhotoUrl();
-//	        
-//	        // Check is Pic is not null before accessing properties
-//	        if (pic != null) {
-//	            try {
-//	                String fileName = pic.getOriginalFilename();
-//
-//	                String generatedFileName = fileName; 
-//
-//	                blog.setPhotoUrl(generatedFileName);
-//
-//	                InputStream is = pic.getInputStream();
-//	                FileOutputStream os = new FileOutputStream( imgPath + File.separator + generatedFileName);
-//	                FileCopyUtils.copy(is, os);
-//	            } catch (IOException e) {
-//	                e.printStackTrace();
-//	            }
-//	        } else {
-//	            RegistrationStatus status = new RegistrationStatus();
-//	            status.setStatus(false);
-//	            status.setStatusMessage("picture is required.");
-//	            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-//	        }
-//
-//	        Blog addedBlog = blogService.addBlog(blog);
-//	        RegistrationStatus status = new RegistrationStatus();
-//	        status.setStatus(true);
-//	        status.setStatusMessage("Photo Uploaded Successful!");
-//	        status.setId(addedBlog.getId());
-//
-//	        return new ResponseEntity<>(status, HttpStatus.OK);
-//
-//	    } catch (BloggerServiceException e) {
-//	        RegistrationStatus status = new RegistrationStatus();
-//	        status.setStatus(false);
-//	        status.setStatusMessage(e.getMessage());
-//
-//	        return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-//	    }
-//	}
+
 	
 	
 	
 	
 	
-	//--------xxxxxxxxxxxx---------Create New Log API ----------xxxxxxxxxx-------------
+	/**
+	 * --------xxxxxxxxxxxx---------Create New Log API ----------xxxxxxxxxx-------------
+	 * 
+	 * @param blogId
+	 * @param logDetail
+	 * @return
+	 */
 	@PostMapping("/add-log")
 	public ResponseEntity<RegistrationStatus> registerLog(
 	    @RequestParam("blogId") int blogId,
@@ -131,9 +83,8 @@ public class LogController {
 	        // Check if Pic is not null before accessing properties
 	        if (logPic != null) {
 	            try {
-	                String fileName = logPic.getOriginalFilename();
-
-	                String generatedFileName = fileName;
+	                
+	                String generatedFileName = logPic.getOriginalFilename();
 
 	                log.setImageUrl(generatedFileName);
 
@@ -154,10 +105,10 @@ public class LogController {
 	        RegistrationStatus status = new RegistrationStatus();
 	        status.setStatus(true);
 	        status.setStatusMessage("Photo Uploaded Successful!");
-	        status.setId(addedLog.getLogId());    //-------- something wrong
+	        status.setId(addedLog.getLogId());  
 	        return new ResponseEntity<>(status, HttpStatus.OK);
 
-	    } catch (BloggerServiceException e) {      //-----------catch universal exception or simply show any message
+	    } catch (BloggerServiceException e) {      
 	        RegistrationStatus status = new RegistrationStatus();
 	        status.setStatus(false);
 	        status.setStatusMessage(e.getMessage());
@@ -169,34 +120,43 @@ public class LogController {
 	
 	
 	
-	
-	
-	//-----xxxxxxxx----Read A Log using id -----------xxxxxxxxxx----
+
+	/**
+	 *----xxxxxxxx----------------Read A Log using id -----------xxxxxxxxxx----------------- 
+	 * 
+	 * @param logId
+	 * @return
+	 */
 	
 	 @GetMapping("/blog/log/{logId}")
    public Log fetchByLogId(@PathVariable int logId) {
        Log log = logService.fetchByLogId(logId);
-       //-------surround with try catch ---------------------
+       
        if (log == null) {
            throw new BloggerServiceException("Blog with id " + logId + " does not exist!");
        }
        return log;
-       //---------------------------
    }
 	 			
 	 
-	 //--------------------Read  image of A Log-----------------
 	 
+	 
+	 
+	 
+	 /**
+	  *--------------------Get an image of A Log using Log id----------------- 
+	  * 
+	  * @param logId
+	  * @return
+	  */
    @GetMapping(path = "/blog/fetch/logPic/{logId}", produces = MediaType.IMAGE_JPEG_VALUE)
    public ResponseEntity<byte[]> getLogPic(@PathVariable int logId) {
        try {
            Log log = logService.fetchByLogId(logId);
-           //--------------surround with try catch-------------------------------
+           
            if (log == null) {
                throw new BloggerServiceException("Blog with id " + logId + " does not exist!");
-           }
-          //--------------------------------------
-           
+           }     
            
            Path imagePath = FileSystems.getDefault().getPath(imgPath , log.getImageUrl());
            byte[] imageBytes = Files.readAllBytes(imagePath);
@@ -211,85 +171,17 @@ public class LogController {
    }
 
 	 
-	 
-//	 @GetMapping(path = "/blogger/fetch/pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-//	 public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
-//	     try {
-//	         Blog blog = blogService.fetchById(id);
-//	         if (blog == null) {
-//	             throw new BloggerServiceException("Blog with id " + id + " does not exist!");
-//	         }
-//
-//	         // Assuming blog.getPhotoUrl() contains the correct image filename
-//	         Path imagePath = Paths.get(imgPath, blog.getPhotoUrl());
-//	         byte[] imageBytes = Files.readAllBytes(imagePath);
-//
-//	         HttpHeaders headers = new HttpHeaders();
-//	         headers.setContentType(MediaType.IMAGE_JPEG);
-//
-//	         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
-//	     } catch (IOException e) {
-//	         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	     }
-//	 }
-
-	 
-	 
-	 
-	 
-   //-----------XXXXXXXX-----------------changes made here--------------------------------XXXXXXXXXX---------------changes made here ---------
-	 
-//   @GetMapping("/blog/fetchLogs/{blogId}")
-//   public RegistrationStatus fetchLogsByBlogId(@PathVariable String blogId) {
-//       try {
-//           List<Log> logList = logService.fetchLogsByBlogId(Integer.parseInt(blogId));
-//
-//           RegistrationStatus status = new RegistrationStatus();
-//           status.setList(logList);
-//           status.setStatus(true);
-//           status.setStatusMessage("Blog photos fetched successfully.");
-//           return status;
-//       } catch (Exception e) {
-//           RegistrationStatus status = new RegistrationStatus();
-//           status.setStatus(false);
-//           status.setStatusMessage("Failed to fetch blog photos: " + e.getMessage());
-//           return status;
-//       }
-//   }
-//--------------xxxxxxxxxxxxxxxxxx ----------------xxxxxxxxxxxxxxxx-------------xxxxxxxxxxx--------xxxxxxxxxxxxxxxx 
    
    
    
    
    
-   
-   
-   //-------------------Fetch Blog API --------------------------------------------
-   
-//   @GetMapping("/blog/get-my-blogs/{bloggerId}")
-//   public RegistrationStatus fetchBlogsByUserId(@PathVariable String bloggerId) {
-//      try {
-//    	  
-//    	  System.out.println(bloggerId);
-//          List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
-//
-//          System.out.println(blogList);
-//          RegistrationStatus status = new RegistrationStatus();
-//          status.setList(blogList);
-//          status.setStatus(true);
-//          status.setStatusMessage("User's blogs fetched successfully.");
-//          return status;
-//      } catch (Exception e) {
-//          RegistrationStatus status = new RegistrationStatus();
-//          status.setStatus(false);
-//          status.setStatusMessage("Failed to fetch user's blogs: " + e.getMessage());
-//          return status;
-//      }
-//   }
-   
-   
-   
-   //-----------xxxxxxxxxxxx-----------fetch a log based on id -------xxxxxxx-------------
+   /**
+    * -----------xxxxxxxxxxxx-----------Get a LOG based on id -------xxxxxxx-------------
+    * 
+    * @param blogId
+    * @return log
+    */
    @GetMapping("/log/get-logs/{blogId}")
    public List<Log> fetchLogsByBlogId(@PathVariable String blogId) {      // -----------doubt here
       try {
@@ -313,6 +205,11 @@ public class LogController {
    //---------------xxxxxxxxxxxxxxx-----not needed --------xxxxx-----------
    //---------just in case if needed--------------
    
+   /**
+    * ---------------------to fetch all logs -----------------------
+    * 
+    * @return
+    */
    @GetMapping("/log/fetchAllLogs")
    public RegistrationStatus fetchAllLogs() {
        try {
@@ -339,8 +236,14 @@ public class LogController {
    
    
    
-   //-------------Update Log API---------------------------
    
+   /**
+    * ------------- API for Update LOG using log id---------------------------
+    * 
+    * @param logDetail
+    * @param logId
+    * @return 
+    */
    
    @PutMapping("/update-log/{logId}")
    public ResponseEntity<Log> updateLog(@ModelAttribute LogDetail logDetail, @PathVariable String logId)
@@ -381,19 +284,7 @@ public class LogController {
    
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   //------------xxxxxxxxxx---------delete a log--------xxxxxxxxx----------
+   //------------xxxxxxxxxx---------API for deleting  a LOG using log id--------xxxxxxxxx----------
    @DeleteMapping("/log/delete/{logId}")
    public ResponseEntity<RegistrationStatus> deleteLog(@PathVariable int logId) {
        try {
@@ -423,3 +314,144 @@ public class LogController {
 
 
 }
+
+
+
+
+
+
+
+
+//@PostMapping("/add-blog")
+//public ResponseEntity<RegistrationStatus> registerBlog(    @ModelAttribute BlogDetail blogDetail) {
+//    try {
+//        Blog blog = new Blog();
+//        Blogger blogger = bloggerService.fetchById(blogDetail.getBloggerId());
+//        blog.setBlogger(blogger);
+//        blog.setTitle(blogDetail.getTitle());
+//        blog.setStartDate(blogDetail.getStartDate());
+//        blog.setEndDate(blogDetail.getEndDate());
+//        blog.setBlogDescription(blogDetail.getBlogDescription());
+//        blog.setMembers(blogDetail.getMembers());
+//        blog.setTotalCost(blogDetail.getTotalCost());
+//        blog.setTransportationMode(blogDetail.getTransportationMode());
+//       
+//        
+//        MultipartFile pic = blogDetail.getPhotoUrl();
+//        
+//        // Check is Pic is not null before accessing properties
+//        if (pic != null) {
+//            try {
+//                String fileName = pic.getOriginalFilename();
+//
+//                String generatedFileName = fileName; 
+//
+//                blog.setPhotoUrl(generatedFileName);
+//
+//                InputStream is = pic.getInputStream();
+//                FileOutputStream os = new FileOutputStream( imgPath + File.separator + generatedFileName);
+//                FileCopyUtils.copy(is, os);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            RegistrationStatus status = new RegistrationStatus();
+//            status.setStatus(false);
+//            status.setStatusMessage("picture is required.");
+//            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//        }
+//
+//        Blog addedBlog = blogService.addBlog(blog);
+//        RegistrationStatus status = new RegistrationStatus();
+//        status.setStatus(true);
+//        status.setStatusMessage("Photo Uploaded Successful!");
+//        status.setId(addedBlog.getId());
+//
+//        return new ResponseEntity<>(status, HttpStatus.OK);
+//
+//    } catch (BloggerServiceException e) {
+//        RegistrationStatus status = new RegistrationStatus();
+//        status.setStatus(false);
+//        status.setStatusMessage(e.getMessage());
+//
+//        return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+//    }
+//}
+
+
+
+
+
+//	 @GetMapping(path = "/blogger/fetch/pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+//	 public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
+//	     try {
+//	         Blog blog = blogService.fetchById(id);
+//	         if (blog == null) {
+//	             throw new BloggerServiceException("Blog with id " + id + " does not exist!");
+//	         }
+//
+//	         // Assuming blog.getPhotoUrl() contains the correct image filename
+//	         Path imagePath = Paths.get(imgPath, blog.getPhotoUrl());
+//	         byte[] imageBytes = Files.readAllBytes(imagePath);
+//
+//	         HttpHeaders headers = new HttpHeaders();
+//	         headers.setContentType(MediaType.IMAGE_JPEG);
+//
+//	         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+//	     } catch (IOException e) {
+//	         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//	     }
+//	 }
+
+
+
+
+
+//-----------XXXXXXXX-----------------changes made here--------------------------------XXXXXXXXXX---------------changes made here ---------
+
+//   @GetMapping("/blog/fetchLogs/{blogId}")
+//   public RegistrationStatus fetchLogsByBlogId(@PathVariable String blogId) {
+//       try {
+//           List<Log> logList = logService.fetchLogsByBlogId(Integer.parseInt(blogId));
+//
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setList(logList);
+//           status.setStatus(true);
+//           status.setStatusMessage("Blog photos fetched successfully.");
+//           return status;
+//       } catch (Exception e) {
+//           RegistrationStatus status = new RegistrationStatus();
+//           status.setStatus(false);
+//           status.setStatusMessage("Failed to fetch blog photos: " + e.getMessage());
+//           return status;
+//       }
+//   }
+//--------------xxxxxxxxxxxxxxxxxx ----------------xxxxxxxxxxxxxxxx-------------xxxxxxxxxxx--------xxxxxxxxxxxxxxxx 
+
+
+
+
+
+
+//-------------------Fetch Blog API --------------------------------------------
+
+//   @GetMapping("/blog/get-my-blogs/{bloggerId}")
+//   public RegistrationStatus fetchBlogsByUserId(@PathVariable String bloggerId) {
+//      try {
+//    	  
+//    	  System.out.println(bloggerId);
+//          List<Blog> blogList = blogService.fetchBlogsByBloggerId(Integer.parseInt(bloggerId));
+//
+//          System.out.println(blogList);
+//          RegistrationStatus status = new RegistrationStatus();
+//          status.setList(blogList);
+//          status.setStatus(true);
+//          status.setStatusMessage("User's blogs fetched successfully.");
+//          return status;
+//      } catch (Exception e) {
+//          RegistrationStatus status = new RegistrationStatus();
+//          status.setStatus(false);
+//          status.setStatusMessage("Failed to fetch user's blogs: " + e.getMessage());
+//          return status;
+//      }
+//   }

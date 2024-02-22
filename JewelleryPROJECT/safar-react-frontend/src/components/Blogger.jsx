@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import CustomNavbar from './CustomNavbar';
 import { Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -82,13 +81,6 @@ const Subtitle = styled.p`
 `;
 
 const Blogger = () => {
-
-// bloggerName: '',
-  // bloggerEmail: '',
-  // bloggerPhone: '',
-  // bloggerPassword: '',
-  // profilePic: '',
-  // blogsCreated: ''
   const [bloggers, setBloggers] = useState([]);
 
   useEffect(() => {
@@ -105,11 +97,8 @@ const Blogger = () => {
     fetchData();
   }, []);
 
-
-
   return (
     <>
-      {/* <CustomNavbar /> */}
       <Container>
         <Header>Our Contributors</Header>
         

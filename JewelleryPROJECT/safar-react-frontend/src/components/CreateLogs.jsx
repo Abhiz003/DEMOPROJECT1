@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './AddBlog.css';
+import '../Styles/AddBlog.css';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
-import CustomNavbar from './CustomNavbar';
 
 const CreateLogs = () => {
   const location = useLocation();
@@ -66,8 +65,8 @@ const CreateLogs = () => {
       console.log('Log added successfully:', result.data);
 
       alert('Log added successfully');
-      navigate('/my-logs');
-      // navigate('/my-logs', { state: { blogId:blogId } });
+      // navigate('/my-logs');
+      navigate('/my-logs', { state: { blogId: blogId } });
     } catch (error) {
       console.error('Error adding log:', error.message);
     }
@@ -75,7 +74,6 @@ const CreateLogs = () => {
 
   return (
     <>
-    {/* <CustomNavbar /> */}
       <div className="add-blog-container mt-2 border">
       <h1 className="add-blog-title  text-center">Create Logs</h1>
         <p className="text-center">Share your Travel experience</p>
@@ -83,12 +81,12 @@ const CreateLogs = () => {
           <div className="log-parent">
             <Form.Group>
               <Form.Label>Place Name: 
-                <Form.Control type="text" placeholder="Enter place name" name="placeName" value={logData.placeName} onChange={handleChange} />
+                <Form.Control type="text" placeholder="Enter place name" name="placeName" value={logData.placeName}  onChange={handleChange} required/>
               </Form.Label>
             </Form.Group>
             <Form.Group>
               <Form.Label>Start time: 
-                <Form.Control type="datetime-local" name="startTime" value={logData.startTime} onChange={handleChange} />
+                <Form.Control type="datetime-local" name="startTime" value={logData.startTime}  onChange={handleChange} />
               </Form.Label>
             </Form.Group>
             <Form.Group>
@@ -98,14 +96,14 @@ const CreateLogs = () => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Images: 
-                <Form.Control type="file" name="imageUrl" onChange={handleChange} />
+                <Form.Control  type="file" name="imageUrl" onChange={handleChange} required />
               </Form.Label>
-              <Button onClick={() => setLogData((prevLog) => ({ ...prevLog, imageUrl: '' }))}>remove Image</Button>
+              {/* <Button onClick={() => setLogData((prevLog) => ({ ...prevLog, imageUrl: '' }))}>remove Image</Button> */}
 
             </Form.Group>
             <Form.Group>
               <Form.Label>Description:
-                <Form.Control name="logDescription"  as="textarea" value={logData.logDescription} onChange={handleChange}></Form.Control>
+                <Form.Control name="logDescription"  as="textarea" value={logData.logDescription} onChange={handleChange} required></Form.Control>
               </Form.Label>
             </Form.Group>
             <Form.Group>

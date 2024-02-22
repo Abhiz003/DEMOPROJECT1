@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './AddBlog.css';
+import '../Styles/AddBlog.css';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import CustomNavbar from './CustomNavbar';
 import axios from 'axios';
 import { getUserId } from '../utils/TokenUtil';
 
@@ -75,18 +74,11 @@ const AddBlog = () => {
 
   return (
     <>
-      {/* <CustomNavbar /> */}
       <div className="add-blog-container">
         <h2 className="add-blog-title text-center">Add Blog</h2>
         <p className="text-center">Share your Travel experience</p>
         <form onSubmit={handleSubmit} onReset={handleReset}>
-          {/* <input
-              type="hidden"
-              id="bloggerId"
-              name="bloggerId"
-              value={getUserId()}
-              required
-            /> */}
+         
           <Form.Group>
             <Form.Label>Title:</Form.Label>
             <Form.Control

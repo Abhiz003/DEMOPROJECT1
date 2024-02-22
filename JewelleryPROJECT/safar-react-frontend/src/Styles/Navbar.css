@@ -1,0 +1,17 @@
+.logo{
+    height:100px
+
+  }
+  .navlink{
+
+    font-size: 20px;
+  }
+  .navbar-links .navlink.active {
+   background-color: #265073;
+  }
+
+
+
+  .profile-icon {
+    padding:10px;
+  }

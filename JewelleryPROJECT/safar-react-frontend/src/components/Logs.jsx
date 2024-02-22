@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import './Logs.css'
+import '../Styles/Logs.css'
 import axios from 'axios'
-import CustomNavbar from './CustomNavbar'
 import { Button } from 'react-bootstrap'
+import { isBlogger, getUserId } from '../utils/TokenUtil'
 
 const Logs = () => {
     const location = useLocation();
-    const { blogId } = location.state;
-    console.log("TEST:------>" + blogId);
+    const { blogId, bloggerId } = location.state;
+    console.log("TEST:------> " + blogId);
 
+    
     const [logs, setLogs] = useState([]);
 
     const navigate = useNavigate();
+
     useEffect(() => {
         const fetchLogs = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/log/get-logs/${blogId}`);
                 if (response.status === 200) {
                     setLogs(response.data);
+                    console.log("isBlogger ----->  ", isBlogger());
+                    console.log("BloggerID----> ", bloggerId);
                 } else {
                     console.error('Failed to fetch logs:', response.statusMessage);
                 }
@@ -26,50 +30,80 @@ const Logs = () => {
                 console.error('Error fetching Logs: ', error);
             }
         }
-
         fetchLogs();
     }, []);
+
+    const handleUpdate =  (logId) => {
+        console.log(logId);
+        navigate(`/update-log`, { state: { logId, blogId }});
+    }
+
+    const handleDelete = (logId) => {
+        const confirmDelete = window.confirm(`Are you sure  you want to delete the log- ${logId} !!!`);
+        if(confirmDelete) {
+            console.log(logId);
+            try {
+
+                axios.delete(`http://localhost:8080/log/delete/${logId}`)
+                alert("log deleted successfully");
+                window.location.reload();
+            } catch (error) {
+                console.log('Failed to delete blog', error);
+                alert("Unable to delet the blog, try reloading !!!");
+            }
+        } 
+
+    }
+
 
     const handleContextMenu = (event) => {
         event.preventDefault();
     };
 
-
-    // const WORDS_LIMIT = 30;
-
-    // const truncateDescription = (logDescription) => {
-    //     const words = logDescription.split(' ');
-    //     if (words.length > WORDS_LIMIT) {
-    //         return words.slice(0, WORDS_LIMIT);
-    //     }
-    //     return logDescription;
-    // };
-
     const handleTimeLine = () => {
         return logs.map((log, index) => {
             const side = index % 2 === 0 ? "left" : "right";
-            // const logData= { placeName, startTime, exitTime, logDescription };
+
             return (
                 <div key={index} className={`content-container ${side}-container`}>
                     <i className="fa-solid fa-gear"></i>
                     <div className="text-box">
+                        <div className='img'>
+                            <img
+                                className="d-block w-90"
+                                alt={`Log ${log.logId}`}
+                                src={`Images/${log.imageUrl}`}
+                                onContextMenu={handleContextMenu}
+                            />
+                        </div>
+                        <h2 className="log-title">{log.placeName} </h2>
+                        <small>{log.startTime} - {log.exitTime} <a href={log.location} target="_blank"><i className="fa-solid fa-location-dot fa-fade" style={{color: "#ff6666"}}></i></a></small>
+                        <p className="log-description">
 
-                        <img
-                            className="d-block w-100"
-                            alt={`Log ${log.logId}`}
-                            src={`Images/${log.imageUrl}`}
-                            onContextMenu={handleContextMenu}
-                        />
-                        <h2>{log.placeName}</h2>
-                        <small>{log.startTime} - {log.exitTime}</small>
-                        <p className="log-description" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {/* {truncateDescription(log.logDescription)}{' '} */}
-                            {/* {log.logDescription.length > WORDS_LIMIT && ( */}
-                            {log.logDescription }
+                            {log.logDescription}
                         </p>
                         <span className={`${side}-container-arrow`}></span>
-                       
-                        <Button onClick={() => {console.log("Place name is : ", log.placename); navigate("/trip-details", { state: { placeName: log.placeName, passAmount: log.passAmount, description: log.logDescription} })}} className="btn btn-primary">View more</Button>
+
+                        <Button onClick={() => { 
+                            console.log("Place name is : ", log.placeName); 
+                            navigate("/trip-details", { 
+                                state: { placeName: log.placeName, passAmount: log.passAmount, description: log.logDescription } 
+                                }) }} 
+                        className="btn btn-primary">
+                         View more
+                        </Button>&nbsp;
+
+                            
+                    { isBlogger() && getUserId() === bloggerId 
+                        ?
+                        <>
+                        <Button onClick={() => handleUpdate(log.logId)}>UPDATE </Button> &nbsp;
+                        <Button onClick={() => handleDelete(log.logId) }>DELETE</Button>
+                        </>
+                        :
+                        <>
+                        </>
+                    }
 
                     </div>
                 </div>
@@ -80,7 +114,6 @@ const Logs = () => {
 
     return (
         <>
-            {/* <CustomNavbar /> */}
             <div className="container logs-container" >
                 <div className="timeline " style={{ paddingBottom: '50px' }}>
 

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import CustomNavbar from './CustomNavbar'
+import React, { useState, useEffect } from 'react'
 import '../Styles/TripDetails.css'
 import { Container, Table } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom';
@@ -9,12 +8,14 @@ const TripDetails = () => {
   const { placeName, passAmount, description } = location.state;
 
   useEffect(() => {
-    alert("You can take screenshots to access this info at low network areas !!!");
-  },[])
+  
+      alert("You can take screenshots to access this info at low network areas !!!");
+  }, []);
+  
+
 
   return (
     <>
-      {/* <CustomNavbar/> */}
       <Container>
 
       <Table striped  bordered hover >

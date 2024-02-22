@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import '../App.css'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import CustomNavbar from './CustomNavbar';
 import { bloggerLogin, login } from '../Services/UserService.js';
 import { useNavigate } from 'react-router-dom';
 import { getToken } from '../utils/TokenUtil.js';
@@ -17,7 +16,6 @@ const Login = () => {
     if (name === 'isBlogger') {
       setIsBlogger(e.target.checked);
     }
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -58,7 +56,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <CustomNavbar /> */}
       <Container className="login-container">
         <div className="container d-flex justify-content-center align-items-center">
           <h1 className='mt-5'>User Login</h1>

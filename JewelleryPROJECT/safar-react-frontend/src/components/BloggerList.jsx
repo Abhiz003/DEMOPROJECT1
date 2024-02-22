@@ -1,7 +1,6 @@
 import { Modal, Button, Container, Table } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { deleteBlogger, deleteUser, getAllBlogger } from "../Services/UserService";
-import AdminNavbar  from "./AdminNavbar";
 
 const BloggerList = () => {
 
@@ -46,7 +45,7 @@ const BloggerList = () => {
 
     return (
         <>
-            {/* <AdminNavbar /> */}
+         
             <h1>Bloggers List</h1>
             <Container>
                 {user.length !== 0 ? (

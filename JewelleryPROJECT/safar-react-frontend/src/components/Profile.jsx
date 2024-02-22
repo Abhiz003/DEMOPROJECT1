@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Card, Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';  
-import './Profile.css';
-import CustomNavbar from './CustomNavbar';
+import '../Styles/Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { deleteUser  } from '../Services/UserService';

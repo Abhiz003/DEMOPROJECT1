@@ -1,6 +1,6 @@
 import React from 'react';
-import aboutImage from '../img_art/FindArt/pexels-nubia-navarro-(nubikini)-386000.jpg';
-import './Newsletter.css';
+import aboutImage from '../places-images/minibus123.jpg';
+import '../Styles/Newsletter.css';
 const Newsletter = () => {
   return (
     <>
@@ -21,7 +21,7 @@ const Newsletter = () => {
             <div className="col-md-6">
               <div className="about-text text-center mt-5">
                 <p>
-                  "At Art-Sphere, we make it our mission to help you discover and buy from the best emerging artists around the world. Whether you’re looking to discover a new artist, add a statement piece to your home, or commemorate an important life event, Saatchi Art is your portal to thousands of original works by today’s top artists.""
+                "At ExploreHub, we are dedicated to enhancing your travel experiences by providing a seamless platform to discover and share captivating travel logs from explorers worldwide. Whether you seek inspiration for your next adventure, wish to document your journeys, or commemorate unforgettable travel moments, ExploreHub is your gateway to a diverse collection of immersive travel logs curated by passionate globetrotters. Immerse yourself in the narratives, relive the moments, and embark on a virtual journey through the lens of fellow travelers who have explored the world and are eager to share their tales with you."
                 </p>
               </div>
             </div>

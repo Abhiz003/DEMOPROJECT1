@@ -6,12 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: url('./admin/videos/cappadocia.jpg');
+  /* background: url('../public/Images/ManyImages/7wondersOfWorld.jpg');  */
   background-position:center;
   background-attachment: fixed;
   background-size: cover;
   overflow-x:hidden;
-  
   box-sizing: border-box;
 }
 

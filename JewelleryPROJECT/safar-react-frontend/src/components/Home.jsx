@@ -1,14 +1,13 @@
 import React from 'react';
-import CustomNavbar from './CustomNavbar';
 import Carousel from 'react-bootstrap/Carousel';
-import img1 from '../img_art/crausal/pexels-asad-photo-maldives-1450340.jpg';
-import img2 from '../img_art/crausal/pexels-jacob-colvin-1761282.jpg';
-import img3 from '../img_art/crausal/pexels-pixabay-99551.jpg';
-import img4 from '../img_art/crausal/pexels-syed-hasan-mehdi-815880.jpg';
+import img1 from '../places-images/Carousel/pexels-asad-photo-maldives-1450340.jpg';
+import img2 from '../places-images/Carousel/pexels-jacob-colvin-1761282.jpg';
+import img3 from '../places-images/Carousel/pexels-pixabay-99551.jpg';
+import img4 from '../places-images/Carousel/pexels-syed-hasan-mehdi-815880.jpg';
 import Reviews from './Reviews';
-import './Home.css';
+import '../Styles/Home.css';
 import { Button } from 'react-bootstrap';
-import FeaturedProducts from './FeaturedProducts';
+import FeaturedPlaces from './FeaturedPlaces';
 import Newsletter from './Newsletter';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ export function Home() {
     const navigate = useNavigate();
     return (
         <>
-            {/* <CustomNavbar /> */}
             <Carousel fade controls={false}>
                 <Carousel.Item>
                     <img src={img1} alt="First slide" className="carousel-image" />
@@ -52,15 +50,16 @@ export function Home() {
                         <p>Let your adventure through the destinations be guided by experiences that resonate with your soul.</p>
                         <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')}>EXPLORE JOURNEYS</Button></p>
                     </Carousel.Caption>
-                </Carousel.Item>
-                
+                </Carousel.Item>  
             </Carousel>
-        <hr/>
+       
+            <div className="featured-places">
+                <FeaturedPlaces />
+            </div>
 
-            <FeaturedProducts />
-
-
-            <Newsletter />
+            <div className="just-info">
+                <Newsletter />
+            </div>
 
             <div>
                 <Reviews />

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
-import CustomNavbar from './CustomNavbar';
 import { signup } from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
+import '../Styles/AddBlog.css'
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -106,8 +106,7 @@ export function SignUp() {
 
   return (
     <>
-      {/* <CustomNavbar /> */}
-      <Container>
+      <Container className="add-blog-container">
         <h2 className="mt-5 text-center">User Registration</h2>
         <Form onSubmit={handleSubmit}>
           <Row className="justify-content-center">
