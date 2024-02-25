@@ -1,13 +1,14 @@
 import React from 'react';
-import img1 from '../places-images/PopularPlaces/pexels-ricky-esquivel-1701893.jpg';
-import img2 from '../places-images/PopularPlaces/pexels-oleksandr-p-1004584.jpg';
-import img3 from '../places-images/PopularPlaces/pexels-mayur-sable-12931217.jpg';
-import img4 from '../places-images/PopularPlaces/pexels-jen-healy-2542339.jpg';
-import img5 from '../places-images/PopularPlaces/pexels-jagadeeshbabu-gnanasekaran-14352575.jpg';
-import img6 from '../places-images/PopularPlaces/pexels-frozenmomentii-13943611.jpg';
-import img7 from '../places-images/PopularPlaces/pexels-david-geib-3220760.jpg';
-import img8 from '../places-images/PopularPlaces/pexels-darshak-pandya-574313.jpg';
-// import { Button } from 'react-bootstrap';
+import img1 from '../projectImages/PopularPlaces/pexels-ricky-esquivel-1701893.jpg';
+import img2 from '../projectImages/PopularPlaces/pexels-oleksandr-p-1004584.jpg';
+import img3 from '../projectImages/PopularPlaces/pexels-mayur-sable-12931217.jpg';
+import img4 from '../projectImages/PopularPlaces/pexels-jen-healy-2542339.jpg';
+import img5 from '../projectImages/PopularPlaces/pexels-jagadeeshbabu-gnanasekaran-14352575.jpg';
+import img6 from '../projectImages/PopularPlaces/pexels-frozenmomentii-13943611.jpg';
+import img7 from '../projectImages/PopularPlaces/pexels-david-geib-3220760.jpg';
+import img8 from '../projectImages/PopularPlaces/pexels-darshak-pandya-574313.jpg';
+import '../Styles/FeaturedPlaces.css';
+import { Button } from 'react-bootstrap';
 
 const FeaturedPlaces = () => {
   const products = [
@@ -36,7 +37,7 @@ const FeaturedPlaces = () => {
 
         <div className="row row-cols-1 row-cols-md-4 g-4 mt-3">
           {products.map((product) => (
-            <div className="col" key={product.id}>
+            <div className="col " key={product.id} >
               <div className="card h-100 product-card">
                 <img src={product.image} className="card-img-top" alt="..." />
                 <div className="card-body">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { getUserDetails, updateUser } from '../Services/UserService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditUserDetails = () => {
   const newid = sessionStorage.getItem('userId');
@@ -57,7 +58,7 @@ const EditUserDetails = () => {
         errors.userPhone = /^[0-9]{10}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
         break;
       case 'userEmail':
-        errors.userEmail = /\S+@\S+\.\S+/.test(value) ? '' : 'Invalid email address';
+        errors.userEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value) ? '' : 'Invalid email address';
         break;
       case 'userPassword':
         errors.userPassword =
@@ -98,10 +99,10 @@ const EditUserDetails = () => {
       sessionStorage.setItem('userEmail', formData.userEmail);
 
       if (result.status === true) {
-        alert(result.statusMessage || 'User details updated successfully.');
+        toast.success(result.statusMessage || 'User details updated successfully.');
         navigate('/user-profile');
       } else {
-        alert(result.statusMessage || 'Failed to update user details.');
+        toast.error(result.statusMessage || 'Failed to update user details.');
       }
     } catch (error) {
       console.log(error);
@@ -114,7 +115,6 @@ const EditUserDetails = () => {
 
   return (
     <>
-      {/* <CustomNavbar /> */}
       <Container>
         <h2 className="mt-5 text-center">User Registration</h2>
         <Form onSubmit={handleSubmit}>

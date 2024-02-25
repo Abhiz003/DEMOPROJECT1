@@ -1,10 +1,8 @@
-
-export function getToken() {       // staring point  for session
-  return localStorage.getItem("token");
-}
-
 export function isAuthenticated() {
   return getToken() ? true : false;
+}
+export function getToken() {
+  return localStorage.getItem("token");
 }
 
 export function logout() {
@@ -14,21 +12,21 @@ export function logout() {
 
 
 export function isBlogger() {
-  return localStorage.getItem("blogger") === "true";
+  return localStorage.getItem("blogger") === 'true';
 }
 
 
 
 export function getUserId() {
-  // return sessionStorage.getItem('userId');
-
   return localStorage.getItem('userId');
 }
 
 
 
+
+
 export function isUser() {
-  return localStorage.getItem('user') === "true";
+  return localStorage.getItem('user') === 'true';
 }
 
 

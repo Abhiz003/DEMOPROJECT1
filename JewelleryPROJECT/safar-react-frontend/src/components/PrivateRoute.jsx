@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { getToken, isAuthenticated } from "../utils/TokenUtil";
 
 
@@ -12,10 +12,9 @@ export function PrivateRoute(props) {
 }
 
 export function AdminPrivateRoute(props) {
-const data = sessionStorage.getItem("adminMessage")
+const data = sessionStorage.getItem("token")
     if (isAuthenticated() && data === "secret") {
-        // return props.children;
-        return <Outlet/>
+        return props.children;
     } else {
         return <Navigate to={'/admin-log-in'}></Navigate>
     }

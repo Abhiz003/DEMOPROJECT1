@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import '../Styles/Form.css';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { register } from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
-import '../Styles/AddBlog.css';
-import axios from 'axios';
+import {toast}  from 'react-toastify'
+
+
 
 const BloggerRegistration = () => {
   const navigate = useNavigate();
@@ -41,19 +43,17 @@ const BloggerRegistration = () => {
 
     switch (name) {
       case 'bloggerName':
-        errors.bloggerName = /^[A-Za-z\s]+$/.test(value) ? '' : 'Name should contain only letters and spaces';
+        errors.bloggerName = /^[A-Za-z]{3,}(?:\s[A-Za-z]+)*$/.test(value) ? '' : 'Name should contain only letters and spaces';
         break;
       case 'bloggerPhone':
-        errors.bloggerPhone = /^[0-9]{10}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
+        errors.bloggerPhone = /^[6-9]\d{9}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
         break;
       case 'bloggerEmail':
-        errors.bloggerEmail = /\S+@\S+\.\S+/.test(value) ? '' : 'Invalid email address';
+        errors.bloggerEmail = /^([^0-9<>()[\]\\.,;:\s@"]+(\.[^0-9<>()[\]\\.,;:\s@"]+)*)|(".+?")@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/.test(value) ? '' : 'Invalid email address';
         break;
       case 'bloggerPassword':
-        errors.bloggerPassword =
-          value.length >= 6 && /[A-Z]/.test(value) && /\d/.test(value) && /[!@#$%^&*(),.?":{}|<>]/.test(value)
-            ? ''
-            : 'Password must be at least 6 characters long, contain one uppercase letter, one number, and one special character';
+        errors.bloggerPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?!.*\s).{6,}$/.test(value) 
+          ? '' : 'Password must be at least 6 characters long, contain one uppercase letter, one number, and one special character';
         break;
       default:
         break;
@@ -72,32 +72,28 @@ const BloggerRegistration = () => {
     try {
       const formDataForUpload = new FormData();
 
-      
+
       Object.keys(formData).forEach((key) => {
         if (key !== 'profilePic') {
           formDataForUpload.append(key, formData[key]);
         }
       });
 
-      
+
       formDataForUpload.append('profilePic', formData.profilePic);
 
       console.log('Form Data for Upload: ', formDataForUpload)
       const response = await register(formDataForUpload);
 
-      console.log('Axios Response:', response);
-
-      //  const response = axios.post('http://localhost:8080/register-blogger');
-
       if (response.status === true) {
-        alert("Congratulations! You're officially a part of the club.");
-        // alert(response.statusMessage || "Congratulations! You're officially a part of the club.");
+          toast.success(response.statusMessage || 'Congratulations! You are officially a part of the club.');
         navigate('/log-in');
       } else {
-       
-        alert(response.statusMessage || "Oops! It seems like you're already a member. Please Log In.");
+        toast.error(response.statusMessage || "Oops! It seems like you're already a member. Please Log In.");
+
         navigate('/log-in');
       }
+
     } catch (error) {
       console.log(error);
       setSignUpError(true);
@@ -207,7 +203,7 @@ const BloggerRegistration = () => {
               </Form.Group>
             </Col>
           </Row>
-          
+
           <Row className="justify-content-center mt-3">
             <Col lg={2}>
               <Button variant="primary" type="submit">
@@ -222,6 +218,3 @@ const BloggerRegistration = () => {
 };
 
 export default BloggerRegistration;
-
-
-

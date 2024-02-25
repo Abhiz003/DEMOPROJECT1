@@ -3,14 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import '../Styles/Logs.css'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
-import { isBlogger, getUserId } from '../utils/TokenUtil'
+import { isBlogger, getUserId, isAuthenticated } from '../utils/TokenUtil'
+import { toast } from 'react-toastify'
 
 const Logs = () => {
     const location = useLocation();
     const { blogId, bloggerId } = location.state;
     console.log("TEST:------> " + blogId);
 
-    
+
     const [logs, setLogs] = useState([]);
 
     const navigate = useNavigate();
@@ -33,25 +34,25 @@ const Logs = () => {
         fetchLogs();
     }, []);
 
-    const handleUpdate =  (logId) => {
+    const handleUpdate = (logId) => {
         console.log(logId);
-        navigate(`/update-log`, { state: { logId, blogId }});
+        navigate(`/update-log`, { state: { logId, blogId } });
     }
 
     const handleDelete = (logId) => {
         const confirmDelete = window.confirm(`Are you sure  you want to delete the log- ${logId} !!!`);
-        if(confirmDelete) {
+        if (confirmDelete) {
             console.log(logId);
             try {
 
                 axios.delete(`http://localhost:8080/log/delete/${logId}`)
-                alert("log deleted successfully");
-                window.location.reload();
+                toast.success("log deleted successfully");
+                // window.location.reload();
             } catch (error) {
                 console.log('Failed to delete blog', error);
-                alert("Unable to delet the blog, try reloading !!!");
+                toast.error("Unable to delete the blog, try reloading !!!");
             }
-        } 
+        }
 
     }
 
@@ -68,42 +69,45 @@ const Logs = () => {
                 <div key={index} className={`content-container ${side}-container`}>
                     <i className="fa-solid fa-gear"></i>
                     <div className="text-box">
-                        <div className='img'>
+                        <div className='img-box'>
                             <img
-                                className="d-block w-90"
+                                className="d-block w-90 log-image"
                                 alt={`Log ${log.logId}`}
                                 src={`Images/${log.imageUrl}`}
                                 onContextMenu={handleContextMenu}
                             />
                         </div>
                         <h2 className="log-title">{log.placeName} </h2>
-                        <small>{log.startTime} - {log.exitTime} <a href={log.location} target="_blank"><i className="fa-solid fa-location-dot fa-fade" style={{color: "#ff6666"}}></i></a></small>
+                        <small>{log.startTime} - {log.exitTime} <a href={log.location} target="_blank"><i className="fa-solid fa-location-dot fa-fade" style={{ color: "#ff6666" }}></i></a></small>
                         <p className="log-description">
-
                             {log.logDescription}
                         </p>
                         <span className={`${side}-container-arrow`}></span>
-
-                        <Button onClick={() => { 
-                            console.log("Place name is : ", log.placeName); 
-                            navigate("/trip-details", { 
-                                state: { placeName: log.placeName, passAmount: log.passAmount, description: log.logDescription } 
-                                }) }} 
-                        className="btn btn-primary">
-                         View more
-                        </Button>&nbsp;
-
-                            
-                    { isBlogger() && getUserId() === bloggerId 
-                        ?
-                        <>
-                        <Button onClick={() => handleUpdate(log.logId)}>UPDATE </Button> &nbsp;
-                        <Button onClick={() => handleDelete(log.logId) }>DELETE</Button>
+                        {isAuthenticated() && <>
+                            <Button onClick={() => {
+                                navigate("/trip-details", {
+                                    state: { placeName: log.placeName, passAmount: log.passAmount, description: log.logDescription }
+                                });
+                                toast.success("You can take screenshots to access this info at low network areas !!!");
+                            }}
+                                className="btn btn-primary">
+                                View more
+                            </Button> &nbsp;
                         </>
-                        :
-                        <>
-                        </>
-                    }
+                        }
+
+
+
+                        {isBlogger() && getUserId() === bloggerId
+                            ?
+                            <>
+                                <Button onClick={() => handleUpdate(log.logId)}>UPDATE </Button> &nbsp;
+                                <Button onClick={() => handleDelete(log.logId)}>DELETE</Button>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
 
                     </div>
                 </div>

@@ -87,6 +87,8 @@ public class BloggerController {
             status.setStatusMessage("Registration successful!");
             status.setId(id);
 
+//            System.out.println("status is " + status.getStatus());
+            
             return new ResponseEntity<>(status, HttpStatus.OK);
 
         } catch (BloggerServiceException e) {
@@ -112,11 +114,17 @@ public class BloggerController {
 	public RegistrationStatus isBloggerPresent(@RequestBody Blogger blogger){
 		try {
 			Blogger newBlogger = bloggerService.login(blogger);
+			
+//			 String token = "bloggerToken123";    // this is  my key 
+//			 newBlogger.setToken(token);     // move it under object and check if needed in the entity  and setter method for it
+			
+			
 			RegistrationStatus status = new RegistrationStatus();
 			status.setStatus(true);
 			status.setStatusMessage("Login Successfull");
 			status.setEmail(newBlogger.getBloggerEmail());
 			status.setName(newBlogger.getBloggerName());
+//			status.setToken(token);
 			status.setId(newBlogger.getBloggerId());
 			return status;
 		} catch (Exception e) {
@@ -128,9 +136,13 @@ public class BloggerController {
 	}
 	
 	
-	
-	
-	//-------------------Update Blogger API------------
+
+	/**
+	 *-------------------Update Blogger API------------
+	 * 
+	 * @param bloggerDetails
+	 * @return
+	 */
 	@PostMapping("/update-blogger")
 	public ResponseEntity<RegistrationStatus> updateBlogger(@ModelAttribute BloggerDetail bloggerDetails) {
 	    try {
@@ -193,34 +205,14 @@ public class BloggerController {
 	    String[] result = new String[emptyNames.size()];
 	    return emptyNames.toArray(result);
 	}
-
-
-
 	
 	
-	
-	
-	
-	//---------------Delete Blogger   API-------------------
-	@DeleteMapping("/delete-blogger/{id}")
-	public ResponseEntity<?> deleteBlogger(@PathVariable int id) {
-	    try {
-	        Blogger fetchedBlogger = bloggerService.fetchById(id);
-	        if (fetchedBlogger != null) {
-	            bloggerService.permanentlyDelete(fetchedBlogger);
-	            return ResponseEntity.ok("Blogger with ID: " + fetchedBlogger.getBloggerId() + "Permanently deleted successfully");
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    } catch (BloggerServiceException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
-	    }
-	}
-	
-	
-	
-	//-------------------Get-Blogger API---------------
-	@GetMapping("/get-blogger")
+	/**
+	 * -------------------Get-Bloggers API---------------
+	 * 
+	 * @return
+	 */
+	@GetMapping("/get-bloggers")
 	public ResponseEntity<RegistrationStatus> getAllBloggers() {
 	    try {
 	        List<Blogger> bloggers = bloggerService.getAllBloggers();
@@ -241,17 +233,56 @@ public class BloggerController {
 	}
 	
 	
-	//--------------------- Fetch One Blogger using ID ---------------
+	/**
+	 * --------------------- Fetch One Blogger using ID ---------------
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/blogger/fetch/{id}")
 	public Blogger fetchById(@PathVariable int id) {
 		return bloggerService.fetchById(id);
 	}
 	
 	
-	//--------------------Fetch profilePic of A blogger-------------
+	/**
+	 * --------------------Fetch profilePic of A blogger-------------
+	 * 
+	 * @param bloggerId
+	 * @return
+	 * @throws IOException
+	 */
 	@GetMapping(path = "/blogger/fetch/profilePic/{bloggerId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getProfilePic(@PathVariable int bloggerId) throws IOException {
         Blogger blogger = bloggerService.fetchById(bloggerId);
         return Files.readAllBytes(Paths.get(imgPath + "Profiles" + File.separator + blogger.getProfilePic()));
     }
+
+
+
+
+/**
+ * ---------------Delete Blogger   API-------------------
+ * 
+ * @param id
+ * @return
+ */
+	@DeleteMapping("/delete-blogger/{id}")
+	public ResponseEntity<?> deleteBlogger(@PathVariable int id) {
+	    try {
+	        Blogger fetchedBlogger = bloggerService.fetchById(id);
+	        if (fetchedBlogger != null) {
+	            bloggerService.permanentlyDelete(fetchedBlogger);
+	            return ResponseEntity.ok("Blogger with ID: " + fetchedBlogger.getBloggerId() + "Permanently deleted successfully");
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    } catch (BloggerServiceException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("not found");
+	    }
+	}
+
+
+
+
 }

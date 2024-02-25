@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../Styles/AddBlog.css';
+import '../Styles/Form.css';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const UpdateLog = () => {
@@ -64,7 +65,7 @@ const UpdateLog = () => {
         const exitTime = new Date(logData.exitTime);
 
         if (exitTime < startTime) {
-            alert(`Time travel isn't possible yet. Put Time after ${startTime}`);
+            toast.warning(`Time travel isn't possible yet. Put Time after ${startTime}`);
             return;
         }
 
@@ -87,10 +88,11 @@ const UpdateLog = () => {
             });
             console.log('Log added successfully:', response.data);
 
-            alert('Log added successfully');
+            toast.success('Log added successfully');
             // navigate('/my-logs');
             navigate('/my-logs', { state: { blogId: blogId } });
         } catch (error) {
+            toast.error("Error adding log");
             console.error('Error adding log:', error.message);
         }
     };

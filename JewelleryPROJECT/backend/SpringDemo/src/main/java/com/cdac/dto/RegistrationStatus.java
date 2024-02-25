@@ -11,6 +11,10 @@ public class RegistrationStatus {
 	private String name;
 	private String password;
 	
+	
+	// try a token here and its get/set
+//	private String token;
+	
 	private List<?> list;
     
     public List<?> getList() {
@@ -27,12 +31,16 @@ public class RegistrationStatus {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isStatus() {
-		return status;
-	}
+	
+	
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	
+	public boolean getStatus() {
+		return status;
+	}
+	
 	public String getStatusMessage() {
 		return statusMessage;
 	}
@@ -57,6 +65,16 @@ public class RegistrationStatus {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+//	public String getToken() {
+//		return token;
+//	}
+//
+//	public void setToken(String token) {
+//		this.token = token;
+//	}
+
+	
 	
 	
 	

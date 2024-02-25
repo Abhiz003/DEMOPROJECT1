@@ -1,152 +1,35 @@
-/* MyBlogs.css */
-
-.container-fluid {
-    padding: 15px;
-  }
-  
-  label{
-    font-weight: bold;
-    color:#000;
-  }
-  .blog {
-    padding: 10px;
-    margin: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-  
-  .place-image {
-    width: 70%;
-    overflow: hidden;
-  }
-  
-  .place-image img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .details-part {
-    padding: 20px;
-  }
-  
-  .main-parent {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .main-box1 {
-    margin-bottom: 10px;
-  }
-  
-  .main-box2,
-  .main-box3,
-  .main-box4,
-  .main-box5,
-  .main-box6 {
-    margin-bottom: 8px;
-  }
-  
-  .btn {
-    margin-right: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    .blog {
-      margin: 10px;
-    }
-  
-    .place-image {
-      width: 100%;
-    }
-  
-    .details-part {
-      padding: 10px;
-    }
-  }
-  /*-----------------Extra styling-------------------*/
-
-/* .arts {
-    width: 500px; 
-    margin-top: 5%;
-    margin-bottom: 5px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  } */
-  
-  /* .xyz {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  } */
-  
-/* 
-  @media (max-width: 768px) {
-    .arts {
-      max-width: 100%;
-    }
-  }
-   */
 
 
+/* -----------MyBlogs, AllBlogs, AdminBlogs------------------------- */
 
-
-
-
-
-  /* ------------------------------------ */
-
-  .blog-container {
-    display:flex;
+.blog-container {
+  display:flex;
 }
 
-.blog-image{
-    width:50%;
+.blog-image-container{
+  width:50%;
 }
+
+.blog-image {
+  height: 100%;
+  width: 100%;
+}
+
 .blog-info{
-    position:relative;
-    width:50%;
-    text-align: center;
-    padding-left: 30px;
+  position:relative;
+  width:50%;
+  text-align: center;
+  padding-left: 30px;
 }
-
-
-
-/* .description {
-  margin-top: 10px;
-  padding: 20px;
-  font-style: italic;
- margin-top: 10px; 
- padding: 20px; 
- font-style: italic; 
- height:200px; 
- overflow-y: hidden;  
- text-overflow: ellipsis;
- white-space: pre-wrap;
- 
- display: -webkit-box;
- -webkit-line-clamp: 2; /
-         line-clamp: 2; 
- -webkit-box-orient: vertical;
-} */
-
 
 .description {
-  margin-top: 10px;
-  padding: 20px;
-  font-style: italic;
-  height: calc(6 * 1.2em); 
-  overflow: hidden;
-  /* text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 6; 
-  -webkit-box-orient: vertical; */
-  /* white-space: pre-wrap; */
-  display:flex;
-  justify-content: space-around;
+margin-top: 10px;
+padding: 20px;
+font-style: italic;
+height: calc(6 * 1.2em); 
+overflow: hidden;
+display:flex;
+justify-content: space-around;
 
 
 
@@ -154,14 +37,14 @@
 }
 
 /* .description::last-line{
-  text-overflow: ellipsis;
+text-overflow: ellipsis;
 } */
 
 
 .crud-buttons {
-  display: flexbox;
-  justify-content: space-around;
-  align-items: center;
+display: flexbox;
+justify-content: space-around;
+align-items: center;
 }
 
 .crud-buttons Button{
@@ -169,18 +52,19 @@ margin:5px;
 }
 
 @media screen and (max-width:1161px) {
-  .blog-container {
-    width:95%;
-    margin:auto;
-    flex-direction:column;
-  }
-  .blog-container div{
-    width: 100%;
-  }
+.blog-container {
+  width:95%;
+  margin:auto;
+  flex-direction:column;
+}
+.blog-container div{
+  width: 100%;
+}
 }
 
 
-
-
+.blog-ops-buttons{
+  gap:20px;
+}
 
 

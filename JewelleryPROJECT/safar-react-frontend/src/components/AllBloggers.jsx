@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { getAllBlogger } from '../Services/UserService';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/AllBloggers.css';
+import { getAllBlogger } from '../Services/UserService';
+import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
+
 
 const AllBloggers = () => {
+    const navigate = useNavigate();
     const [bloggers, setBloggers] = useState([])
 
     useEffect(() => {
@@ -23,27 +25,39 @@ const AllBloggers = () => {
         fetchAllBloggers();
     }, [])
 
+
+    const viewBlogs = async (bloggerId) => {
+        const response = await axios.get(`http://localhost:8080/blog/get-my-blogs/${bloggerId}`);
+
+        navigate(`/my-blogs/${bloggerId}`);
+    }
+
+
+
+
     return (
         <>
             <Container fluid="md mt-4">
                 <Row className="bloggers-row">
                     {bloggers.length === 0 ? (
-                        <p>No bloggers registered.</p>
+                        <h3>No bloggers registered.</h3>
                     ) : (
                         <>
                             {bloggers.map((blogger, index) => (
                                 <Col key={index}>
                                     <Card key={blogger.bloggerId} className="blogger-card">
-                                        <Card.Img variant="top" src="Images/dummyUser.png"  className="blogger-img "/>
-                                        {/* <Card.Img variant="top" src={`http://localhost:8080/blogger/fetch/profilePic/${blogger.bloggerId}`} /> */}
+                                        <Card.Img variant="top" src={`Images/Profiles/${blogger.profilePic}`} alt={`${blogger.profilePic}`} className="blogger-img " />
                                         <Card.Body>
                                             <Card.Title>{blogger.bloggerName}</Card.Title>
-                                            <Card.Text>
+                                            <Card className='text p-1 mb-1'>
                                                 <p>Email: {blogger.bloggerEmail}</p>
                                                 <p>Phone: {blogger.bloggerPhone}</p>
-                                                bloggerDescriptionDescription
-                                            </Card.Text>
-                                            <Button variant="primary" onClick={() => (alert("Profile unavailable"))}>View Profile</Button>
+                                                <span>bloggerDescriptionDescription</span>
+                                            </Card>
+                                            <Button variant="primary" onClick={() => navigate(`/profile-page/${blogger.bloggerId}`,)}>View Profile</Button>
+                                            &nbsp;
+
+                                            <Button variant="outline-success" onClick={() => { viewBlogs(blogger.bloggerId) }} title={blogger.bloggerId}>View Blogs</Button>
                                         </Card.Body>
                                     </Card>
                                 </Col>

@@ -9,97 +9,89 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/Navbar.css'
 
-
-const AdminNavbar = ({title}) => {
+const AdminNavbar = ({ title, onRoleChange }) => {
   const navigate = useNavigate();
 
-  const openAdminProfile = () => {
-    navigate('/admin/admin-profile');
-  };
-  
   const handleAdminDashBoard = () => {
-    navigate('/admin/admin-dashboard')
+    navigate('/admin-dashboard')
   }
+
+
   const handleLogOutClick = () => {
     logout();
-    navigate('/');
+
+    onRoleChange();
+    // navigate('/home');    // set a flag to render the custom  navbar in app.js
+    // window.location.reload();
+  };
+
+  const isNavLinkActive = (url) => {
+    return window.location.pathname.includes(url);
+  };
+
+  const isDropdownActive = (urls) => {
+    return urls.some((url) => isNavLinkActive(url));
   };
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className=" navbar" style={{backgroundColor:"#638889"}} data-bs-theme="dark">
-     
+      <Navbar collapseOnSelect expand="lg" className=" navbar" style={{ backgroundColor: "#638889" }} data-bs-theme="dark">
+
         <Container>
-          <Navbar.Brand href="/admin-dashboard">
-          <img src="Images/Logo/TheSafarLogo.png" title={title} className="logo" alt="SAFAR" />
+          <Navbar.Brand href="/">
+            <img src="Images/Logo/TheSafarLogo.png" title={title} className="logo" alt="SAFAR" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav" className="me-2 navbar-links">
-            <Nav className="me-auto navbar-links">
-              <LinkContainer to="/home">
-                <Nav.Link className="navlink">Home</Nav.Link>
+          <Navbar.Collapse id="responsive-navbar-nav" className="me-2">
+            <Nav className="me-auto nav-links">
+              <LinkContainer to="/home" isActive={() => isNavLinkActive('/home')} className="navlink">
+                <Nav.Link>Home</Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to="/admin/admin-dashboard/all-users">
-                <Nav.Link className="navlink">Users</Nav.Link>
+              <LinkContainer to="/all-users" isActive={() => isNavLinkActive('/all-users')} className="navlink">
+                <Nav.Link>Users</Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to="/all-bloggers">
-                <Nav.Link className="navlink">Bloggers</Nav.Link>
-              </LinkContainer>
-             
-              <LinkContainer to="/all-blogs">
-                <Nav.Link className="navlink">All Blogs</Nav.Link>
+              <LinkContainer to="/all-bloggers" isActive={() => isNavLinkActive('/all-bloggers')} className="navlink">
+                <Nav.Link>Bloggers</Nav.Link>
               </LinkContainer>
 
-              <NavDropdown title={"List"} 
-              className={`navlink 
-              ${window.location.pathname.includes('/bloggers-list') 
-              || window.location.pathname.includes('/users-list') 
-              ? 'active' : ''}`}  id="profile-dropdown">
-                    <LinkContainer to="/admin/admin-dashboard/bloggers-list">
-                      <NavDropdown.Item>Bloggers List</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin/admin-dashboard/users-list">
-                      <NavDropdown.Item>Users List</NavDropdown.Item>
-                    </LinkContainer>
+              <NavDropdown title={"List"}
+              id="profile-dropdown"
+              active={() => isDropdownActive(['/bloggers-list', '/users-list'])}
+              className={`navlink ${isDropdownActive(['/bloggers-list', '/users-list']) ? 'active' : ''}`}>
+                <LinkContainer to="/bloggers-list" isActive={() => isNavLinkActive('/bloggers-list')} className='navlink'>
+                  <NavDropdown.Item>Bloggers List</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/users-list" isActive={() => isNavLinkActive('/users-list')} className='navlink'>
+                  <NavDropdown.Item>Users List</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
 
-              
 
-            
-              <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
-              {!isAuthenticated() ? (
-                <>
+              <LinkContainer to="/all-blogs" isActive={() => isNavLinkActive('/all-blogs')} className="navlink">
+                <Nav.Link>All Blogs</Nav.Link>
+              </LinkContainer>
 
-                    <LinkContainer to="/log-in">
-                      <NavDropdown.Item>Log In</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/blogger-signup">
-                      <NavDropdown.Item>SignUp-Blogger</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/signup">
-                      <NavDropdown.Item>SignUp-User</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin-log-in">
-                      <NavDropdown.Item>Admin</NavDropdown.Item>
-                    </LinkContainer>
-                 
-                </>
-              ) : (
-                <>
+              <NavDropdown 
+              title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} 
+              id="profile-dropdown"
+              active={() => isDropdownActive(['/admin-dashboard'])}
+              className={`profile-icon navlink ${isDropdownActive(['/admin-dashboard']) ? 'active' : ''}`}>
 
-                  <NavDropdown.Item onClick={openAdminProfile}>
-                      Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={handleAdminDashBoard}>
-                      Admin DashBoard 
-                  </NavDropdown.Item>
+                {isAuthenticated() &&
+                  <>
+                    {localStorage.getItem("token") === "secret" ? (
+                      <NavDropdown.Item onClick={handleAdminDashBoard}>
+                        Admin DashBoard
+                      </NavDropdown.Item>
+                    ) : null
+                    }
                     <NavDropdown.Item onClick={handleLogOutClick}>
                       Log Out
                     </NavDropdown.Item>
-                </>
-              )}
+                  </>
+                }
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -137,19 +129,6 @@ export default AdminNavbar;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import Container from 'react-bootstrap/Container';
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
@@ -159,95 +138,75 @@ export default AdminNavbar;
 // import { NavDropdown } from 'react-bootstrap';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser } from '@fortawesome/free-solid-svg-icons';
-// import './Navbar.css'
+// import '../Styles/Navbar.css'
 
-
-
-// const AdminNavbar = ({title}) => {
+// const AdminNavbar = ({ title }) => {
 //   const navigate = useNavigate();
+
+//   const handleAdminDashBoard = () => {
+//     navigate('/admin-dashboard')
+//   }
+
 
 //   const handleLogOutClick = () => {
 //     logout();
 //     navigate('/');
+//     // window.location.reload();
+//     // sessionStorage.clear();
 //   };
-
-//   const handleProfileClick = () => {
-//       isAdmin()  && navigate('/admin-profile');
-//   };
-
 
 //   return (
 //     <>
-//       <Navbar collapseOnSelect expand="lg" className=" navbar" style={{backgroundColor:"#638889"}} data-bs-theme="dark">
-     
+//       <Navbar collapseOnSelect expand="lg" className=" navbar" style={{ backgroundColor: "#638889" }} data-bs-theme="dark">
+
 //         <Container>
 //           <Navbar.Brand href="/admin-dashboard">
-//           <img src="Images/Logo/TheSafarLogo.png" title={title} className="logo" alt="SAFAR" />
+//             <img src="Images/Logo/TheSafarLogo.png" title={title} className="logo" alt="SAFAR" />
 //           </Navbar.Brand>
 //           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-//           <Navbar.Collapse id="responsive-navbar-nav" className="me-2 navbar-links">
-//             <Nav className="me-auto navbar-links">
+//           <Navbar.Collapse id="responsive-navbar-nav" className="me-2">
+//             <Nav className="me-auto">
 //               <LinkContainer to="/admin-dashboard">
-//                 <Nav.Link className="navlink">Home</Nav.Link>
+//                 <Nav.Link>Home</Nav.Link>
 //               </LinkContainer>
 
 //               <LinkContainer to="/all-users">
-//                 <Nav.Link className="navlink">Users</Nav.Link>
+//                 <Nav.Link>Users</Nav.Link>
 //               </LinkContainer>
 
 //               <LinkContainer to="/all-bloggers">
-//                 <Nav.Link className="navlink">Bloggers</Nav.Link>
-//               </LinkContainer>
-             
-//               <LinkContainer to="/all-blogs">
-//                 <Nav.Link className="navlink">All Blogs</Nav.Link>
+//                 <Nav.Link>Bloggers</Nav.Link>
 //               </LinkContainer>
 
-//               <NavDropdown title={"List"} 
-//               className={`navlink 
-//               ${window.location.pathname.includes('/bloggers-list') 
-//               || window.location.pathname.includes('/users-list') 
-//               ? 'active' : ''}`}  id="profile-dropdown">
-//                     <LinkContainer to="/bloggers-list">
-//                       <NavDropdown.Item>Bloggers List</NavDropdown.Item>
-//                     </LinkContainer>
-//                     <LinkContainer to="/users-list">
-//                       <NavDropdown.Item>Users List</NavDropdown.Item>
-//                     </LinkContainer>
+//               <NavDropdown title={"List"} className="text-dark" id="profile-dropdown">
+//                 <LinkContainer to="/bloggers-list">
+//                   <NavDropdown.Item className="text-dark">Bloggers List</NavDropdown.Item>
+//                 </LinkContainer>
+//                 <LinkContainer to="/users-list">
+//                   <NavDropdown.Item>Users List</NavDropdown.Item>
+//                 </LinkContainer>
 //               </NavDropdown>
 
-              
 
-//             </Nav>
-//             <Nav>
-//               {!isAuthenticated() ? (
-//                 <>
-//                   <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
+//               <LinkContainer to="/all-blogs">
+//                 <Nav.Link>All Blogs</Nav.Link>
+//               </LinkContainer>
 
-//                     <LinkContainer to="/log-in">
-//                       <NavDropdown.Item>Log In</NavDropdown.Item>
-//                     </LinkContainer>
-//                     <LinkContainer to="/blogger-register">
-//                       <NavDropdown.Item>SignUp-Blogger</NavDropdown.Item>
-//                     </LinkContainer>
-//                     <LinkContainer to="/sign-up">
-//                       <NavDropdown.Item>SignUp-User</NavDropdown.Item>
-//                     </LinkContainer>
-//                     <LinkContainer to="/admin-log-in">
-//                       <NavDropdown.Item>Admin</NavDropdown.Item>
-//                     </LinkContainer>
-//                   </NavDropdown>
-//                 </>
-//               ) : (
-//                 <>
-//                   <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
-                 
+//               <NavDropdown title={<FontAwesomeIcon icon={faUser} size="lg" color="white" />} id="profile-dropdown">
+//                 {isAuthenticated() &&
+//                   <>
+//                     {sessionStorage.getItem("token") === "secret" ? (
+//                       <NavDropdown.Item onClick={handleAdminDashBoard}>
+//                         Admin DashBoard
+//                       </NavDropdown.Item>
+//                     ) : null
+//                     }
 //                     <NavDropdown.Item onClick={handleLogOutClick}>
 //                       Log Out
 //                     </NavDropdown.Item>
-//                   </NavDropdown>
-//                 </>
-//               )}
+//                   </>
+//                 }
+//               </NavDropdown>
 //             </Nav>
 //           </Navbar.Collapse>
 //         </Container>

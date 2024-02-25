@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Modal } from 'react-bootstrap';
-import CustomNavbar from './CustomNavbar';
-import { AiOutlineDownload } from 'react-icons/ai';
-import { saveAs } from 'file-saver';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/MyBlogs.css';
 import axios from 'axios';
 // import { getUserId } from '../utils/TokenUtil';
-import { getBlogImage} from '../Services/BlogService';
+import { deleteBlog, getAllBlogs, getBlogImage} from '../Services/BlogService';
 import { isAdmin } from '../utils/TokenUtil';
+import { toast } from 'react-toastify';
 
 
 
@@ -20,16 +18,27 @@ const AllBlogs = () => {
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [showZoom, setShowZoom] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [blogToDelete, setBlogToDelete] = useState(null);
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/blog/fetchAllBlogs`);
-        if (response.status === 200) {
-          setBlogs(response.data);
-        } else {
-          console.error('Failed to fetch blogs:', response.statusMessage);
+        // const response = await axios.get(`http://localhost:8080/blog/fetchAllBlogs`);
+        // if (response.status === 200) {
+        //   setBlogs(response.data);
+        // } 
+        
+        // else {
+        //   console.error('Failed to fetch blogs:', response.statusMessage);
+        // }
+
+        const data = await getAllBlogs();
+        if(data) {
+          setBlogs(data);
         }
+
       } catch (error) {
         console.error('Error fetching blogs:', error);
       }
@@ -52,27 +61,31 @@ const AllBlogs = () => {
     event.preventDefault();
   };
 
-  // const handleDelete = (blogId) => {
-  //   axios.delete(`http://localhost:8080/blog/delete/${blogId}`)
-  //   .then()
-  // }
-  
-//   const handleDelete = async (blogId) => {
-//     const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+  const handleDelete = (blogId) => {
+    setBlogToDelete(blogId);
+    setShowDeleteConfirmation(true);
+  };
 
-//     if (confirmDelete) {
-//         console.log(blogId);
-//         try {
-//             await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
-//             console.log("Blog deleted successfully");
-//             window.location.reload();
-//         } catch (error) {
-//             console.error('Failed to delete blog:', error);
-//             alert("Unable to delete the blog, try reloading !!!")
-//         }
-//     }
-// };
+  const confirmDelete = async () => {
+    console.log(blogToDelete);
+    try {
+        // await axios.delete(`http://localhost:8080/blog/delete/${blogToDelete}`);
 
+        const result = await deleteBlog(blogToDelete);
+       
+
+      console.log("Blog deleted successfully");
+    } catch (error) {
+      console.error('Failed to delete blog:', error);
+      toast.error("Unable to delete the blog, try reloading !!!")
+    } finally {
+      setShowDeleteConfirmation(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+  };
 
   return (
     <>
@@ -86,9 +99,9 @@ const AllBlogs = () => {
             {blogs.map((blog, index) => (
               <Card key={blog.id} className='mb-2 blog-container'>
                 <Card.Body className="blog-container">
-                  <div className="blog-image">
+                  <div className="blog-image-container">
                     <img
-                      className="blogs"
+                      className="blog-image"
                       src={`Images/${blog.photoUrl}`}
                       alt={`Blog ${blog.id}`}
                       onClick={() => handleOpenZoom(blog.id)}
@@ -116,11 +129,13 @@ const AllBlogs = () => {
                       {blog.blogDescription}
                     </p>
                     {/* <Button onClick={() => navigate('/my-logs', blogId={blog.id})} > View</Button> &nbsp; */}
-                    <Button onClick={() => navigate('/logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
+                    <Button onClick={() => navigate('/my-logs', { state: { blogId:blog.id } })} > View</Button> &nbsp;
+                      {/* user should be redirected to login page if user isn't logged in  to view the logs */}
 
                     {/* <Button onClick={() => navigate('/create-logs') } > create Logs</Button> */}
                     
-                    {/* {isAdmin() && <Button onClick={handleDelete(blog.id)}>Delete</Button>}  */}
+                    {/* {isAdmin() && <Button>Delete</Button>}  */}
+                    {isAdmin() && <Button onClick={() => handleDelete(blog.id)}>Delete</Button>} 
                   </div>
                 </Card.Body>
               </Card>
@@ -129,6 +144,21 @@ const AllBlogs = () => {
         )}
       </Container>
 
+        {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteConfirmation} onHide={cancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this blog?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
      
     </>
   );

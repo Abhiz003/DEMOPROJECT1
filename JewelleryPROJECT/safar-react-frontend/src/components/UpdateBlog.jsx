@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import '../Styles/AddBlog.css';
+import '../Styles/Form.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { getUserId } from '../utils/TokenUtil';
+import { toast } from 'react-toastify';
 
 const UpdateBlog = () => {
   const navigate = useNavigate();
@@ -72,16 +73,16 @@ const UpdateBlog = () => {
         });
 
       if (response.status === 200) {
-        alert('Blog updated successfully');
+        toast.success('Blog updated successfully');
         navigate('/my-blogs');
         // You can navigate back to the blog list or handle it as needed
       } else {
-        alert(`Failed to update blog: ${response.data.statusMessage}`);
+        toast.error(`Failed to update blog: ${response.data.statusMessage}`);
       }
       
     } catch (error) {
       console.error('Error updating blog:', error);
-      alert(`Failed to update blog: ${error.message}`);
+      toast.error(`Failed to update blog: ${error.message}`);
     }
   };
   return (

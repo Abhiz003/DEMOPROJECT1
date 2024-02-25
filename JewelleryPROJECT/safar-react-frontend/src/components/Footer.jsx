@@ -7,7 +7,7 @@ import { faFacebook, faInstagram, faLinkedin, faYoutube } from '@fortawesome/fre
 export const Footer = () => {
 
     return (
-        <div className="footer-dark mt-5 footer-container">
+        <div className="footer-dark  footer-container">
             <footer>
                 <Container>
                     <Row>
@@ -36,22 +36,22 @@ export const Footer = () => {
                             <h3 className="text-center">Get In Touch</h3>
                             <div className="social-buttons">
 
-                                <a href="https://www.linkedin.com/in/abhijitb3/" target="_blank" rel="noreferrer" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
+                                <a href="https://www.linkedin.com/in/abhijitb3/" target="_blank" className="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
                                     <span className="social-button__inner">
                                         <i className="fab fa-linkedin-in"></i>
                                     </span>
                                 </a>
-                                <a href="https://www.instagram.com/_magnum.__?igsh=MTg1cHZ3ejVzODdtMA==/" target="_blank" rel="noreferrer" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
+                                <a href="https://www.instagram.com/_magnum.__?igsh=MTg1cHZ3ejVzODdtMA==/" target="_blank" className="social-buttons__button social-button social-button--instagram" aria-label="InstaGram">
                                     <span className="social-button__inner">
                                         <i className="fab fa-instagram"></i>
                                     </span>
                                 </a>
-                                <a href="https://github.com/Abhiz003" target="_blank" rel="noreferrer" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
+                                <a href="https://github.com/Abhiz003" target="_blank" className="social-buttons__button social-button social-button--github" aria-label="GitHub">
                                     <span className="social-button__inner">
                                         <i className="fab fa-github"></i>
                                     </span>
                                 </a>
-                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" target="_blank" rel="noreferrer" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
+                                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new" target="_blank" className="social-buttons__button social-button social-button--gmail" title="abhijitbhangale3@gmail.com" aria-label="GitHub">
                                     <span className="social-button__inner">
                                         <i className="fa-solid fa-envelope fa-fade" ></i>
                                     </span>

@@ -1,9 +1,9 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import img1 from '../places-images/Carousel/pexels-asad-photo-maldives-1450340.jpg';
-import img2 from '../places-images/Carousel/pexels-jacob-colvin-1761282.jpg';
-import img3 from '../places-images/Carousel/pexels-pixabay-99551.jpg';
-import img4 from '../places-images/Carousel/pexels-syed-hasan-mehdi-815880.jpg';
+import img1 from '../projectImages/Carousel/pexels-asad-photo-maldives-1450340.jpg';
+import img2 from '../projectImages/Carousel/pexels-jacob-colvin-1761282.jpg';
+import img3 from '../projectImages/Carousel/pexels-pixabay-99551.jpg';
+import img4 from '../projectImages/Carousel/pexels-syed-hasan-mehdi-815880.jpg';
 import Reviews from './Reviews';
 import '../Styles/Home.css';
 import { Button } from 'react-bootstrap';
@@ -50,15 +50,16 @@ export function Home() {
                         <p>Let your adventure through the destinations be guided by experiences that resonate with your soul.</p>
                         <p><Button type='button' variant="outline-light" onClick={() => navigate('/all-blogs')}>EXPLORE JOURNEYS</Button></p>
                     </Carousel.Caption>
-                </Carousel.Item>  
+                </Carousel.Item>
+                
             </Carousel>
        
             <div className="featured-places">
-                <FeaturedPlaces />
+            <FeaturedPlaces />
             </div>
 
             <div className="just-info">
-                <Newsletter />
+            <Newsletter />
             </div>
 
             <div>

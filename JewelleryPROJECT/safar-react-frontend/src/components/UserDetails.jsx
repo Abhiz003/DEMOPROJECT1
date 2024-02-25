@@ -51,6 +51,7 @@ export function UsersList() {
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                {/* <th>Password</th> */}
                                 <th>Status</th>
                                 <th>Options</th>
                             </tr>
@@ -62,6 +63,7 @@ export function UsersList() {
                                         <td>{s.userName}</td>
                                         <td>{s.userPhone}</td>
                                         <td>{s.userEmail}</td>
+                                        {/* <td>{s.userPassword}</td> */}
                                         <td>{s.userStatus}</td>
                                         <td>
                                             <Button variant="danger" onClick={() => openModalDialog(s.userId)}>
@@ -76,6 +78,7 @@ export function UsersList() {
                 ) : (
                     <h4>Currently, You Don't Have Any Users...</h4>
                 )}
+
                 <Modal show={showDialog} onHide={closeModalDialog}>
                     <Modal.Header closeButton>
                         <Modal.Title>Confirmation</Modal.Title>
@@ -90,7 +93,9 @@ export function UsersList() {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
             </Container>
+
         </>
     );
 }

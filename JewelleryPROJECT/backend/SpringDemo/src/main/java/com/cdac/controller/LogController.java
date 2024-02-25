@@ -203,7 +203,7 @@ public class LogController {
    
    
    //---------------xxxxxxxxxxxxxxx-----not needed --------xxxxx-----------
-   //---------just in case if needed--------------
+   //---------just in case if needed to extract logs into pdf--------------
    
    /**
     * ---------------------to fetch all logs -----------------------
@@ -284,7 +284,12 @@ public class LogController {
    
    
    
-   //------------xxxxxxxxxx---------API for deleting  a LOG using log id--------xxxxxxxxx----------
+   /**
+    * ------------xxxxxxxxxx---------API for deleting  a LOG using log id--------xxxxxxxxx----------
+    * 
+    * @param logId
+    * @return
+    */
    @DeleteMapping("/log/delete/{logId}")
    public ResponseEntity<RegistrationStatus> deleteLog(@PathVariable int logId) {
        try {

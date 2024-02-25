@@ -1,11 +1,16 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   return (
-    <>
-      <Outlet/>
-    </>
+    <div className="temp">
+      <h1>Welcome Admin...</h1>
+      <div>
+
+
+        <h2>This is admin DASHBOARD component</h2>
+      </div>
+    </div>
   );
 };
 

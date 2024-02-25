@@ -12,7 +12,7 @@
 }
 
 .card-img-top {
-  max-height: 300px; /* Increase the max-height for larger images */
+  height: 40%; /* Increase the max-height for larger images */
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }

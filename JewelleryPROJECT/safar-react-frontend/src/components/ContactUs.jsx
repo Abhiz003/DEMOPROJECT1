@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import '../Styles/ContactUs.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import { toast } from 'react-toastify';
 
 const  ContactUs = () => {
     const initialData = {
@@ -32,7 +32,7 @@ const  ContactUs = () => {
                 jsonData[key] = value;
             });
 
-            alert("Do you want to sent the message?");
+             toast.warning("Do you want to sent the message?");
             console.log("message sent")
             // const response = await messagesend(jsonData);
 
@@ -102,7 +102,6 @@ const  ContactUs = () => {
 
     return (
         <>
-
             <div className="row justify-content-center mt-5 mb-5">
                 <div className="col-md-8 contact-form">
                     <div className="text-center mb-4"></div>

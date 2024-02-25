@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cdac.entity.User;
 import com.cdac.entity.User.UserStatus;
@@ -22,11 +21,24 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	 @Autowired
+	    private PasswordEncoder passwordEncoder;
+	 
 	
+	/**
+	 * ------Register user service------
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public int register(User user) {
 	    Optional<User> isUserAlreadyPresent = userRepository.findByUserEmail(user.getUserEmail());
 	    if (isUserAlreadyPresent.isEmpty()) {
-	        User savedUser = userRepository.save(user);
+	    	//password encrypted here ------------------xxxxxxxxxx---------------xxxxxxx--------------
+	    	 String encodedPassword = passwordEncoder.encode(user.getUserPassword());
+	    	user.setUserPassword(encodedPassword);
+	    	
+	        User savedUser = userRepository.save(user);        //befor passing thsi object make sure password is hashed and setPassword()
 	        savedUser.setUserStatus(UserStatus.ACTIVE);
 	        return savedUser.getUserId();
 	    } else {
@@ -34,11 +46,19 @@ public class UserService {
 	    }
 	}
 
+	
+	
+	
 	public User login(User user) {
 	    Optional<User> isUserPresent = userRepository.findByUserEmail(user.getUserEmail());
 	    if (isUserPresent.isPresent()) {
 	        User existingUser = isUserPresent.get();
-	        if (user.getUserPassword().equals(existingUser.getUserPassword())) {
+	        
+	        
+//	        if (user.getUserPassword().equals(existingUser.getUserPassword())) {
+	        	
+	        if (passwordEncoder.matches(user.getUserPassword(),existingUser.getUserPassword())) {
+	        	
 	        	if(existingUser.getUserStatus() == UserStatus.ACTIVE) {
 		            return existingUser;
 	        	}
@@ -54,6 +74,9 @@ public class UserService {
 	}
 
 
+	
+	
+	
 	public Boolean adminLogin(User user) {
 	    if ("admin@gmail.com".equals(user.getUserEmail())) {
 	        if ("Admin@123".equals(user.getUserPassword())) {
@@ -82,7 +105,11 @@ public class UserService {
 	        existingUser.setUserName(user.getUserName());
 	        existingUser.setUserEmail(user.getUserEmail());
 	        existingUser.setUserPhone(user.getUserPhone());
-	        existingUser.setUserPassword(user.getUserPassword());
+	        
+	        //----------password encrypted here ---------------------------
+	        String encodedPassword = passwordEncoder.encode(user.getUserPassword());
+	        existingUser.setUserPassword(encodedPassword); 
+	        
 	        existingUser.setProfilePic(user.getProfilePic());
 	        
 	        User updatedUser = userRepository.save(existingUser);

@@ -1,5 +1,5 @@
 import React from 'react';
-import aboutImage from '../places-images/minibus123.jpg';
+import aboutImage from '../projectImages/Homepage/minibus003.jpg';
 import '../Styles/Newsletter.css';
 const Newsletter = () => {
   return (

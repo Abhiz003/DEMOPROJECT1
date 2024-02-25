@@ -2,11 +2,6 @@
     margin-block: 100px;
     padding-bottom: 100px;
 }
-.img{
-    /* width: */
-    height:40%;
-}
-
 
 .timeline {
     position: relative;
@@ -14,6 +9,17 @@
     width: 100%;
     /* margin-block:100px; */
 }
+
+.img-box{
+    width:100%;
+    height:30%;    /*  won't be needed .... just in case */
+}
+.log-image {
+    height: 100%;
+    width: 100%;
+}
+
+
 
 .content-container {
     height: 300px;

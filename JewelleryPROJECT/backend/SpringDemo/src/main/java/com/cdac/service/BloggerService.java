@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cdac.entity.Blogger;
@@ -21,9 +22,20 @@ public class BloggerService {
 	@Autowired
 	private BloggerRepository bloggerRepository;
 	
+	@Autowired
+	public PasswordEncoder passwordEncoder;
+	
+	
+	
 	public int register(Blogger blogger) {
 	    Optional<Blogger> isBloggerAlreadyPresent = bloggerRepository.findByBloggerEmail(blogger.getBloggerEmail());
 	    if (isBloggerAlreadyPresent.isEmpty()) {
+	    	
+	    	
+	    	//----------- password encrypted here ---------------
+	    	String encodedPassword = passwordEncoder.encode(blogger.getBloggerPassword());
+	    	blogger.setBloggerPassword(encodedPassword);
+	    		
 	    	Blogger savedBlogger = bloggerRepository.save(blogger);
 	        savedBlogger.setBloggerStatus(BloggerStatus.ACTIVE);
 	        return savedBlogger.getBloggerId();
@@ -32,11 +44,20 @@ public class BloggerService {
 	    }
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	public Blogger login(Blogger blogger) {
 	    Optional<Blogger> isBloggerPresent = bloggerRepository.findByBloggerEmail(blogger.getBloggerEmail());
 	    if (isBloggerPresent.isPresent()) {
 	    	Blogger existingUser = isBloggerPresent.get();
-	        if (blogger.getBloggerPassword().equals(existingUser.getBloggerPassword())) {
+	    	
+	    	
+	        if (passwordEncoder.matches(blogger.getBloggerPassword(),existingUser.getBloggerPassword())) {
 	        	if(existingUser.getBloggerStatus() == BloggerStatus.ACTIVE) {
 		            return existingUser;
 	        	}
@@ -84,6 +105,8 @@ public class BloggerService {
 			throw new BloggerServiceException("Blogger with id " + id + " does not exist!");
 	}
 
+	
+	
 	public List<Blogger> getAllBloggers() {
 		return bloggerRepository.findAll();
 	}

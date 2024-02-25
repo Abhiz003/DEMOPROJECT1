@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../Styles/AddBlog.css';
+import '../Styles/Form.css';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const CreateLogs = () => {
@@ -41,7 +42,7 @@ const CreateLogs = () => {
     const exitTime = new Date(logData.exitTime);
   
     if (exitTime < startTime) {
-      alert(`Time travel isn't possible yet. Put Time after ${startTime}`);
+      toast.warning(`Time travel isn't possible yet. Put Time after ${startTime}`);
       return;
     }
 
@@ -57,14 +58,14 @@ const CreateLogs = () => {
       formDataForUpload.append('imageUrl', logData.imageUrl);
       formDataForUpload.append('blogId',blogId);
 
-      const result = await axios.post('http://localhost:8080/add-log', formDataForUpload, {
+      const result = await axios.post(`http://localhost:8080/add-log`, formDataForUpload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log('Log added successfully:', result.data);
 
-      alert('Log added successfully');
+      toast.success('Log added successfully');
       // navigate('/my-logs');
       navigate('/my-logs', { state: { blogId: blogId } });
     } catch (error) {

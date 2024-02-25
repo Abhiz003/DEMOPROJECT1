@@ -32,13 +32,19 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    
+    
     String imgPath = BloggerController.imgPath; // calling the basepath of images folder
     
     
     
     	
-    //--------------------xxxxxxxxx------------add User API----------xxxxxxxxx------------
+    /**
+     * --------------------xxxxxxxxx------------add User API  / USER SIGNUP API----------xxxxxxxxx------------
+     * 
+     * @param userDetails
+     * @return
+     */
     @PostMapping("/register-user")
     public ResponseEntity<RegistrationStatus> registerv3(UserDetail userDetails) {
         try {
@@ -61,6 +67,8 @@ public class UserController {
                 e.printStackTrace();
             }
 
+            	//  user.setPasswordnewHashed password here ()
+          
             int id = userService.register(user);
             RegistrationStatus status = new RegistrationStatus();
             status.setStatus(true);
@@ -81,15 +89,47 @@ public class UserController {
     
     
     
- 
+    /**
+     * ---------------USER LOGIN  API------------
+     * 
+     * @param user
+     * @return
+     */
+    
+    @PostMapping("/login-user")
+    public ResponseEntity<RegistrationStatus> loginUser(@RequestBody User user) {
+        try {
+            User newUser = userService.login(user);
+
+            RegistrationStatus status = new RegistrationStatus();
+            status.setStatus(true);
+            status.setStatusMessage("Login Successful");
+            status.setEmail(newUser.getUserEmail());
+            status.setName(newUser.getUserName());
+            status.setId(newUser.getUserId());
+
+            return new ResponseEntity<>(status, HttpStatus.OK);
+
+        } catch (Exception e) {
+            RegistrationStatus status = new RegistrationStatus();
+            status.setStatus(false);
+            status.setStatusMessage(e.getMessage());
+
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     
     
     
     
     
-    //--------------UPDATE USER API----------
-    
+    /**
+     * --------------UPDATE USER API----------
+     * 
+     * @param userDetails
+     * @return
+     */
     @PatchMapping("/user-update")
     public ResponseEntity<RegistrationStatus> update(UserDetail userDetails) {
         try {
@@ -131,7 +171,12 @@ public class UserController {
 
     
     
-    //---------------DELETE USER API----------
+    /**
+     * ---------------DELETE USER API----------
+     * 
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         try {
@@ -148,7 +193,11 @@ public class UserController {
     }
 
     
-    //-------------GET ALL USERS --------------------
+    /**
+     * -------------GET ALL USERS --------------------
+     * 
+     * @return
+     */
     @GetMapping("/all-users")
     public ResponseEntity<RegistrationStatus> getAllUsers() {
         try {
@@ -172,14 +221,24 @@ public class UserController {
     
     
     
-    //----------------get user by id ----------xxxxxxxx---------
+    /**
+     * ----------------get user by id ----------xxxxxxxx---------
+     * 
+     * @param id
+     * @return
+     */
     @GetMapping("/user/fetch/{id}")
     public User fetchById(@PathVariable int id) {
         return userService.fetchById(id);
     }
 
     
-    //--------------get profile picture of user by id--------------------
+    /**
+     * --------------get profile picture of user by id--------------------
+     * 
+     * @param id
+     * @return
+     */
     
     @GetMapping(path = "/user/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfilePic(@PathVariable int id) {
@@ -203,34 +262,15 @@ public class UserController {
     
     
     
-    //---------------USER LOGIN  API------------
-    
-    @PostMapping("/login-user")
-    public ResponseEntity<RegistrationStatus> loginUser(@RequestBody User user) {
-        try {
-            User newUser = userService.login(user);
-
-            RegistrationStatus status = new RegistrationStatus();
-            status.setStatus(true);
-            status.setStatusMessage("Login Successful");
-            status.setEmail(newUser.getUserEmail());
-            status.setName(newUser.getUserName());
-            status.setId(newUser.getUserId());
-
-            return new ResponseEntity<>(status, HttpStatus.OK);
-
-        } catch (Exception e) {
-            RegistrationStatus status = new RegistrationStatus();
-            status.setStatus(false);
-            status.setStatusMessage(e.getMessage());
-
-            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-        }
-    }
-
     
     
-    //--------------ADMIN-LOGIN API---------------
+    
+    /**
+     * --------------ADMIN-LOGIN API---------------
+     * 
+     * @param user
+     * @return
+     */
     @PostMapping("/admin-login")
 	public RegistrationStatus isAdmin(@RequestBody User user) {
 		try {

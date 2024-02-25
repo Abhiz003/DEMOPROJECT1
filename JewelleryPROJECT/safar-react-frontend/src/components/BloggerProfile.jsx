@@ -3,18 +3,17 @@ import { Container, Card, Form, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/BloggerProfile.css';
-import { deleteBlogger } from '../Services/UserService';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../utils/TokenUtil';
+import { deleteBlogger, getBloggerDetails } from '../Services/UserService';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUserId, logout } from '../utils/TokenUtil';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const BloggerProfile = () => {
-  const name = sessionStorage.getItem('userName');
-  const email = sessionStorage.getItem('userEmail');
-  const bloggerId = sessionStorage.getItem('userId');
+  const bloggerId = getUserId();   // or take it from the url by useParams
+
 
   const [selectedImage, setSelectedImage] = useState(null);
-
   const [showZoom, setShowZoom] = useState(false);
 
   const handleZoomIn = (imageId) => {
@@ -39,31 +38,41 @@ const BloggerProfile = () => {
 
   const navigate = useNavigate();
 
-  const [bloggerImages, setBloggerImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [photoUrl, setPhotoUrl] = useState(null);
+  const [blogger, setBlogger] = useState(null);
+  console.log("getting blogger id --==--==--==>>>>", bloggerId);
 
   useEffect(() => {
-    fetchBloggerImages(bloggerId);
-  }, [bloggerId]);
-
-  const fetchBloggerImages = async (bloggerId) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/blog/fetchBlogtPhotosByBlogger/${bloggerId}`);
-      
-
-      if (response.status) {
-        setBloggerImages(response.list);
-        setLoading(false);
-      } else {
-        console.error('Failed to fetch user images:', response.statusMessage);
+    const fetchBlogger = async () => {
+      try {
+        const data = await getBloggerDetails(bloggerId);
+        setBlogger(data);
+      } catch (error) {
+        console.error('Error fetching blogger details:', error);
+        toast.error('Failed to fetch blogger details');
       }
-    } catch (error) {
-      console.error('Error fetching user images:', error);
-    }
-  };
+    };
 
+    fetchBlogger();
+  }, [bloggerId]);
   
+
+  // const fetchBloggerImages = async (bloggerId) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:8080/blog/fetchBlogPhotosByBlogger/${bloggerId}`);
+
+
+  //     if (response.status) {
+  //       setBloggerImages(response.list);
+  //       setLoading(false);
+  //     } else {
+  //       console.error('Failed to fetch user images:', response.statusMessage);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching user images:', error);
+  //   }
+  // };
+
+
 
   const handleDelete = async (imageId) => {
     const confirmed = window.confirm('Are you sure you want to delete this image?');
@@ -76,12 +85,12 @@ const BloggerProfile = () => {
       const response = await axios.delete(`http://localhost:8080/blog/delete/${imageId}`);
 
       if (response.status) {
-        alert('Blog image deleted successfully');
+        toast.success('Blog image deleted successfully');
 
         setSelectedImage(null);
         setShowZoom(false);
 
-        fetchBloggerImages(bloggerId);
+        // fetchBloggerImages(bloggerId);
       } else {
         console.error('Failed to delete blog image:', response.statusMessage);
       }
@@ -98,10 +107,10 @@ const BloggerProfile = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:8080/delete-blogger/${bloggerId}`);
+      const response = await deleteBlogger(bloggerId);
 
       if (response.status) {
-        alert('Account deleted successfully');
+        toast.success('Account deleted successfully');
 
       } else {
         console.error('Failed to delete account:', response.statusMessage);
@@ -110,164 +119,124 @@ const BloggerProfile = () => {
       console.error('Error deleting account:', error);
     }
   };
-  
 
-  const renderBloggerImages = () => {
-    return (
-      <div className="user-images">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          Array.isArray(bloggerImages) && bloggerImages.length > 0 ? (
-            bloggerImages.map((image, index) => (
-              <div key={index} className="user-image-container">
-                <img
-                  src={`http://localhost:8080/blogger/fetch/pic/${image.id}`}
-                  alt={`Blogger Image ${index + 1}`}
-                  className="user-image"
-                  onClick={() => handleZoomIn(image.id)}
-                />
-              </div>
-            ))
-          ) : (
-            <p>No blogger images available.</p>
-          )
-        )}
-      </div>
-    );
-  };
 
-  const handleChange = (event) => {
-    setPhotoUrl(event.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    if (!photoUrl) {
-      alert('Please select an image before uploading.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('blogger.bloggerId', bloggerId);
-    formData.append('photoUrl', photoUrl);
-
-    try {
-      const response = await axios.post('http://localhost:8080/add-blog', formData);
-
-      if (response.status) {
-        alert('Image uploaded successfully');
-        setPhotoUrl(null);
-        fetchBloggerImages(bloggerId);
-      } else {
-        console.error('Failed to upload art image:', response.statusMessage);
-      }
-    } catch (error) {
-      console.error('Error uploading art image:', error);
-    }
-  };
+  // const renderBloggerImages = () => {
+  //   return (
+  //     <div className="user-images">
+  //       {loading ? (
+  //         <p>Loading...</p>
+  //       ) : (
+  //         Array.isArray(bloggerImages) && bloggerImages.length > 0 ? (
+  //           bloggerImages.map((image, index) => (
+  //             <div key={index} className="user-image-container">
+  //               <img
+  //                 src={`http://localhost:8080/blogger/fetch/pic/${image.id}`}
+  //                 alt={`Blogger Image ${index + 1}`}
+  //                 className="user-image"
+  //                 onClick={() => handleZoomIn(image.id)}
+  //               />
+  //             </div>
+  //           ))
+  //         ) : (
+  //           <p>No blogger images available.</p>
+  //         )
+  //       )}
+  //     </div>
+  //   );
+  // };
 
 
 
 
   return (
     <>
-      {/* <CustomNavbar /> */}
+      {blogger && (
       <Container className="mt-5">
-        <h2 className="mb-4 head">Welcome {name}...</h2>
+        <h2 className="mb-4 head">Welcome {blogger.bloggerName}...</h2>
+
         <Card className="card">
           <Card.Header className="card-header">
             <h3>Blogger Profile</h3>
           </Card.Header>
-          <Card.Body className="card-body">
-            <div className="text-center mb-4">
-              <img
-                className="newImage"
-                src={`http://localhost:8080/blogger/fetch/profilePic/${bloggerId}`}
-                alt="Profile Pic"
-                onClick={() => handleProfileZoomIn()} 
-              />
-            </div>
-            <div style={{ marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-              <div style={{ marginTop: '20px' }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ color: '#555' }}>Name</h4>
-                  <p>{name}</p>
-                </div>
-                <div>
-                  <h4 style={{ color: '#555' }}>Email</h4>
-                  <p>{email}</p>
+         
+            <Card.Body className="card-body" key={blogger.bloggerId}>
+              <div className="text-center mb-4">
+                <img
+                  className="newImage"
+                  src={`Images/Profiles/${blogger.profilePic}`}
+
+                  alt="Profile Pic"
+                  onClick={() => handleProfileZoomIn()}
+                />
+              </div>
+              <div style={{ marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
+                <div style={{ marginTop: '20px' }}>
+                  <div style={{ marginBottom: '20px' }}>
+                    <h4 style={{ color: '#555' }}>Name</h4>
+                    <p>{blogger.bloggerName}</p>
+                  </div>
+                  <div>
+                    <h4 style={{ color: '#555' }}>Email</h4>
+                    <p>{blogger.bloggerEmail}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <div className="social-links">
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={faInstagram} className="social-icon" />
-                </a>
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={faTwitter} className="social-icon" />
-                </a>
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <div className="social-links">
+                  <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faInstagram} className="social-icon" />
+                  </a>
+                  <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faTwitter} className="social-icon" />
+                  </a>
+                </div>
               </div>
-            </div>
-            <div style={{ marginTop: '30px' }}>
-              <h4 style={{ color: '#555' }}>Uploaded Blogs</h4>
-              {renderBloggerImages()}
-            </div>
-            <div style={{ marginTop: '30px' }}>
-              <h4 style={{ color: '#555' }}>Upload Blog Images</h4>
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Label>Blogs Images</Form.Label>
-                  <Form.Control type="file" name="photoUrl" onChange={handleChange} />
-                </Form.Group>
-                <Button variant="primary" className="mt-2" onClick={handleUpload}>
-                  Upload
-                </Button>
-              </Form>
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button
+
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <Button
                   variant="secondary"
                   onClick={() => navigate(`/edit-blogger-details`)}
                 >
                   Edit Account Details
                 </Button>{'  '}
-              <Button variant="danger" onClick={handleDeleteAccount} className="ml-2">
-                Delete Account
-              </Button>
-            </div>
-          </Card.Body>
+                <Button variant="danger" onClick={handleDeleteAccount} className="ml-2">
+                  Delete Account
+                </Button>
+              </div>
+            </Card.Body>
+          
         </Card>
 
         <Modal show={showZoom} onHide={handleZoomOut} centered>
-        <Modal.Body>
-          {selectedImage && (
-            <img
-              className='zoomed-profile-pic'
-              src={`http://localhost:8080/blogger/fetch/pic/${selectedImage}`}
-              alt="Zoomed Profile Pic"
-            />
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleZoomOut}>
-            Close
-          </Button>
-          <Button
+          <Modal.Body>
+            {selectedImage && (
+              <img
+                className='zoomed-profile-pic'
+                src={`Images/Profiles/${blogger.profilePic}`}
+                alt="Zoomed Profile Pic"
+              />
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleZoomOut}>
+              Close
+            </Button>
+            <Button
               variant="danger"
               onClick={() => handleDelete(selectedImage)}
-          >
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
 
-      <Modal show={showProfileZoom} onHide={handleProfileZoomOut} centered>
+        <Modal show={showProfileZoom} onHide={handleProfileZoomOut} centered>
           <Modal.Body>
             <img
               className='zoomed-profile-pic'
-              src={`http://localhost:8080/blogger/fetch/profilePic/${bloggerId}`}
+              src={`Images/Profiles/${blogger.profilePic}`}
               alt="Zoomed Profile Pic"
             />
           </Modal.Body>
@@ -279,6 +248,7 @@ const BloggerProfile = () => {
         </Modal>
 
       </Container>
+      )}
     </>
   );
 }

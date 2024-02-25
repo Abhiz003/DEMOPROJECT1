@@ -57,7 +57,7 @@ const EditBloggerDetails = () => {
         errors.bloggerPhone = /^[0-9]{10}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
         break;
       case 'bloggerEmail':
-        errors.bloggerEmail = /\S+@\S+\.\S+/.test(value) ? '' : 'Invalid email address';
+        errors.bloggerEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value) ? '' : 'Invalid email address';
         break;
       default:
         break;
@@ -79,7 +79,7 @@ const EditBloggerDetails = () => {
   try {
     const formDataForUpload = new FormData();
 
-    // Append user ID to the form data
+    
     formDataForUpload.append('bloggerId', newid);
 
     Object.keys(formData).forEach((key) => {

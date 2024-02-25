@@ -81,12 +81,19 @@ const Subtitle = styled.p`
 `;
 
 const Blogger = () => {
+
+// bloggerName: '',
+  // bloggerEmail: '',
+  // bloggerPhone: '',
+  // bloggerPassword: '',
+  // profilePic: '',
+  // blogsCreated: ''
   const [bloggers, setBloggers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/get-blogger');
+        const response = await axios.get(`http://localhost:8080/get-blogger`);
         console.log(response);
         setBloggers(response.data.list);
       } catch (error) {
@@ -96,6 +103,8 @@ const Blogger = () => {
 
     fetchData();
   }, []);
+
+
 
   return (
     <>

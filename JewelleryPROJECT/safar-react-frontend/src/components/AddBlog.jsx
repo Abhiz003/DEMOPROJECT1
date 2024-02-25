@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import '../Styles/AddBlog.css';
+import '../Styles/Form.css';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getUserId } from '../utils/TokenUtil';
+import { toast } from 'react-toastify';
 
 const AddBlog = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const AddBlog = () => {
     const endDate = new Date(blogData.endDate);
   
     if (endDate < startDate) {
-      alert('End date cannot be before the start date');
+      toast.warning('End date cannot be before the start date');
       return;
     }
   
@@ -53,7 +54,7 @@ const AddBlog = () => {
       formDataForUpload.append('photoUrl', blogData.photoUrl);
       formDataForUpload.append('bloggerId', getUserId());
   
-      const result = await axios.post('http://localhost:8080/add-blog', formDataForUpload, {
+      const result = await axios.post(`http://localhost:8080/add-blog`, formDataForUpload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -61,9 +62,10 @@ const AddBlog = () => {
   
       console.log('Blog added successfully:', result.data);
   
-      alert('Blog added successfully');
-      navigate('/my-blogs');
+       toast.success('Blog added successfully');
+      navigate(`/my-blogs/${getUserId()}`);
     } catch (error) {
+      toast.error("somethingwent wrong");
       console.error('Error adding blog:', error.message);
     }
   };
