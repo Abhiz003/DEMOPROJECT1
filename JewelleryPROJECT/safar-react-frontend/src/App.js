@@ -99,7 +99,7 @@ export const App = () => {
 
 
           <Route path='/profile-page/:bloggerId' element={<ProfilePage />} />
-          <Route path='/speech-recognition' element={<SpeechRecognitionApp />} />
+          {/* <Route path='/speech-recognition' element={<SpeechRecognitionApp />} /> */}
 
 
 

@@ -34,18 +34,7 @@ const  ContactUs = () => {
 
              toast.warning("Do you want to sent the message?");
             console.log("message sent")
-            // const response = await messagesend(jsonData);
-
-            // if (response.status === true) {
-            //     setFormStatus('Sent');
-            //     resetForm();
-
-            //     setTimeout(() => {
-            //         setFormStatus('Send');
-            //     }, 2000);
-            // } else {
-            //     throw new Error('Failed to submit message');
-            // }
+            
             throw new Error('Failed to submit message');
         } catch (error) {
             console.error('Error submitting message:', error);

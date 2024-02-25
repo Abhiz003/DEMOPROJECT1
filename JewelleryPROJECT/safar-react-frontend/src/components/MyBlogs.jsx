@@ -141,7 +141,6 @@ const MyBlogs = () => {
         <div className="d-flex blog-ops-buttons">
 
             <Button  onClick={() => navigate('/add-blog')}>Add New Blog</Button>
-          <Button onClick={() => navigate('/speech-recognition')}>Text to speech</Button>
         </div> 
         :
         <></>
