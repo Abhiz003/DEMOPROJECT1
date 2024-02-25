@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/Navbar.css'
 
-const AdminNavbar = ({ title, onRoleChange }) => {
+const AdminNavbar = ({ title }) => {
   const navigate = useNavigate();
 
   const handleAdminDashBoard = () => {
@@ -20,9 +20,8 @@ const AdminNavbar = ({ title, onRoleChange }) => {
   const handleLogOutClick = () => {
     logout();
 
-    onRoleChange();
-    // navigate('/home');    // set a flag to render the custom  navbar in app.js
-    // window.location.reload();
+    navigate('/home');    // set a flag to render the custom  navbar in app.js
+    window.location.reload();
   };
 
   const isNavLinkActive = (url) => {

@@ -46,12 +46,14 @@ const Login = () => {
         toast.success(`Welcome, ${result.name}! Get ready for an exciting journey!`);
 
         localStorage.setItem('userId', result.id);
-        localStorage.setItem('token', result.token);   // fetch here tioken from the backend
+        localStorage.setItem('token', result.token);   // fetch here token from the backend
         navigate('/');
       } else {
-        toast.warning(result.statusMessage || "Oops! It seems like you're not a member. Please SignUp first.");
+      toast.warning(result.statusMessage || "Oops! It seems like you're not a member. Please SignUp first.");
+
       }
     } catch (error) {
+      toast.warning( "Oops! It seems like you're not a member. Please SignUp first.");
       console.log(error);
     }
   };

@@ -61,6 +61,30 @@ const AllBlogs = () => {
     event.preventDefault();
   };
 
+  // const handleDelete = (blogId) => {
+  //   setBlogToDelete((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
+  //   setShowDeleteConfirmation(true);
+  // };
+
+  // const confirmDelete = async () => {
+  //   console.log(blogToDelete);
+  //   try {
+  //       // await axios.delete(`http://localhost:8080/blog/delete/${blogToDelete}`);
+
+  //       const result = await deleteBlog(blogToDelete);
+       
+
+  //     console.log("Blog deleted successfully");
+  //   } catch (error) {
+  //     console.error('Failed to delete blog:', error);
+  //     toast.error("Unable to delete the blog, try reloading !!!")
+  //   } finally {
+  //     setShowDeleteConfirmation(false);
+  //   }
+  // };
+
+
+
   const handleDelete = (blogId) => {
     setBlogToDelete(blogId);
     setShowDeleteConfirmation(true);
@@ -69,19 +93,24 @@ const AllBlogs = () => {
   const confirmDelete = async () => {
     console.log(blogToDelete);
     try {
-        // await axios.delete(`http://localhost:8080/blog/delete/${blogToDelete}`);
-
-        const result = await deleteBlog(blogToDelete);
-       
-
-      console.log("Blog deleted successfully");
+      await deleteBlog(blogToDelete);
+      // Fetch the updated list of blogs after deletion
+      const updatedBlogs = await getAllBlogs();
+      if (updatedBlogs) {
+        setBlogs(updatedBlogs);
+        toast.success("Blog deleted successfully");
+      } else {
+        toast.error("Failed to fetch updated blogs");
+      }
     } catch (error) {
       console.error('Failed to delete blog:', error);
-      toast.error("Unable to delete the blog, try reloading !!!")
+      toast.error("Unable to delete the blog, try reloading !!!");
     } finally {
       setShowDeleteConfirmation(false);
     }
   };
+
+
 
   const cancelDelete = () => {
     setShowDeleteConfirmation(false);

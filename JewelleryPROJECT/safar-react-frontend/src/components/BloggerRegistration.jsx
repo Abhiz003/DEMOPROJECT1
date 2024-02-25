@@ -49,7 +49,7 @@ const BloggerRegistration = () => {
         errors.bloggerPhone = /^[6-9]\d{9}$/.test(value) ? '' : 'Phone should contain exactly 10 numbers';
         break;
       case 'bloggerEmail':
-        errors.bloggerEmail = /^([^0-9<>()[\]\\.,;:\s@"]+(\.[^0-9<>()[\]\\.,;:\s@"]+)*)|(".+?")@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/.test(value) ? '' : 'Invalid email address';
+        errors.bloggerEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value) ? '' : 'Invalid email address';
         break;
       case 'bloggerPassword':
         errors.bloggerPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?!.*\s).{6,}$/.test(value) 

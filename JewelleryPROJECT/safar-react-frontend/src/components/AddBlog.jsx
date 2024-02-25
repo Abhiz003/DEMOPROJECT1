@@ -27,20 +27,54 @@ const AddBlog = () => {
     if (type === 'file') {
       setBlogData({ ...blogData, [name]: e.target.files[0] });
     } else {
+
+      if (name === 'members' && parseInt(value, 10) <= 0) {
+        toast.warning('Minimum 1 member is required');
+        return; 
+      }
+      if(name ==='totalCost' && parseInt(value,10) < 0) {
+        toast.warning('cost cannot be negative')
+        return;
+      }
       setBlogData((prevBlog) => ({ ...prevBlog, [name]: value }));
     }
+
+    if (name === 'startDate' && blogData.endDate) {
+      const startDate = new Date(value);
+      const endDate = new Date(blogData.endDate);
+  
+      if (startDate > endDate) {
+        toast.warning('Start date cannot be after the end date');
+        return;
+      }
+    }
+  
+    // Add validation for end date not preceding start date
+    if (name === 'endDate' && blogData.startDate) {
+      const startDate = new Date(blogData.startDate);
+      const endDate = new Date(value);
+  
+      if (endDate < startDate) {
+        toast.warning('End date cannot be before the start date');
+        return;
+      }
+    }
+
+
+
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const startDate = new Date(blogData.startDate);
-    const endDate = new Date(blogData.endDate);
+    // const startDate = new Date(blogData.startDate);
+    // const endDate = new Date(blogData.endDate);
   
-    if (endDate < startDate) {
-      toast.warning('End date cannot be before the start date');
-      return;
-    }
+    // if (endDate < startDate) {
+    //   toast.warning('End date cannot be before the start date');
+    //   return;
+    // }
   
     try {
       const formDataForUpload = new FormData();

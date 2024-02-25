@@ -9,7 +9,7 @@ import { NavDropdown, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const CustomNavbar = ({ title, onRoleChange }) => {
+const CustomNavbar = ({ title }) => {
   const navigate = useNavigate();
 
   const handleLogOutClick = () => {

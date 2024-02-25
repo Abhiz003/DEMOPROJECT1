@@ -119,7 +119,7 @@ export async function updateUser(credentials) {
 export async function getUsers() {
     try {
         const response = await axios.get(`http://localhost:8080/all-users`);
-        return response.list;
+        return response.data;
     } catch (error) {
         console.log(error);
     }

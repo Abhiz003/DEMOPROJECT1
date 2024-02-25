@@ -84,14 +84,18 @@ public class BloggerService {
 	        existingBlogger.setBloggerPassword(blogger.getBloggerPassword());
 	        existingBlogger.setProfilePic(blogger.getProfilePic());
 	        
-	        Blogger updatedArtist = bloggerRepository.save(existingBlogger);
+	        Blogger updatedBlogger = bloggerRepository.save(existingBlogger);
 	        
-	        updatedArtist.setBloggerStatus(BloggerStatus.ACTIVE);
-	        return updatedArtist.getBloggerId();
+	        updatedBlogger.setBloggerStatus(BloggerStatus.ACTIVE);
+	        return updatedBlogger.getBloggerId();
 	    } else {
 	        throw new BloggerServiceException("Blogger not found with ID: " + blogger.getBloggerId());
 	    }
 	}
+	
+	
+	
+	
 	
 	public void permanentlyDelete(Blogger blogger) {
 		bloggerRepository.delete(blogger);

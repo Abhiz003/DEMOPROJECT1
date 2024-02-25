@@ -19,8 +19,8 @@ export function UsersList() {
 
     async function fetchUsersList() {
         try {
-            const data = await getUsers();
-            setUser(data.list);
+            const result = await getUsers();
+            setUser(result.list);
         } catch (error) {
             console.log(error);
         }

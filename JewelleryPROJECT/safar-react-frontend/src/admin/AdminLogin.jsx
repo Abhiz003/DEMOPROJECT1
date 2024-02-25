@@ -36,6 +36,7 @@ export function AdminLogin() {
                     sessionStorage.setItem("token",result.name);
 
                     navigate("/home");   // set  another flag here to render the admin navbar  in app.js
+                    window.location.reload();
                 }
             } else {
                 

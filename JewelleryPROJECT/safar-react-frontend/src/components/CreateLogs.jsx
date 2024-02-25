@@ -30,21 +30,47 @@ const CreateLogs = () => {
     if (type === 'file') {
       setLogData({ ...logData, [name]: e.target.files[0] });
     } else {
+
+      if(name ==='passAmount' && parseInt(value,10) < 0) {
+        toast.warning('cost cannot be negative')
+        return;
+      }
       setLogData((prevLog) => ({ ...prevLog, [name]: value }));
     }
+    if (name === 'startTime' && logData.exitTime) {
+      const startTime = new Date(value);
+      const exitTime = new Date(logData.exitTime);
+  
+      if (startTime > exitTime) {
+        toast.warning('Start Time cannot be after the exit time');
+        return;
+      }
+    }
+  
+    // Add validation for end date not preceding start date
+    if (name === 'exitTime' && logData.startTime) {
+      const startTime = new Date(logData.startTime);
+      const exitTime = new Date(value);
+  
+      if (exitTime < startTime) {
+        toast.warning('Exit Time cannot be before the start time');
+        return;
+      }
+    }
+
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const startTime = new Date(logData.startTime);
-    const exitTime = new Date(logData.exitTime);
+    // const startTime = new Date(logData.startTime);
+    // const exitTime = new Date(logData.exitTime);
   
-    if (exitTime < startTime) {
-      toast.warning(`Time travel isn't possible yet. Put Time after ${startTime}`);
-      return;
-    }
+    // if (exitTime < startTime) {
+    //   toast.warning(`Time travel isn't possible yet. Put Time after ${startTime}`);
+    //   return;
+    // }
 
     try {
       const formDataForUpload = new FormData();

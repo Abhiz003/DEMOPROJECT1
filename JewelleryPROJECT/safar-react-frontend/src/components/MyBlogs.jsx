@@ -40,8 +40,6 @@ const MyBlogs = () => {
   };
 
 
-
-  
   const handleDelete = async (blogId) => {
     try {
       await axios.delete(`http://localhost:8080/blog/delete/${blogId}`);
