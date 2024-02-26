@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CookieConsent from "react-cookie-consent";
 import { Home } from './components/Home';
 import Login from './components/Login';
 import UserSignUp from './components/UserSignUp';
@@ -97,7 +96,6 @@ export const App = () => {
 
           <Route path='/profile-page/:bloggerId' element={<ProfilePage />} />
           {/* <Route path='/speech-recognition' element={<SpeechRecognitionApp />} /> */}
-
 
 
         </Routes>

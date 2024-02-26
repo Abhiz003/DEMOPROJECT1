@@ -184,16 +184,15 @@ const [showSpeechModal, setShowSpeechModal] = useState(false);
                 />
               </Form.Label>
             </Form.Group>
-           
-              <Button type="submit" className="btn btn-success">
-                SUBMIT LOG
-              </Button>
+
+            <div className="d-flex blog-ops-buttons">
+              <Button type="submit" className="btn btn-success">SUBMIT LOG</Button>
               <Button onClick={() => setShowSpeechModal(true)}>SPEECH TO TEXT</Button>
-            
+            </div> 
+
           </div>
         </form>
       </div>
-
 
       <Modal show={showSpeechModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

@@ -138,7 +138,7 @@ const MyBlogs = () => {
           </>
         )}
           { isBlogger() && bloggerId=== getUserId() ?
-        <div className="d-flex blog-ops-buttons">
+        <div>
 
             <Button  onClick={() => navigate('/add-blog')}>Add New Blog</Button>
         </div> 
