@@ -186,9 +186,9 @@ const [showSpeechModal, setShowSpeechModal] = useState(false);
             </Form.Group>
            
               <Button type="submit" className="btn btn-success">
-                Submit Log
+                SUBMIT LOG
               </Button>
-              <Button onClick={() => setShowSpeechModal(true)}>Text to speech</Button>
+              <Button onClick={() => setShowSpeechModal(true)}>SPEECH TO TEXT</Button>
             
           </div>
         </form>
